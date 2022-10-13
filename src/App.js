@@ -1,25 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import { ThemeProvider } from "@mui/material";
+import { createTheme } from '@mui/material/styles'
+import { grey } from '@mui/material/colors';
+import React, { Suspense, Component } from 'react'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import Home from './pages/Home'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+document.body.style.backgroundImage = "url(https://static.onecms.io/wp-content/uploads/sites/44/2022/08/02/how-to-stock-your-pantry.jpg)";
+document.body.style.backgroundSize = "cover";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: grey[100],
+    },
+    secondary: {
+      main: grey[800],
+    },
+  },
+  typography: {
+    fontFamily: 'Quicksand',
+    fontWeightLight: 400,
+    fontWeightRegular: 500,
+    fontWeightMedium: 600,
+    fontWeightBold: 700,
+  }
+})
+
+export default class App extends Component {
+
+  render() {
+    return(
+      <Suspense fallback="Loading..." >
+      <>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+          </Switch>
+        </Router>
+      </ThemeProvider>
+    </>
+    </Suspense>
+    );
+  }
 }
-
-export default App;

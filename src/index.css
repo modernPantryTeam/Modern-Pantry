@@ -2,7 +2,7 @@
 
 body {
   width: 100%;
-  background: #fafafa;
+  background: #ffffff;
   position: relative;
   font-family: 'Quicksand';
   padding: 0;
@@ -13,7 +13,6 @@ hr {
   height: 0;
   color: inherit;
 }
-
 abbr[title] {
   text-decoration: underline dotted;
 }
@@ -272,6 +271,11 @@ video {
 .bg-blue-medium {
   --tw-bg-opacity: 1;
   background-color: rgba(0, 92, 152, var(--tw-bg-opacity));
+}
+
+.bg-black-medium {
+  --tw-bg-opacity: 1;
+  background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
 }
 
 .bg-black-faded {
@@ -742,7 +746,7 @@ video {
   padding-left: 0px;
   padding-top: 0px;
   font-size: 3rem;
-  line-height: 5vw;
+  line-height: 3vw;
 }
 
 .text-main-main {
@@ -775,10 +779,10 @@ video {
 }
 
 .pd_right {
-  padding-left: 400px;
+  padding-left: 40rem;
 }
 
 .blurred {
-  background-color: rgba(100%,100%,100%,40%);
-  backdrop-filter: blur(50px);
+  background-color: rgba(100%,100%,100%,10%);
+  backdrop-filter: blur(80px);
 }

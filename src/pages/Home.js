@@ -9,8 +9,8 @@ function Home() {
   return (
 
 <><Headbar></Headbar>
-    <div className="justify-center flex items-center h-screen border">
-    <div className="blurred p-8 border border-gray-primary mb-4 rounded">
+    <div className="justify-center flex items-center h-screen">
+    <div className="blurred p-8 mb-4 rounded">
         <div className="flex w-full">
         </div>
         <div className="flex flex-col w-full">

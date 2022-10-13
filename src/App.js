@@ -5,7 +5,7 @@ import React, { Suspense, Component } from 'react'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import Home from './pages/Home'
 
-document.body.style.backgroundImage = "url(https://static.onecms.io/wp-content/uploads/sites/44/2022/08/02/how-to-stock-your-pantry.jpg)";
+document.body.style.backgroundImage = "url(https://makviphomeservices.com/wp-content/uploads/2022/03/pantryOrganization.png)";
 document.body.style.backgroundSize = "cover";
 
 const theme = createTheme({

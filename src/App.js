@@ -4,6 +4,8 @@ import { grey } from '@mui/material/colors';
 import React, { Suspense, Component } from 'react'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import Home from './pages/Home'
+import Login from './pages/Login'
+import SignUp from './pages/SignUp'
 
 document.body.style.backgroundImage = "url(https://makviphomeservices.com/wp-content/uploads/2022/03/pantryOrganization.png)";
 document.body.style.backgroundSize = "cover";
@@ -37,6 +39,12 @@ export default class App extends Component {
           <Switch>
             <Route exact path="/">
               <Home />
+            </Route>
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route exact path="/sign-up">
+              <SignUp />
             </Route>
           </Switch>
         </Router>

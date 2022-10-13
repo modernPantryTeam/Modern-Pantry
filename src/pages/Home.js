@@ -16,7 +16,7 @@ function Home() {
                     Welcome to Modern Pantry!
                 </p>
                 <p className="text-sub">
-                    placeholder.
+                    placeholder..
                 </p>
             </div>
         </div>

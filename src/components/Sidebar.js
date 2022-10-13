@@ -1,34 +1,30 @@
-import * as React from 'react'
-import { AppBar, Toolbar, Grid, Typography } from '@mui/material'
+import 'bootstrap/dist/css/bootstrap.min.css';  
+import { Button, Container, Offcanvas } from 'react-bootstrap';  
+import {useState} from 'react'  
+import MenuIcon from '@mui/icons-material/Menu';
 import ButtonCustom from './ButtonCustom'
-import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
-import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
-import ContactMailOutlinedIcon from '@mui/icons-material/ContactMailOutlined';
 
-function Sidebar({}) {
-    return (
-<AppBar>
-<Toolbar>
-    <Grid
-        container
-        direction="row"
-        justifyContent="flex-start"
-    >
-        <a href="/">
-            Modern Pantry
-        </a>
-    </Grid>
-    <Grid
-        container
-        direction="row"
-        justifyContent="flex-end"
-    >
-        <ButtonCustom link="/login" icon={<LoginOutlinedIcon />} />
-        <ButtonCustom link="/sign-up" icon={<LockOpenOutlinedIcon />} />
-        <ButtonCustom link="/contact-us" icon={<ContactMailOutlinedIcon />} />
-    </Grid>
-</Toolbar>
-</AppBar>
-);
-}
-export default Sidebar;
+function Sidebar() {  
+  const [show, setShow] = useState(false);  
+  const closeSidebar = () => setShow(false);  
+  const showSidebar = () => setShow(true);  
+  return (  
+    <>  
+    <Container className='p-4'>  
+      <Button variant="primary" onClick={showSidebar}>  
+        Menu
+      </Button>  
+      <ButtonCustom icon={<MenuIcon />} />
+      <Offcanvas show={show} onHide={closeSidebar}>  
+        <Offcanvas.Header closeButton>  
+          <Offcanvas.Title>Menu</Offcanvas.Title>  
+        </Offcanvas.Header>  
+        <Offcanvas.Body>  
+          Options 
+        </Offcanvas.Body>  
+      </Offcanvas>  
+      </Container>  
+    </>  
+  );  
+}  
+export default Sidebar;  

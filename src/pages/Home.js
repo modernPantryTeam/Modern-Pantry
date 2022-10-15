@@ -7,7 +7,9 @@ import Offcanvas from 'react-bootstrap/Offcanvas'
 function Home() {
 
   return (
-    <><Headbar></Headbar>
+    <>
+    <Headbar></Headbar>
+    <Sidebar></Sidebar>
     <div className="justify-center flex items-center h-screen">
       <div className="flex justify-center items-center flex-col w-fullrounded text-black blurred pr-5 h-12">
         <p className="text-main">

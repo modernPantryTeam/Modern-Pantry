@@ -1,0 +1,30 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #fff;
+}
+
+.sidebar {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  width: 200px;
+  height: 90vh;
+  padding: 15px 30px;
+  background-color: #000;
+  color: #fff;
+}
+.sidebar__box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 30px;
+}
+.sidebar__icon {
+  margin-right: 10px;
+}/*# sourceMappingURL=sidebar.css.map */

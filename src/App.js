@@ -6,6 +6,8 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import Home from './pages/Home'
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
+import NotFound from './pages/not-found'
+import Dashboard from './pages/Dashboard'
 
 document.body.style.backgroundImage = "url(https://makviphomeservices.com/wp-content/uploads/2022/03/pantryOrganization.png)";
 document.body.style.backgroundSize = "cover";
@@ -40,12 +42,16 @@ export default class App extends Component {
             <Route exact path="/">
               <Home />
             </Route>
-            <Route exact path="/login">
+            <Route path="/login">
               <Login />
             </Route>
-            <Route exact path="/sign-up">
+            <Route path="/sign-up">
               <SignUp />
             </Route>
+            <Route path="/dashboard">
+              <Dashboard />
+            </Route>
+            <Route component={NotFound} />
           </Switch>
         </Router>
       </ThemeProvider>

@@ -11,10 +11,10 @@ body {
 
 .sidebar {
   position: absolute;
-  top: 70px;
+  top: 0px;
   left: 0;
   width: 200px;
-  height: 90vh;
+  height: 100vh;
   padding: 15px 30px;
   background-color: #000;
   color: #fff;
@@ -28,3 +28,7 @@ body {
 .sidebar__icon {
   margin-right: 10px;
 }/*# sourceMappingURL=sidebar.css.map */
+
+.sidebar__title {
+  margin-top: 1.5px;
+}

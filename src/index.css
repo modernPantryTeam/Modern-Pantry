@@ -786,3 +786,7 @@ video {
   background-color: rgba(100%,100%,100%,10%);
   backdrop-filter: blur(80px);
 }
+
+.pt-3 {
+  padding-top: 50px;
+}

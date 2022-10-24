@@ -6,6 +6,9 @@ import SendIcon from '@mui/icons-material/Send';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import "../sass/css/sidebar.css";
+import WButtonCustom from './WButtonCustom'
+import LeaderboardIcon from '@mui/icons-material/Leaderboard';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 
 function Sidebar() {
 	
@@ -13,18 +16,24 @@ function Sidebar() {
 		<>
 			<div className="sidebar">
         <div className="sidebar__box">
-          <div className="sidebar__icon"><LoginOutlinedIcon /></div>
-          <div className="sidebar__title">Home</div>
+        <div className="pt-3">
+        <a href="/">
+          <input type="image" src=" https://i.imgur.com/LXfHfIz.png"></input>
+          </a>
+          </div>
+          <div className="pt-1">
+          <WButtonCustom link="/" name={"Modern Pantry"} />
+          </div>
         </div>
 
         <div className="sidebar__box">
-          <div className="sidebar__icon"><SearchIcon /></div>
-          <div className="sidebar__title">Explore</div>
+          <div className="sidebar__icon"><MenuBookIcon /></div>
+          <div className="sidebar__title">My Pantries</div>
         </div>
 
         <div className="sidebar__box">
-          <div className="sidebar__icon"><SendIcon /></div>
-          <div className="sidebar__title">Messages</div>
+          <div className="sidebar__icon"><LeaderboardIcon /></div>
+          <div className="sidebar__title">Statistics</div>
         </div>
 
         <div className="sidebar__box">

@@ -150,7 +150,7 @@ export default function MiniDrawer() {
                                         justifyContent: 'center',
                                     }}
                                 >
-                                    {index === 0 && <InboxIcon />}
+                                    {index === 0 && <MenuBookIcon />}
                                     {index === 1 && <MailIcon />}
                                     {index === 2 && <NotificationsIcon />}
                                     {index === 3 && <AddCircleOutlineIcon />}

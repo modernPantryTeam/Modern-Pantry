@@ -4,7 +4,7 @@
 
 What is Modern Pantry? It is an application that we have created so that people from all over the world can supervise their preserves. The application has many options and useful functions that allow you to conveniently use it.
 
-### Build with
+### Built with
 
 - [![React][react.js]][react-url]
 
@@ -21,7 +21,7 @@ What is Modern Pantry? It is an application that we have created so that people 
 
 ### Instalation
 
-- Clone the repo
+- Clone the repository
   ```sh
   git clone https://github.com/Zayooo00/Modern-Pantry
   ```

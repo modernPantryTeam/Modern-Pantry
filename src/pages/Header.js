@@ -47,12 +47,12 @@ export default class Header extends Component {
                         <ButtonCustom link="/" name={lang.t('home')} icon={<HomeOutlinedIcon />} />
                         <ButtonCustom link="/add" name={lang.t('add')} icon={<AddBoxOutlinedIcon />} />
                         <ButtonCustom link="/profile" name={lang.t('profile')} icon={<AccountBoxOutlinedIcon />} />
-                        <Button 
+                        <Button
                             onClick={this.handleLogout}
-                            style={{ color: 'black', marginLeft: '0px' }} 
-                            variant="text" 
+                            style={{ color: 'black', marginLeft: '0px' }}
+                            variant="text"
                             startIcon={<LogoutOutlinedIcon />} >
-                                {lang.t('logout')}
+                            {lang.t('logout')}
                         </Button>
                     </Grid>
                 </Toolbar>

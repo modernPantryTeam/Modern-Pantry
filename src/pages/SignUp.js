@@ -1,9 +1,4 @@
 import React, { Component } from 'react';
-import { AppBar, Toolbar, Grid, Typography } from '@mui/material'
-import ButtonCustom from '../components/ButtonCustom'
-import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
-import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
-import ContactMailOutlinedIcon from '@mui/icons-material/ContactMailOutlined';
 import authService from '../services/auth-service';
 import userService from '../services/user-service';
 import logger from '../logger/logger'
@@ -56,7 +51,7 @@ export default class SignUp extends Component {
       username: e.target.value
     });
   }
-  
+
   onChangeEmail(e) {
     this.setState({
       email: e.target.value
@@ -77,7 +72,7 @@ export default class SignUp extends Component {
       loading: true
     });
 
-    
+
     logger.log("SignUp.js")
     logger.log(this.state.username)
     logger.log(this.state.password)
@@ -118,79 +113,80 @@ export default class SignUp extends Component {
       );
   }
 
-      handleProfile(e) {
-        e.preventDefault();
-        this.setState({
-          message: "",
-          successful: false,
-          loading: true
-        });
+  handleProfile(e) {
+    e.preventDefault();
+    this.setState({
+      message: "",
+      successful: false,
+      loading: true
+    });
 
-        
-      logger.log("SignUp.js")
-      logger.log(this.state.name)
-      logger.log(this.state.lastname)
-      logger.log(this.state.description)
 
-      userService.register(
-        this.state.name,
-        this.state.lastname,
-        this.state.description).then(
-          response => {
-            logger.log("SignUp.js")
-            logger.log(response);
-            this.setState({
-              message: response.data.message,
-              loading: false
+    logger.log("SignUp.js")
+    logger.log(this.state.name)
+    logger.log(this.state.lastname)
+    logger.log(this.state.description)
+
+    userService.register(
+      this.state.name,
+      this.state.lastname,
+      this.state.description).then(
+        response => {
+          logger.log("SignUp.js")
+          logger.log(response);
+          this.setState({
+            message: response.data.message,
+            loading: false
+          });
+          userService.login().then(
+            () => {
+              window.location.reload();
+            },
+            error => {
+              logger.log("SignUp.js")
+              logger.error(error)
+              const resMessage = (
+                error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+                error.message ||
+                error.toString();
+              this.setState({
+                loading: false,
+                message: resMessage
+              });
             });
-                userService.login().then(
-                  () => {
-                    window.location.reload();
-                  },
-                  error => {
-                    logger.log("SignUp.js")
-                    logger.error(error)
-                    const resMessage = (
-                      error.response &&
-                      error.response.data &&
-                      error.response.data.message) ||
-                      error.message ||
-                      error.toString();
-                    this.setState({
-                      loading: false,
-                      message: resMessage
-                    });
-                  });
-          },
-          error => {
-            logger.log("SignUp.js")
-            logger.error(error)
-            console.log(error);
-            const resMessage = (
-              error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-              error.message ||
-              error.toString();
-            this.setState({
-              loading: false,
-              message: resMessage
-            });
-          }
-        );
+        },
+        error => {
+          logger.log("SignUp.js")
+          logger.error(error)
+          console.log(error);
+          const resMessage = (
+            error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+            error.message ||
+            error.toString();
+          this.setState({
+            loading: false,
+            message: resMessage
+          });
+        }
+      );
   }
 
   render() {
     return (
       <><><Headbar></Headbar>
-
-</><div className="container flex mx-auto items-center h-screen">
-              <div className="flex w-full">
+      </>
+      <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <div className="container flex mx-auto items-center h-screen">
+          <div className="flex w-full">
           </div>
           <div className="flex flex-col w-5">
-          <div className="flex flex-col items-center bg-white p-4 border border-gray-primary mb-4 rounded">
-                  <h1 className="flex justify-center w-full">
-                <img src="https://i.imgur.com/YtiHDru.png" alt="Pantry" className="mt-2 w-4/12 mb-4" />
+            <div className="flex flex-col items-center bg-white p-4 border border-gray-primary mb-4 rounded">
+              <h1 className="flex justify-center w-full">
+                <img src="https://i.imgur.com/YtiHDru.png" alt="Pantry" className="mt-2 w-4/12" />
               </h1>
 
               {this.state.successful && (
@@ -225,7 +221,7 @@ export default class SignUp extends Component {
                     type="submit"
                     className={`bg-blue-medium text-white w-full rounded h-8 font-bold`}
                   >
-                     {this.state.loading && ("...")}
+                    {this.state.loading && ("...")}
                   </button>
                 </form>)}
               {!this.state.successful && <p className="mb-4 text-xs text-red-primary">{this.state.message}</p>}
@@ -264,14 +260,23 @@ export default class SignUp extends Component {
                     disabled={this.state.loading || this.state.successful}
                     type="submit"
                     className={`bg-black-medium text-white w-full rounded h-8 font-bold`}
-                    >
-                        Sign Up
+                  >
+                    Sign Up
                     {this.state.loading && ("...")}
                   </button>
                 </form>)}
             </div>
+            <div className="flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary">
+              <p className="text-sm">
+                Or continue with:
+              </p>
+              <p className="text-sm">Sign in with Google</p>
+              <p className="text-sm">Sign in with Facebook</p>
+              <p className="text-sm">Sign in with Github</p>
+            </div>
           </div>
         </div></>
+
     );
   }
 }

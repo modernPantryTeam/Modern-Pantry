@@ -16,9 +16,7 @@ What is Modern Pantry? It is an application that we have created so that people 
 - and much more.
 
 ### Getting started
-
-- Install Node.js
-[![Node][node.js]][node-url]
+- Install[![Node][node.js]][node-url]
 
 ### Instalation
 

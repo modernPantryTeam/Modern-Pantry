@@ -6,7 +6,7 @@ What is Modern Pantry? It is an application that we have created so that people 
 
 ### Built with
 
-- [![React][react.js]][react-url]
+[![React][react.js]][react-url]
 
 ### Functionality
 

@@ -51,7 +51,6 @@ export default class SignUp extends Component {
       username: e.target.value
     });
   }
-
   onChangeEmail(e) {
     this.setState({
       email: e.target.value
@@ -71,7 +70,6 @@ export default class SignUp extends Component {
       successful: false,
       loading: true
     });
-
 
     logger.log("SignUp.js")
     logger.log(this.state.username)

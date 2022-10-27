@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Link from '@material-ui/core/Link';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -10,18 +11,11 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useState } from "react";
-import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
-import SearchIcon from '@mui/icons-material/Search';
-import SendIcon from '@mui/icons-material/Send';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import WButtonCustom from './WButtonCustom'
@@ -111,19 +105,25 @@ export default function MiniDrawer() {
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
             <AppBar position="fixed" open={open}>
-                <Toolbar>
+                <Toolbar style={{ backgroundColor: "#111", }}>
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
                         onClick={handleDrawerOpen}
                         edge="start"
                         sx={{
-                            marginRight: 5,
+                            marginRight: 2,
                             ...(open && { display: 'none' }),
                         }}
                     >
                         <MenuIcon />
                     </IconButton>
+                    <a href="/">
+                        <input type="image" alt="pantry logo" src=" https://i.imgur.com/LXfHfIz.png"></input>
+                    </a>
+                    <div className="pb-1 button-width">
+                        <WButtonCustom link="/" name={"Modern Pantry"} />
+                    </div>
                 </Toolbar>
             </AppBar>
             <Drawer variant="permanent" open={open}>
@@ -141,6 +141,7 @@ export default function MiniDrawer() {
                                     minHeight: 48,
                                     justifyContent: open ? 'initial' : 'center',
                                     px: 2.5,
+                                    color: 'white',
                                 }}
                             >
                                 <ListItemIcon
@@ -150,10 +151,18 @@ export default function MiniDrawer() {
                                         justifyContent: 'center',
                                     }}
                                 >
-                                    {index === 0 && <MenuBookIcon />}
-                                    {index === 1 && <MailIcon />}
-                                    {index === 2 && <NotificationsIcon />}
-                                    {index === 3 && <AddCircleOutlineIcon />}
+                                    <Link style={{ color: "white", }} href='/dashboard'>
+                                        {index === 0 && <MenuBookIcon />}
+                                    </Link>
+                                    <Link style={{ color: "white", }} href='/statistics'>
+                                        {index === 1 && <LeaderboardIcon />}
+                                    </Link>
+                                    <Link style={{ color: "white", }} href='/notifications'>
+                                        {index === 2 && <NotificationsIcon />}
+                                    </Link>
+                                    <Link style={{ color: "white", }}>
+                                        {index === 3 && <AddCircleOutlineIcon />}
+                                    </Link>
 
                                 </ListItemIcon>
                                 <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />

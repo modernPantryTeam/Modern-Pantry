@@ -265,12 +265,12 @@ export default class SignUp extends Component {
                 </form>)}
             </div>
             <div className="flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary">
-              <p className="text-sm">
+              <p className="text-sm text-black">
                 Or continue with:
               </p>
-              <p className="text-sm">Sign in with Google</p>
-              <p className="text-sm">Sign in with Facebook</p>
-              <p className="text-sm">Sign in with Github</p>
+              <p className="text-sm text-black">Sign in with Google</p>
+              <p className="text-sm text-black">Sign in with Facebook</p>
+              <p className="text-sm text-black">Sign in with Github</p>
             </div>
           </div>
         </div></>

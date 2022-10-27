@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Grid, Typography, Button } from '@mui/material'
+import { AppBar, Toolbar, Grid, Button } from '@mui/material'
 import ButtonCustom from '../components/ButtonCustom'
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
@@ -36,7 +36,7 @@ export default class Header extends Component {
                         justifyContent="flex-start"
                     >
                         <a href="/">
-                            <input type="image" src="https://i.imgur.com/ZTcHjwn.png" style={{ height: '38px', justifyContent: 'flex-start', marginLeft: '0px', direction: 'row', marginTop: '5px' }} />
+                            <input type="image" alt="pantry logo" src="https://i.imgur.com/ZTcHjwn.png" style={{ height: '38px', justifyContent: 'flex-start', marginLeft: '0px', direction: 'row', marginTop: '5px' }} />
                         </a>
                     </Grid>
                     <Grid

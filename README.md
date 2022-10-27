@@ -14,7 +14,7 @@ What is Modern Pantry? It is an application that we have created so that people 
 - offers statistics and summaries
 - allows you to create your own pantry and share it with friends
 - view your own pantry by using QR code
-- and much more.
+- and much more
 
 ### Getting started
 - Install[![Node][node.js]][node-url]

@@ -1,73 +1,338 @@
 import * as React from 'react'
-import Sidebar from '../components/Sidebar'
+import { Component } from 'react'
 import Drawer from '../components/Drawer'
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions } from '@mui/material';
+import emailjs from "emailjs-com";
+import { Grid, CardActionArea, CardMedia, Typography, CardActions, Button, Card, CardHeader, CardContent, TextField } from '@mui/material';
+import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
+import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
+import postService from '../services/post-service';
 
-function Dashboard() {
+document.body.style.backgroundImage = "url(https://makviphomeservices.com/wp-content/uploads/2022/03/pantryOrganization.png)";
+document.body.style.backgroundSize = "cover";
 
-  return (
-    <>
-      <Drawer></Drawer>
-      <div class="container">
-        <div class="pantry-wrapper pt-5">
-          <div class="pantry-search blurred1 pantry-item">
-            <p className="text-main font-bold">
-              Your Pantries
-            </p>
-            <p className="text-medium-medium font-bold">
-              Even just a few spices or ethnic condiments that you can keep in your pantry can turn your mundane dishes into a culinary masterpiece.
-              <i>-  Marcus Samuelsson</i>
-            </p>
-          </div>
+export default class Dashboard extends Component {
 
-          <div class="pantry-result">
-            <div id="pantry">
+  constructor(props) {
+    super(props);
+    this.popup = this.popup.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleCreatePost = this.handleCreatePost.bind(this);
+    this.onChangeSaveFile = this.onChangeSaveFile.bind(this);
+    this.onChangeDescription = this.onChangeDescription.bind(this);
+    this.onChangeTitle = this.onChangeTitle.bind(this);
+    this.onClickSelectFile = this.onClickSelectFile.bind(this);
 
-              <div class="pantry-item">
-                <div class="pantry-img pt-5">
-                  <input type="image" src="https://i.imgur.com/LeAXVOG.png"></input>
-                </div>
-                <div class="pantry-name">
-                  <p className="text-medium font-bold">
-                    Beach House
-                  </p>
-                  <a href="#" class="pantry-btn">Enter</a>
-                </div>
-              </div>
-              <div class="pantry-item">
-                <div class="pantry-img pt-5">
-                  <input type="image" src="https://i.imgur.com/KLjt9bt.png"></input>
-                </div>
-                <div class="pantry-name">
-                  <p className="text-medium font-bold">
-                    Downtown
-                  </p>
-                  <a href="#" class="pantry-btn">Enter</a>
-                </div>
-              </div>
-              <div class="pantry-item">
-                <div class="pantry-img pt-5">
-                  <input type="image" src="https://i.imgur.com/LeAXVOG.png"></input>
-                </div>
-                <div class="pantry-name">
-                  <p className="text-medium font-bold">
-                    Madrit
-                  </p>
-                  <a href="#" class="pantry-btn">Enter</a>
-                </div>
+    this.state = {
+      send: false,
+      file: {},
+      fileName: "",
+      title: "",
+      description: "",
+      titleError: false,
+      descriptionError: false,
+      fileError: false,
+      uploadError: true,
+      fileSubmitError: true,
+      message: ""
+    }
+
+    this.fileInputRef = React.createRef();
+  }
+
+  popup(e) {
+    e.preventDefault();
+    emailjs.popup(e.target)
+      .then((result) => {
+      }, (error) => {
+      });
+    e.target.reset()
+  }
+
+  handleClick(e) {
+    e.preventDefault();
+    this.setState({
+      send: true
+    });
+  }
+
+  onClickSelectFile(e) {
+    e.preventDefault();
+    this.fileInputRef.current.click();
+  }
+
+  onChangeTitle(e) {
+    this.setState({
+      title: e.target.value
+    });
+  }
+
+  onChangeDescription(e) {
+    this.setState({
+      description: e.target.value
+    });
+  }
+
+  onChangeSaveFile(e) {
+    this.setState({
+      file: e.target.files[0],
+      fileName: e.target.files[0].name,
+      fileSubmitError: false
+    });
+  }
+
+  handleCreatePost(e) {
+    e.preventDefault();
+    this.setState({
+      titleError: false,
+      descriptionError: false,
+      message: ""
+    });
+
+    if (this.state.title === "") {
+      this.setState({
+        titleError: true
+      });
+    }
+    if (this.state.description === "") {
+      this.setState({
+        descriptionError: true
+      });
+    }
+    if (this.state.fileName === "") {
+      this.setState({
+        fileError: true
+      });
+    }
+
+    if (this.state.title && this.state.description && this.state.fileName) {
+
+      postService.createPost(
+        this.state.title,
+        this.state.description,
+        this.state.file,
+        this.state.fileName
+      ).then(
+        () => {
+          this.setState({
+            uploadError: false
+          });
+        },
+        error => {
+          const resMessage = (
+            error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+            error.message ||
+            error.toString();
+          this.setState({
+            uploadError: true,
+            message: resMessage
+          });
+        }
+      );
+
+    }
+  }
+
+
+  render() {
+    if (!this.state.send) {
+      return (
+        <>
+          <Drawer></Drawer>
+          <div class="container">
+            <div class="pantry-result">
+              <div id="pantry">
+                <Card sx={{ maxWidth: 345 }}>
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      height="200"
+                      image="https://i.imgur.com/LeAXVOG.png"
+                      alt="pantry image"
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        Beach House
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Ut dictum laoreet libero, eu facilisis erat fringilla rutrum.
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                  <CardActions>
+                    <Button size="small" color="inherit">
+                      Enter
+                    </Button>
+                  </CardActions>
+                </Card>
+
+                <Card sx={{ maxWidth: 345 }}>
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      height="200"
+                      image="https://i.imgur.com/LeAXVOG.png"
+                      alt="pantry imagea"
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        Miami
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Ut dictum laoreet libero, eu facilisis erat fringilla rutrum.
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                  <CardActions>
+                    <Button size="small" color="inherit">
+                      Enter
+                    </Button>
+                  </CardActions>
+                </Card>
+
+                <Card sx={{ maxWidth: 345 }}>
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      height="200"
+                      image="https://i.imgur.com/LeAXVOG.png"
+                      alt="pantry image"
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        Los Angeles
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Ut dictum laoreet libero, eu facilisis erat fringilla rutrum.
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                  <CardActions>
+                    <Button size="small" color="inherit">
+                      Enter
+                    </Button>
+                  </CardActions>
+                </Card>
               </div>
             </div>
+            <button
+              type="button"
+              className={`bg-black text-white w-2 rounded h-8 font-bold`}
+              onClick={this.handleClick}
+            >
+              {("Create")}
+            </button>
           </div>
+          
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Drawer></Drawer>
+          <Grid
+            container
+            spacing={0}
+            direction="column"
+            alignItems="center"
+            justify="center"
+            style={{ minHeight: '80vh' }}
+          >
+            <Grid item xs={3}>
+              <Card style={{ width: '40rem', marginTop: '20px' }} elevation={5}>
+                <p className="pt-4 pl-2 text-medium">
+                  Edit your pantry
+                </p>
+                <CardContent>
+                  {this.state.message && (
+                    <p className="mb-4 text-xs text-red-primary">
+                      {this.state.message}
+                    </p>
+                  )}
+                  <form noValidate autoComplete="off" onSubmit={this.handleCreatePost}>
+
+
+                    {this.state.fileSubmitError && (
+                      <Button
+                        style={{
+                          color: this.state.fileError ? '#ffffff' : 'white',
+                          borderColor: this.state.fileError ? '#d32f2f' : 'white'
+                        }}
+                        variant="text"
+                        startIcon={<AddPhotoAlternateOutlinedIcon />}
+                        onClick={this.onClickSelectFile}
+                      >
+                        {('Upload image')}
+                      </Button>
+                    )}
+
+                    {!this.state.fileSubmitError && (
+                      <Button
+                        disabled
+                        style={{ color: 'white' }}
+                        variant="text"
+                        startIcon={<AddPhotoAlternateOutlinedIcon />}
+                        onClick={this.onClickSelectFile}
+                      >
+                        {('Upload successful')}
+                      </Button>
+                    )}
+
+                    <input
+                      hidden
+                      type="file"
+                      style={{ display: 'none' }}
+                      ref={this.fileInputRef}
+                      accept="image/*"
+                      onChange={this.onChangeSaveFile}
+                    />
+
+                    <TextField
+                      onChange={this.onChangeTitle}
+                      style={{ marginTop: '10px' }}
+                      label={('Pantry Name')}
+                      variant="outlined"
+                      fullWidth
+                      required
+                      color="secondary"
+                      error={this.state.titleError}
+                    />
+
+                    <TextField
+                      onChange={this.onChangeDescription}
+                      label={('Description')}
+                      style={{ marginTop: '10px' }}
+                      variant="outlined"
+                      fullWidth
+                      required
+                      multiline
+                      color="secondary"
+                      rows={4}
+                      error={this.state.descriptionError}
+                    />
+
+                    <Button
+                      style={{ marginTop: '24px', color: 'white' }}
+                      type="submit"
+                      variant="text"
+                      color="secondary"
+                      endIcon={<SendOutlinedIcon />}>
+                      {('Create')}
+                    </Button>
 
 
 
-        </div>
-      </div>
-    </>
-  );
+                  </form>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </>
+      );
+    }
+  }
 }
-export default Dashboard;

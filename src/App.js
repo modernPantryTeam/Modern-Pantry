@@ -1,33 +1,28 @@
-import { ThemeProvider } from "@mui/material";
-import { createTheme } from '@mui/material/styles'
-import { grey } from '@mui/material/colors';
 import React, { Suspense, Component } from 'react'
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
 import NotFound from './pages/not-found'
 import Dashboard from './pages/Dashboard'
+import Add from './pages/Add'
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 
 document.body.style.backgroundImage = "url(https://makviphomeservices.com/wp-content/uploads/2022/03/pantryOrganization.png)";
 document.body.style.backgroundSize = "cover";
 
-const theme = createTheme({
+const darkTheme = createTheme({
   palette: {
-    primary: {
-      main: grey[100],
-    },
-    secondary: {
-      main: grey[800],
-    },
+    mode: 'dark',
   },
-  typography: {
-    fontFamily: 'Quicksand',
-    fontWeightLight: 400,
-    fontWeightRegular: 500,
-    fontWeightMedium: 600,
-    fontWeightBold: 700,
-  }
+typography: {
+  fontFamily: 'Quicksand',
+  fontWeightLight: 400,
+  fontWeightRegular: 500,
+  fontWeightMedium: 600,
+  fontWeightBold: 700,
+}
 })
 
 export default class App extends Component {
@@ -36,7 +31,8 @@ export default class App extends Component {
     return(
       <Suspense fallback="Loading..." >
       <>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
         <Router>
           <Switch>
             <Route exact path="/">
@@ -50,6 +46,9 @@ export default class App extends Component {
             </Route>
             <Route path="/dashboard">
               <Dashboard />
+            </Route>
+            <Route path="/add">
+              <Add />
             </Route>
             <Route component={NotFound} />
           </Switch>

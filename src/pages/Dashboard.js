@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Component } from 'react'
 import Drawer from '../components/Drawer'
 import emailjs from "emailjs-com";
-import { Grid, CardActionArea, CardMedia, Typography, CardActions, Button, Card, CardHeader, CardContent, TextField } from '@mui/material';
+import { Grid, CardActionArea, CardMedia, Typography, CardActions, Button, Card, CardContent, TextField } from '@mui/material';
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import postService from '../services/post-service';
@@ -142,7 +142,7 @@ export default class Dashboard extends Component {
           <Drawer></Drawer>
           <div class="container">
             <div class="pantry-result">
-              <div id="pantry">
+              <div id="pantry" style={{ paddingLeft: "56px" }}>
                 <Card sx={{ maxWidth: 345 }}>
                   <CardActionArea>
                     <CardMedia
@@ -174,7 +174,7 @@ export default class Dashboard extends Component {
                       component="img"
                       height="200"
                       image="https://i.imgur.com/LeAXVOG.png"
-                      alt="pantry imagea"
+                      alt="pantry image"
                     />
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="div">
@@ -227,7 +227,7 @@ export default class Dashboard extends Component {
               {("Create")}
             </button>
           </div>
-          
+
         </>
       );
     } else {

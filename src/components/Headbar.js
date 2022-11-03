@@ -7,14 +7,14 @@ import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
 function Headbar() {
     return (
         <AppBar>
-            <Toolbar style={{backgroundColor: "#ffffff",}}>
+            <Toolbar style={{ backgroundColor: "#ffffff", }}>
                 <Grid
                     container
                     direction="row"
                     justifyContent="flex-start"
                 >
                     <a href="/">
-                    <input type="image" alt="pantry logo" src=" https://i.imgur.com/LXfHfIz.png"></input>
+                        <input type="image" alt="pantry logo" src=" https://i.imgur.com/LXfHfIz.png"></input>
                     </a>
                     <ButtonCustom link="/" name={"Modern Pantry"} />
                 </Grid>

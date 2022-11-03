@@ -160,7 +160,7 @@ export default function MiniDrawer() {
                                     <Link style={{ color: "white", }} href='/notifications'>
                                         {index === 2 && <NotificationsIcon />}
                                     </Link>
-                                    <Link style={{ color: "white", }}>
+                                    <Link style={{ color: "white", }} href='/create'>
                                         {index === 3 && <AddCircleOutlineIcon />}
                                     </Link>
 

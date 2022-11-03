@@ -11,18 +11,18 @@ import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 
 function Sidebar() {
-	
-	return (
-		<>
-			<div className="sidebar">
+
+  return (
+    <>
+      <div className="sidebar">
         <div className="sidebar__box">
-        <div className="pt-3">
-        <a href="/">
-          <input type="image" src=" https://i.imgur.com/LXfHfIz.png"></input>
-          </a>
+          <div className="pt-3">
+            <a href="/">
+              <input type="image" src=" https://i.imgur.com/LXfHfIz.png"></input>
+            </a>
           </div>
           <div className="pt-1">
-          <WButtonCustom link="/" name={"Modern Pantry"} />
+            <WButtonCustom link="/" name={"Modern Pantry"} />
           </div>
         </div>
 
@@ -47,7 +47,7 @@ function Sidebar() {
         </div>
 
       </div>
-		</>
-	);
+    </>
+  );
 }
 export default Sidebar;

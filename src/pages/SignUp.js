@@ -177,7 +177,7 @@ export default class SignUp extends Component {
     return (
       <><><Headbar></Headbar>
       </>
-      <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
         <div className="container flex mx-auto items-center h-screen">
           <div className="flex w-full">
           </div>

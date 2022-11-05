@@ -12,8 +12,8 @@ using ModernPantryBackend.Data;
 namespace ModernPantryBackend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221105124024_DB-proper")]
-    partial class DBproper
+    [Migration("20221105135832_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -186,6 +186,15 @@ namespace ModernPantryBackend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "test@test.com",
+                            Password = "123",
+                            Username = "TestUser"
+                        });
                 });
 
             modelBuilder.Entity("PantryUser", b =>

@@ -1,0 +1,18 @@
+﻿using ModernPantryBackend.Models.DTOs;
+
+namespace ModernPantryBackend.Mappings
+{
+    public class PantryMapperProfile : Profile
+    {
+        public PantryMapperProfile()
+        {
+            CreateMap<CreatePantryDTO, Pantry>()
+                .ForMember(p => p.Users, c => c.Ignore())
+                .ForMember(p => p.Id, c => c.Ignore())
+                .AfterMap((src, dest) =>
+                {
+                    dest.Name = src.Name;
+                });
+        }
+    }
+}

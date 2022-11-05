@@ -11,7 +11,6 @@
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
 
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var configuration = new ConfigurationBuilder()
@@ -24,6 +23,11 @@
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>().HasData(
+                new User { Id = 1, Email = "test@test.com", Password = "123", Username = "TestUser" }
+            );
+
+
             modelBuilder.Entity<TestModel>()
                 .HasOne(t => t.SecondTestModel)
                 .WithMany().OnDelete(DeleteBehavior.SetNull);

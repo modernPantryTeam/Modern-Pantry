@@ -4,7 +4,7 @@
 
 namespace ModernPantryBackend.Migrations
 {
-    public partial class DBproper : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -160,6 +160,11 @@ namespace ModernPantryBackend.Migrations
                 table: "SecondTestModels",
                 columns: new[] { "Id", "Name" },
                 values: new object[] { 2, "N2" });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Email", "Password", "Username" },
+                values: new object[] { 1, "test@test.com", "123", "TestUser" });
 
             migrationBuilder.InsertData(
                 table: "TestModels",

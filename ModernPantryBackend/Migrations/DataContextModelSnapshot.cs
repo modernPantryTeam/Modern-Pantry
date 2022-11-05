@@ -184,6 +184,15 @@ namespace ModernPantryBackend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "test@test.com",
+                            Password = "123",
+                            Username = "TestUser"
+                        });
                 });
 
             modelBuilder.Entity("PantryUser", b =>

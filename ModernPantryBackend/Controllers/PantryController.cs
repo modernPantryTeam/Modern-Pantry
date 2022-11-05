@@ -10,31 +10,43 @@
             _pantryService = pantryService;
         }
 
-        [HttpGet]
+        [HttpGet("GetUserPantries")]
         public async Task<ServiceResponse> GetCurrentUserPantries()
         {
             return await _pantryService.GetCurrentUserPantries();
         }
 
-        [HttpGet("{id}")]
+        [HttpPost("AddUserToPantry/{pantryId}/{userId}")]
+        public async Task<ServiceResponse> AddUserToPantry(int pantryId, int userId)
+        {
+            return await _pantryService.AddUserToPantry(userId, pantryId);
+        }
+
+        [HttpDelete("RemoveUserFromPantry/{pantryId}/{userId}")]
+        public async Task<ServiceResponse> RemoveUserFromPantry(int pantryId, int userId)
+        {
+            return await _pantryService.RemoveUserFromPantry(userId, pantryId);
+        }
+
+        [HttpGet("GetPantryById/{id}")]
         public async Task<ServiceResponse> GetById(int id)
         {
             return await _pantryService.GetById(id);
         }
 
-        [HttpPost]
+        [HttpPost("CreatePantry")]
         public async Task<ServiceResponse> Create(CreatePantryDTO model)
         {
             return await _pantryService.Create(model);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("EditPantry")]
         public async Task<ServiceResponse> Edit(EditPantryDTO model)
         {
             return await _pantryService.Edit(model);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("DeletePantry/{id}")]
         public async Task<ServiceResponse> Delete(int id)
         {
             return await _pantryService.Delete(id);

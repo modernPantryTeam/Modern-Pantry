@@ -7,6 +7,6 @@
         public string Email { get; set; }
         public string Password { get; set; }
 
-        public virtual IEnumerable<Pantry> Pantries { get; set; }
+        public virtual IEnumerable<PantryUser> PantryUser { get; set; }
     }
 }

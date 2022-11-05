@@ -104,48 +104,48 @@ namespace ModernPantryBackend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PantryUser",
+                name: "PantriesUsers",
                 columns: table => new
                 {
-                    PantriesId = table.Column<int>(type: "int", nullable: false),
-                    UsersId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    PantryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PantryUser", x => new { x.PantriesId, x.UsersId });
+                    table.PrimaryKey("PK_PantriesUsers", x => new { x.UserId, x.PantryId });
                     table.ForeignKey(
-                        name: "FK_PantryUser_Pantries_PantriesId",
-                        column: x => x.PantriesId,
+                        name: "FK_PantriesUsers_Pantries_PantryId",
+                        column: x => x.PantryId,
                         principalTable: "Pantries",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PantryUser_Users_UsersId",
-                        column: x => x.UsersId,
+                        name: "FK_PantriesUsers_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "CategoryProduct",
+                name: "CategoriesProducts",
                 columns: table => new
                 {
-                    CategoriesId = table.Column<int>(type: "int", nullable: false),
-                    ProductsId = table.Column<int>(type: "int", nullable: false)
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CategoryProduct", x => new { x.CategoriesId, x.ProductsId });
+                    table.PrimaryKey("PK_CategoriesProducts", x => new { x.CategoryId, x.ProductId });
                     table.ForeignKey(
-                        name: "FK_CategoryProduct_Categories_CategoriesId",
-                        column: x => x.CategoriesId,
+                        name: "FK_CategoriesProducts_Categories_CategoryId",
+                        column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CategoryProduct_Products_ProductsId",
-                        column: x => x.ProductsId,
+                        name: "FK_CategoriesProducts_Products_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -177,14 +177,14 @@ namespace ModernPantryBackend.Migrations
                 values: new object[] { 2, "T2", 2 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CategoryProduct_ProductsId",
-                table: "CategoryProduct",
-                column: "ProductsId");
+                name: "IX_CategoriesProducts_ProductId",
+                table: "CategoriesProducts",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PantryUser_UsersId",
-                table: "PantryUser",
-                column: "UsersId");
+                name: "IX_PantriesUsers_PantryId",
+                table: "PantriesUsers",
+                column: "PantryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_PantryId",
@@ -200,10 +200,10 @@ namespace ModernPantryBackend.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "CategoryProduct");
+                name: "CategoriesProducts");
 
             migrationBuilder.DropTable(
-                name: "PantryUser");
+                name: "PantriesUsers");
 
             migrationBuilder.DropTable(
                 name: "TestModels");

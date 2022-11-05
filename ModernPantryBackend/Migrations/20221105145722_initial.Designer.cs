@@ -12,7 +12,7 @@ using ModernPantryBackend.Data;
 namespace ModernPantryBackend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221105135832_initial")]
+    [Migration("20221105145722_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,21 +23,6 @@ namespace ModernPantryBackend.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("CategoryProduct", b =>
-                {
-                    b.Property<int>("CategoriesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CategoriesId", "ProductsId");
-
-                    b.HasIndex("ProductsId");
-
-                    b.ToTable("CategoryProduct");
-                });
 
             modelBuilder.Entity("ModernPantryBackend.Models.Category", b =>
                 {
@@ -56,6 +41,21 @@ namespace ModernPantryBackend.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("ModernPantryBackend.Models.CategoryProduct", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CategoryId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CategoriesProducts");
+                });
+
             modelBuilder.Entity("ModernPantryBackend.Models.Pantry", b =>
                 {
                     b.Property<int>("Id")
@@ -71,6 +71,21 @@ namespace ModernPantryBackend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Pantries");
+                });
+
+            modelBuilder.Entity("ModernPantryBackend.Models.PantryUser", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PantryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "PantryId");
+
+                    b.HasIndex("PantryId");
+
+                    b.ToTable("PantriesUsers");
                 });
 
             modelBuilder.Entity("ModernPantryBackend.Models.Product", b =>
@@ -197,34 +212,42 @@ namespace ModernPantryBackend.Migrations
                         });
                 });
 
-            modelBuilder.Entity("PantryUser", b =>
+            modelBuilder.Entity("ModernPantryBackend.Models.CategoryProduct", b =>
                 {
-                    b.Property<int>("PantriesId")
-                        .HasColumnType("int");
+                    b.HasOne("ModernPantryBackend.Models.Category", "Category")
+                        .WithMany("CategoryProduct")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<int>("UsersId")
-                        .HasColumnType("int");
+                    b.HasOne("ModernPantryBackend.Models.Product", "Product")
+                        .WithMany("CategoryProduct")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasKey("PantriesId", "UsersId");
+                    b.Navigation("Category");
 
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("PantryUser");
+                    b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("CategoryProduct", b =>
+            modelBuilder.Entity("ModernPantryBackend.Models.PantryUser", b =>
                 {
-                    b.HasOne("ModernPantryBackend.Models.Category", null)
-                        .WithMany()
-                        .HasForeignKey("CategoriesId")
+                    b.HasOne("ModernPantryBackend.Models.Pantry", "Pantry")
+                        .WithMany("PantryUser")
+                        .HasForeignKey("PantryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ModernPantryBackend.Models.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
+                    b.HasOne("ModernPantryBackend.Models.User", "User")
+                        .WithMany("PantryUser")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Pantry");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ModernPantryBackend.Models.Product", b =>
@@ -248,19 +271,24 @@ namespace ModernPantryBackend.Migrations
                     b.Navigation("SecondTestModel");
                 });
 
-            modelBuilder.Entity("PantryUser", b =>
+            modelBuilder.Entity("ModernPantryBackend.Models.Category", b =>
                 {
-                    b.HasOne("ModernPantryBackend.Models.Pantry", null)
-                        .WithMany()
-                        .HasForeignKey("PantriesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("CategoryProduct");
+                });
 
-                    b.HasOne("ModernPantryBackend.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            modelBuilder.Entity("ModernPantryBackend.Models.Pantry", b =>
+                {
+                    b.Navigation("PantryUser");
+                });
+
+            modelBuilder.Entity("ModernPantryBackend.Models.Product", b =>
+                {
+                    b.Navigation("CategoryProduct");
+                });
+
+            modelBuilder.Entity("ModernPantryBackend.Models.User", b =>
+                {
+                    b.Navigation("PantryUser");
                 });
 #pragma warning restore 612, 618
         }

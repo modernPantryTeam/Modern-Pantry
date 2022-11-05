@@ -8,6 +8,6 @@
         public int PantryId { get; set; }
 
         public virtual Pantry Pantry { get; set; }
-        public virtual IEnumerable<Category> Categories { get; set; }
+        public virtual IEnumerable<CategoryProduct> CategoryProduct { get; set; }
     }
 }

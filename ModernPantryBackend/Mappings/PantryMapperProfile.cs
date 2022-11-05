@@ -7,7 +7,7 @@ namespace ModernPantryBackend.Mappings
         public PantryMapperProfile()
         {
             CreateMap<CreatePantryDTO, Pantry>()
-                .ForMember(p => p.Users, c => c.Ignore())
+                .ForMember(p => p.PantryUser, c => c.Ignore())
                 .ForMember(p => p.Id, c => c.Ignore())
                 .AfterMap((src, dest) =>
                 {

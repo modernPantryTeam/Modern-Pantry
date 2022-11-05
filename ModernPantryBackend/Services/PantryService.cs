@@ -53,19 +53,21 @@
 
         public async Task<ServiceResponse> GetCurrentUserPantries()
         {
-            int userId = 1;     //to be changed when login/registration is added, for now hardcoded to return pantries of TestUser
+            int userId = 1;     //to be changed when login/registration is added, for now hardcoded to return pantries of TestUser1
             var userPantries = await _pantryRepository.GetCurrentUserPantries(userId);
             return ServiceResponse<IEnumerable<Pantry>>.Success(userPantries, "User pantries retrieved.");
         }
 
-        public Task<ServiceResponse> RemoveUserFromPantry(int userId)
+        public async Task<ServiceResponse> RemoveUserFromPantry(int userId, int pantryId)
         {
-            throw new NotImplementedException();
+            await _pantryRepository.RemoveUserFromPantry(userId, pantryId);
+            return ServiceResponse.Success("User removed from pantry.");
         }
 
-        public Task<ServiceResponse> AddUserToPantry(int userId)
+        public async Task<ServiceResponse> AddUserToPantry(int userId, int pantryId)
         {
-            throw new NotImplementedException();
+            await _pantryRepository.AddUserToPantry(userId, pantryId);
+            return ServiceResponse.Success("User added to pantry.");
         }
     }
 }

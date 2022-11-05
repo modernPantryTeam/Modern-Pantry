@@ -12,7 +12,7 @@ using ModernPantryBackend.Data;
 namespace ModernPantryBackend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20221029134749_DB-proper")]
+    [Migration("20221105124024_DB-proper")]
     partial class DBproper
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -88,7 +88,12 @@ namespace ModernPantryBackend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PantryId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PantryId");
 
                     b.ToTable("Products");
                 });
@@ -211,6 +216,17 @@ namespace ModernPantryBackend.Migrations
                         .HasForeignKey("ProductsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ModernPantryBackend.Models.Product", b =>
+                {
+                    b.HasOne("ModernPantryBackend.Models.Pantry", "Pantry")
+                        .WithMany()
+                        .HasForeignKey("PantryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pantry");
                 });
 
             modelBuilder.Entity("ModernPantryBackend.Models.TestModel", b =>

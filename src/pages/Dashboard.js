@@ -7,9 +7,6 @@ import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternate
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import postService from '../services/post-service';
 
-document.body.style.backgroundImage = "url(https://makviphomeservices.com/wp-content/uploads/2022/03/pantryOrganization.png)";
-document.body.style.backgroundSize = "cover";
-
 export default class Dashboard extends Component {
 
   constructor(props) {
@@ -162,8 +159,17 @@ export default class Dashboard extends Component {
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
+                  <Grid
+                    container
+                    direction="row"
+                    justifyContent="flex-start"
+                >
                     <Button size="small" color="inherit">
                       Enter
+                    </Button>
+                    </Grid>
+                    <Button style={{ justifyContent: 'flex-end' }} size="small" color="inherit">
+                      Share
                     </Button>
                   </CardActions>
                 </Card>
@@ -187,8 +193,17 @@ export default class Dashboard extends Component {
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
+                  <Grid
+                    container
+                    direction="row"
+                    justifyContent="flex-start"
+                >
                     <Button size="small" color="inherit">
                       Enter
+                    </Button>
+                    </Grid>
+                    <Button style={{ justifyContent: 'flex-end' }} size="small" color="inherit">
+                      Share
                     </Button>
                   </CardActions>
                 </Card>
@@ -212,8 +227,17 @@ export default class Dashboard extends Component {
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
+                  <Grid
+                    container
+                    direction="row"
+                    justifyContent="flex-start"
+                >
                     <Button size="small" color="inherit">
                       Enter
+                    </Button>
+                    </Grid>
+                    <Button style={{ justifyContent: 'flex-end' }} size="small" color="inherit">
+                      Share
                     </Button>
                   </CardActions>
                 </Card>
@@ -245,7 +269,7 @@ export default class Dashboard extends Component {
             <Grid item xs={3}>
               <Card style={{ width: '40rem', marginTop: '20px' }} elevation={5}>
                 <p className="pt-4 pl-2 text-medium">
-                  Edit your pantry
+                  Create your pantry
                 </p>
                 <CardContent>
                   {this.state.message && (

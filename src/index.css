@@ -1,11 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
 body {
+  
   width: 100%;
-  background: #ffffff;
+  background: url(https://makviphomeservices.com/wp-content/uploads/2022/03/pantryOrganization.png) repeat;
+  background-size: cover;
   position: relative;
   font-family: 'Quicksand';
   padding: 0;
+  overflow: hidden;
   margin: 0;
 }
 

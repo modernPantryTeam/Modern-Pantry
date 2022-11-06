@@ -9,9 +9,6 @@ import Add from './pages/Create'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
-document.body.style.backgroundImage = "url(https://makviphomeservices.com/wp-content/uploads/2022/03/pantryOrganization.png)";
-document.body.style.backgroundSize = "cover";
-
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',

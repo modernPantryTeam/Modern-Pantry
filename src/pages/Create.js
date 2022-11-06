@@ -103,7 +103,7 @@ export default class Add extends Component {
                     });
                 },
                 error => {
-                    logger.log("Add.js")
+                    logger.log("Create.js")
                     logger.error(error)
                     const resMessage = (
                         error.response &&
@@ -132,12 +132,12 @@ export default class Add extends Component {
                         direction="column"
                         alignItems="center"
                         justify="center"
-                        style={{ minHeight: '100vh' }}
+                        style={{ minHeight: '80vh' }}
                     >
                         <Grid item xs={3}>
                             <Card style={{ width: '650px', marginTop: '20px' }} elevation={5}>
                                 <p className="pt-4 pl-2 text-medium">
-                                    Edit your pantry
+                                    Create your pantry
                                 </p>
                                 <CardContent>
                                     {this.state.message && (
@@ -240,7 +240,7 @@ export default class Add extends Component {
                         <Grid item xs={3}>
                             <Card style={{ width: '614px', marginTop: '20px' }} elevation={5}>
                                 <CardHeader
-                                    title={lang.t('add.newTitle')}
+                                    title='New title'
                                 />
                                 <CardContent>
                                     <ButtonCustom link="/Profile" name={lang.t('profile')} icon={<AccountBoxOutlinedIcon />} />

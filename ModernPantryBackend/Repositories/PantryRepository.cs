@@ -15,6 +15,7 @@
         public async Task AddUserToPantry(int userId, int pantryId)
         {
             await _context.PantriesUsers.AddAsync(new PantryUser { PantryId = pantryId, UserId = userId });
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Pantry>> GetCurrentUserPantries(int userId)
@@ -26,6 +27,7 @@
         {
             var pantryUser = await _context.PantriesUsers.FirstOrDefaultAsync(pu => pu.UserId == userId && pu.PantryId == pantryId);
             if (pantryUser != null) _context.PantriesUsers.Remove(pantryUser);
+            await _context.SaveChangesAsync();
         }
     }
 }

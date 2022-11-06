@@ -111,71 +111,6 @@ namespace ModernPantryBackend.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("ModernPantryBackend.Models.SecondTestModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SecondTestModels");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "N1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "N2"
-                        });
-                });
-
-            modelBuilder.Entity("ModernPantryBackend.Models.TestModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("SecondTestModelId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SecondTestModelId");
-
-                    b.ToTable("TestModels");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "T1",
-                            SecondTestModelId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "T2",
-                            SecondTestModelId = 2
-                        });
-                });
-
             modelBuilder.Entity("ModernPantryBackend.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -206,7 +141,21 @@ namespace ModernPantryBackend.Migrations
                             Id = 1,
                             Email = "test@test.com",
                             Password = "123",
-                            Username = "TestUser"
+                            Username = "TestUser1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "test@test.com",
+                            Password = "123",
+                            Username = "TestUser2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "test@test.com",
+                            Password = "123",
+                            Username = "TestUser3"
                         });
                 });
 
@@ -257,16 +206,6 @@ namespace ModernPantryBackend.Migrations
                         .IsRequired();
 
                     b.Navigation("Pantry");
-                });
-
-            modelBuilder.Entity("ModernPantryBackend.Models.TestModel", b =>
-                {
-                    b.HasOne("ModernPantryBackend.Models.SecondTestModel", "SecondTestModel")
-                        .WithMany()
-                        .HasForeignKey("SecondTestModelId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("SecondTestModel");
                 });
 
             modelBuilder.Entity("ModernPantryBackend.Models.Category", b =>

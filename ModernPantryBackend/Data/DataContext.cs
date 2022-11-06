@@ -4,8 +4,6 @@
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
-        public DbSet<TestModel> TestModels { get; set; }
-        public DbSet<SecondTestModel> SecondTestModels { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Pantry> Pantries { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -55,19 +53,6 @@
                 .HasOne(t => t.Product)
                 .WithMany(t => t.CategoryProduct)
                 .HasForeignKey(t => t.ProductId);
-
-            modelBuilder.Entity<TestModel>()
-                .HasOne(t => t.SecondTestModel)
-                .WithMany().OnDelete(DeleteBehavior.SetNull);
-
-            modelBuilder.Entity<TestModel>().HasData(
-                new TestModel { Id = 1, Name = "T1", SecondTestModelId = 1 },
-                new TestModel { Id = 2, Name = "T2", SecondTestModelId = 2 }
-            );
-            modelBuilder.Entity<SecondTestModel>().HasData(
-                new SecondTestModel { Id = 1, Name = "N1" },
-                new SecondTestModel { Id = 2, Name = "N2" }
-            );
         }
     }
 }

@@ -6,6 +6,7 @@ import SignUp from './pages/SignUp'
 import NotFound from './pages/not-found'
 import Dashboard from './pages/Dashboard'
 import Add from './pages/Create'
+import Profile from './pages/Profile'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
@@ -24,32 +25,37 @@ const darkTheme = createTheme({
 
 export default class App extends Component {
 
+  
   render() {
+    
     return (
       <Suspense fallback="Loading..." >
         <>
           <ThemeProvider theme={darkTheme}>
             <CssBaseline />
-            <Router>
-              <Switch>
-                <Route exact path="/">
-                  <Home />
-                </Route>
-                <Route path="/login">
-                  <Login />
-                </Route>
-                <Route path="/sign-up">
-                  <SignUp />
-                </Route>
-                <Route path="/dashboard">
-                  <Dashboard />
-                </Route>
-                <Route path="/create">
-                  <Add />
-                </Route>
-                <Route component={NotFound} />
-              </Switch>
-            </Router>
+                <Router>
+                  <Switch>
+                    <Route exact path="/">
+                      <Home />
+                    </Route>
+                    <Route path="/login">
+                      <Login />
+                    </Route>
+                    <Route path="/sign-up">
+                      <SignUp />
+                    </Route>
+                    <Route path="/dashboard">
+                      <Dashboard />
+                    </Route>
+                    <Route path="/create">
+                      <Add />
+                    </Route>
+                    <Route path="/profile">
+                      <Profile />
+                    </Route>
+                    <Route component={NotFound} />
+                  </Switch>
+                </Router>
           </ThemeProvider>
         </>
       </Suspense>

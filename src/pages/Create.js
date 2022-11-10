@@ -9,7 +9,7 @@ import postService from '../services/post-service';
 import logger from '../logger/logger';
 import lang from 'i18next'
 
-export default class Add extends Component {
+export default class Create extends Component {
     constructor(props) {
         super(props);
         this.handleCreatePost = this.handleCreatePost.bind(this);

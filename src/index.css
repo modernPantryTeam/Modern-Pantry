@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body {
   
@@ -651,6 +654,10 @@ video {
   width: 10rem;
 }
 
+.w-1\/5 {
+  width: 10%;
+}
+
 .w-2\/5 {
   width: 40%;
 }
@@ -1159,3 +1166,18 @@ body {
 .button-width {
   width: 50px;
 }
+
+.centerd {
+  margin: auto;
+  width: 60%;
+  }
+
+  .ds {
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 20px 0px;
+  }
+
+  .darkthemebg
+  {
+    --tw-bg-opacity: 1;
+    background-color: #1e1e1e;
+  }

@@ -5,7 +5,6 @@ import MenuItem from '@mui/material/MenuItem';
 const BasicMenu = ({ anchorEl, handleClose, open, menuItems }) => {
     return (
       <Menu
-        id="basic-menu"
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}

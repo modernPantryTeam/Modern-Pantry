@@ -164,11 +164,11 @@ export default class Dashboard extends Component {
                     direction="row"
                     justifyContent="flex-start"
                 >
-                    <Button size="small" color="inherit">
+                    <Button size="small" color="inherit" href="#">
                       Enter
                     </Button>
                     </Grid>
-                    <Button style={{ justifyContent: 'flex-end' }} size="small" color="inherit">
+                    <Button style={{ justifyContent: 'flex-end' }} size="small" color="inherit" href="#">
                       Share
                     </Button>
                   </CardActions>
@@ -198,11 +198,11 @@ export default class Dashboard extends Component {
                     direction="row"
                     justifyContent="flex-start"
                 >
-                    <Button size="small" color="inherit">
+                    <Button size="small" color="inherit" href="#">
                       Enter
                     </Button>
                     </Grid>
-                    <Button style={{ justifyContent: 'flex-end' }} size="small" color="inherit">
+                    <Button style={{ justifyContent: 'flex-end' }} size="small" color="inherit" href="#">
                       Share
                     </Button>
                   </CardActions>
@@ -232,11 +232,11 @@ export default class Dashboard extends Component {
                     direction="row"
                     justifyContent="flex-start"
                 >
-                    <Button size="small" color="inherit">
+                    <Button size="small" color="inherit" href="#">
                       Enter
                     </Button>
                     </Grid>
-                    <Button style={{ justifyContent: 'flex-end' }} size="small" color="inherit">
+                    <Button style={{ justifyContent: 'flex-end' }} size="small" color="inherit" href="#">
                       Share
                     </Button>
                   </CardActions>

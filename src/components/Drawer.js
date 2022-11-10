@@ -25,6 +25,7 @@ import { Grid } from '@mui/material'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import NotificationBell from './NotificationBell';
+import NotificationBellSidebar from './NotificationBellSidebar';
 
 const drawerWidth = 240;
 
@@ -133,8 +134,7 @@ export default function MiniDrawer() {
                         direction="row"
                         justifyContent="flex-end"
                     >
-                        <NotificationBell
-                        />
+                        <NotificationBell/>
                         <WButtonCustom link="/profile" name={"Profile"} icon={<AccountCircleIcon />} />
                     </Grid>
                 </Toolbar>
@@ -171,7 +171,7 @@ export default function MiniDrawer() {
                                         {index === 1 && <LeaderboardIcon />}
                                     </Link>
                                     <Link style={{ color: "white", }} href='/notifications'>
-                                        {index === 2 && <NotificationsIcon />}
+                                        {index === 2 && <NotificationBellSidebar/>}
                                     </Link>
                                     <Link style={{ color: "white", }} href='/create'>
                                         {index === 3 && <AddCircleOutlineIcon />}

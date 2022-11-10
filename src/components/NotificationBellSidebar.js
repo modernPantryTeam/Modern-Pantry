@@ -12,27 +12,11 @@ const notifications = [
     },
     {
         id: 1,
-        label: 'You need to resupply on beer'
-    },
-    {
-        id: 2,
-        label: 'You need to resupply on beer'
-    },
-    {
-        id: 3,
-        label: 'You need to resupply on beer'
-    },
-    {
-        id: 4,
-        label: 'You need to resupply on beer'
-    },
-    {
-        id: 5,
-        label: 'You need to resupply on beer'
+        label: 'You need to resupply beer'
     },
 ];
 
-const NotificationBell = ({ iconColor }) => {
+const NotificationBellSidebar = ({ iconColor }) => {
     const [open, setOpen] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -51,21 +35,12 @@ const NotificationBell = ({ iconColor }) => {
     return (
         <div>
             <Tooltip title={notifications.length ? newNotifications : noNotifications}>
-                <Button 
-                    style={{ color: 'white'}}
-                    color={iconColor}
-                    onClick={notifications.length ? handleOpen : null}
-                    anchorEl={anchorEl}
-                >
                     <Badge 
-                        style={{marginRight: '5px'}}
                         badgeContent={notifications.length}
                         color="error"
                     >
                         <NotificationsIcon/>
                     </Badge>
-                    Notifications
-                </Button>
             </Tooltip>
             <BasicMenu
                 open={open}
@@ -77,4 +52,4 @@ const NotificationBell = ({ iconColor }) => {
     )
 }
 
-export default NotificationBell
+export default NotificationBellSidebar

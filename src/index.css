@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
-@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -1178,6 +1177,6 @@ body {
 
   .darkthemebg
   {
-    --tw-bg-opacity: 1;
+    opacity: 1;
     background-color: #1e1e1e;
   }

@@ -2,13 +2,10 @@ import * as React from 'react'
 import { Component } from 'react'
 import Drawer from '../components/Drawer'
 import emailjs from "emailjs-com";
-import { Grid, CardActionArea, CardMedia, Typography, CardActions, Button, Card, CardHeader, CardContent, TextField } from '@mui/material';
+import { Grid, CardActionArea, CardMedia, Typography, CardActions, Button, Card, CardContent, TextField } from '@mui/material';
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import postService from '../services/post-service';
-
-document.body.style.backgroundImage = "url(https://makviphomeservices.com/wp-content/uploads/2022/03/pantryOrganization.png)";
-document.body.style.backgroundSize = "cover";
 
 export default class Dashboard extends Component {
 
@@ -142,7 +139,7 @@ export default class Dashboard extends Component {
           <Drawer></Drawer>
           <div class="container">
             <div class="pantry-result">
-              <div id="pantry">
+              <div id="pantry" style={{ paddingLeft: "56px" }}>
                 <Card sx={{ maxWidth: 345 }}>
                   <CardActionArea>
                     <CardMedia
@@ -162,8 +159,17 @@ export default class Dashboard extends Component {
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
-                    <Button size="small" color="inherit">
+                  <Grid
+                    container
+                    direction="row"
+                    justifyContent="flex-start"
+                >
+                    <Button size="small" color="inherit" href="#">
                       Enter
+                    </Button>
+                    </Grid>
+                    <Button style={{ justifyContent: 'flex-end' }} size="small" color="inherit" href="#">
+                      Share
                     </Button>
                   </CardActions>
                 </Card>
@@ -174,7 +180,7 @@ export default class Dashboard extends Component {
                       component="img"
                       height="200"
                       image="https://i.imgur.com/LeAXVOG.png"
-                      alt="pantry imagea"
+                      alt="pantry image"
                     />
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="div">
@@ -187,8 +193,17 @@ export default class Dashboard extends Component {
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
-                    <Button size="small" color="inherit">
+                  <Grid
+                    container
+                    direction="row"
+                    justifyContent="flex-start"
+                >
+                    <Button size="small" color="inherit" href="#">
                       Enter
+                    </Button>
+                    </Grid>
+                    <Button style={{ justifyContent: 'flex-end' }} size="small" color="inherit" href="#">
+                      Share
                     </Button>
                   </CardActions>
                 </Card>
@@ -212,8 +227,17 @@ export default class Dashboard extends Component {
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
-                    <Button size="small" color="inherit">
+                  <Grid
+                    container
+                    direction="row"
+                    justifyContent="flex-start"
+                >
+                    <Button size="small" color="inherit" href="#">
                       Enter
+                    </Button>
+                    </Grid>
+                    <Button style={{ justifyContent: 'flex-end' }} size="small" color="inherit" href="#">
+                      Share
                     </Button>
                   </CardActions>
                 </Card>
@@ -227,7 +251,7 @@ export default class Dashboard extends Component {
               {("Create")}
             </button>
           </div>
-          
+
         </>
       );
     } else {
@@ -245,7 +269,7 @@ export default class Dashboard extends Component {
             <Grid item xs={3}>
               <Card style={{ width: '40rem', marginTop: '20px' }} elevation={5}>
                 <p className="pt-4 pl-2 text-medium">
-                  Edit your pantry
+                  Create your pantry
                 </p>
                 <CardContent>
                   {this.state.message && (

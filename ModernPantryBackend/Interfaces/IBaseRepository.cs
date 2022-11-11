@@ -1,4 +1,4 @@
-﻿namespace ModernPantryBackend.Repositories.BaseRepository
+﻿namespace ModernPantryBackend.Interfaces
 {
     public interface IBaseRepository<T>
     {

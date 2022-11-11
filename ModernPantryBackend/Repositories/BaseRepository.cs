@@ -1,4 +1,4 @@
-﻿namespace ModernPantryBackend.Repositories.BaseRepository
+﻿namespace ModernPantryBackend.Repositories
 {
     public class BaseRepository<T> : IBaseRepository<T> where T : class
     {

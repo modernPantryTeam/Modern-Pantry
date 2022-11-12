@@ -56,7 +56,12 @@
             var pantryUsers = await _pantryUserRepository.FindByConditions(pu => pu.PantryId == pantry.Id);
             foreach (PantryUser pantryUser in pantryUsers)
             {
-                pantryDto.Users.Add(_mapper.Map<GetUserDTO>((await _userRepository.FindByConditions(u => u.Id == pantryUser.UserId)).FirstOrDefault()));
+                pantryDto.Users.Add(_mapper.Map<GetUserDTO>
+                    ((
+                        await _userRepository
+                        .FindByConditions(u => u.Id == pantryUser.UserId))
+                        .FirstOrDefault()
+                    ));
             }
             return ServiceResponse<GetPantryDTO>.Success(pantryDto, "Pantry retrieved.");
         }
@@ -72,7 +77,12 @@
                 var pantryUsers = await _pantryUserRepository.FindByConditions(pu => pu.PantryId == pantry.Id);
                 foreach (PantryUser pantryUser in pantryUsers)
                 {
-                    pantryDto.Users.Add(_mapper.Map<GetUserDTO>((await _userRepository.FindByConditions(u => u.Id == pantryUser.UserId)).FirstOrDefault()));
+                    pantryDto.Users.Add(_mapper.Map<GetUserDTO>
+                        ((
+                            await _userRepository
+                            .FindByConditions(u => u.Id == pantryUser.UserId))
+                            .FirstOrDefault()
+                        ));
                 }
                 userPantriesDto.Add(pantryDto);
             }

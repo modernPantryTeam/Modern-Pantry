@@ -143,24 +143,12 @@ export default class Login extends Component {
 						<div className='flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary'>
 							<p className='text-sm text-black'>Or continue with:</p>
 							<div className='social-row'>
-								<div className='icon fb-icon'>
+								<button className='icon fb-icon'>
 									<FacebookOutlinedIcon />
-								</div>
-								<button className='button fb-btn'>Facebook Login</button>
-							</div>
-
-							<div className='social-row'>
-								<div className='icon google-icon'>
+								</button>
+								<button className='icon google-icon'>
 									<GoogleIcon />
-								</div>
-								<button className='button google-btn'>Google Login</button>
-							</div>
-
-							<div className='social-row'>
-								<div className='icon github-icon'>
-									<GitHubIcon />
-								</div>
-								<button className='button github-btn'>GitHub Login</button>
+								</button>
 							</div>
 						</div>
 					</div>

@@ -6,7 +6,6 @@
       -ms-flex-pack: center;
           justify-content: center;
   width: 100%;
-  margin-bottom: 10px;
 }
 
 .icon {
@@ -19,47 +18,23 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  width: 20%;
-  padding: 5px 10px;
-}
-
-.button {
-  width: 80%;
-  padding: 5px 10px;
-  font-size: 25px;
-  -webkit-transition: background-color 0.5s;
-  transition: background-color 0.5s;
+  width: 30%;
+  padding: 10px 20px;
+  margin: 0 15px;
+  -webkit-transition: background-color 0.3s;
+  transition: background-color 0.3s;
 }
 
 .fb-icon {
   background-color: #4267b2;
 }
-
-.fb-btn {
-  background-color: #4267b2;
-}
-.fb-btn:hover {
+.fb-icon:hover {
   background-color: #284680;
 }
 
 .google-icon {
   background-color: #db4a39;
 }
-
-.google-btn {
-  background-color: #db4a39;
-}
-.google-btn:hover {
+.google-icon:hover {
   background-color: #a92517;
-}
-
-.github-icon {
-  background-color: #171515;
-}
-
-.github-btn {
-  background-color: #171515;
-}
-.github-btn:hover {
-  background-color: #464242;
 }/*# sourceMappingURL=login.css.map */

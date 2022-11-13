@@ -1,10 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using ModernPantryBackend.Interfaces;
-using ModernPantryBackend.Models.DTOs;
-using ModernPantryBackend.Services;
-
-namespace ModernPantryBackend.Controllers
+﻿namespace ModernPantryBackend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -16,10 +10,10 @@ namespace ModernPantryBackend.Controllers
             _productService = productService;
         }
 
-        [HttpGet("GetPantryProducts")]
-        public async Task<ServiceResponse> GetPantryProducts()
+        [HttpGet("GetPantryProducts/{pantryId}")]
+        public async Task<ServiceResponse> GetPantryProducts(int pantryId)
         {
-            return await _productService.GetPantryProducts();
+            return await _productService.GetPantryProducts(pantryId);
         }
 
         [HttpGet("GetProductById/{id}")]

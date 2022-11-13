@@ -22,7 +22,7 @@ namespace ModernPantryBackend.Services
         public async Task<ServiceResponse> Create(CreateProductDTO model)
         {
             var newProduct = _mapper.Map<Product>(model);
-            await _productRepository.Create(newProduct);
+            await _productRepository.Create(newProduct, model.CategoryIds);
             return ServiceResponse.Success("Product added.");
         }
 
@@ -45,7 +45,7 @@ namespace ModernPantryBackend.Services
                 return ServiceResponse.Error("Product not found.");
             }
             product.Name = model.Name;
-            await _productRepository.Edit(product);
+            await _productRepository.Edit(product, model.CategoryIds);
             return ServiceResponse.Success("Product edited.");
         }
 
@@ -72,9 +72,21 @@ namespace ModernPantryBackend.Services
             return ServiceResponse<GetProductDTO>.Success(productDto, "Product retrieved.");
         }
 
-        public Task<ServiceResponse> GetPantryProducts()
+        public async Task<ServiceResponse> GetPantryProducts(int pantryId)
         {
-            throw new NotImplementedException();
+            var pantryProducts = await _productRepository.FindByConditions(p => p.PantryId == pantryId);
+            List<GetProductDTO> pantryProductsDtos = new();
+            foreach(Product product in pantryProducts)
+            {
+                GetProductDTO productDto = _mapper.Map<GetProductDTO>(product);
+                productDto.Categories = _mapper.Map<List<GetCategoryDTO>>(
+                    await _categoryRepository.FindByConditions(
+                        c => c.CategoryProduct.Any(cp => cp.ProductId == product.Id)
+                    ));
+                pantryProductsDtos.Add(productDto);
+            }
+
+            return ServiceResponse<List<GetProductDTO>>.Success(pantryProductsDtos, "Products retrieved.");
         }
     }
 }

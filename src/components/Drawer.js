@@ -21,6 +21,11 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import WButtonCustom from './WButtonCustom'
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import { Grid } from '@mui/material'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LogoutIcon from '@mui/icons-material/Logout';
+import NotificationBell from './NotificationBell'
+import NotificationBellSidebar from './NotificationBellSidebar';
 
 const drawerWidth = 240;
 
@@ -124,6 +129,14 @@ export default function MiniDrawer() {
                     <div className="pb-1 button-width">
                         <WButtonCustom link="/" name={"Modern Pantry"} />
                     </div>
+                    <Grid
+                        container
+                        direction="row"
+                        justifyContent="flex-end"
+                    >
+                        <NotificationBell/>
+                        <WButtonCustom link="/profile" name={"Profile"} icon={<AccountCircleIcon />} />
+                    </Grid>
                 </Toolbar>
             </AppBar>
             <Drawer variant="permanent" open={open}>
@@ -134,7 +147,7 @@ export default function MiniDrawer() {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {['My Pantries', 'Statistics', 'Notifications', 'Create'].map((text, index) => (
+                    {['My Pantries', 'Statistics', 'Notifications', 'Create', 'Profile', 'Logout'].map((text, index) => (
                         <ListItem key={text} disablePadding sx={{ display: 'block' }}>
                             <ListItemButton
                                 sx={{
@@ -158,10 +171,16 @@ export default function MiniDrawer() {
                                         {index === 1 && <LeaderboardIcon />}
                                     </Link>
                                     <Link style={{ color: "white", }} href='/notifications'>
-                                        {index === 2 && <NotificationsIcon />}
+                                        {index === 2 && <NotificationBellSidebar/>}
                                     </Link>
-                                    <Link style={{ color: "white", }}>
+                                    <Link style={{ color: "white", }} href='/create'>
                                         {index === 3 && <AddCircleOutlineIcon />}
+                                    </Link>
+                                    <Link style={{ color: "white", }} href='/profile'>
+                                        {index === 4 && <AccountCircleIcon />}
+                                    </Link>
+                                    <Link style={{ color: "white", }} href='/profile'>
+                                        {index === 5 && <LogoutIcon />}
                                     </Link>
 
                                 </ListItemIcon>
@@ -170,7 +189,7 @@ export default function MiniDrawer() {
                         </ListItem>
                     ))}
                 </List>
-                <Divider />
+                <Divider color="white" />
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
                 <DrawerHeader />

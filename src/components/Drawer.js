@@ -24,7 +24,7 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { Grid } from '@mui/material'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
-import NotificationBell from './NotificationBell';
+import NotificationBell from './NotificationBell'
 import NotificationBellSidebar from './NotificationBellSidebar';
 
 const drawerWidth = 240;

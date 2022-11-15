@@ -10,7 +10,6 @@ body {
   position: relative;
   font-family: 'Quicksand';
   padding: 0;
-  overflow: hidden;
   margin: 0;
 }
 
@@ -541,6 +540,10 @@ video {
 
 .pl-2 {
   padding-left: 1rem;
+}
+
+.pl-4 {
+  padding-left: 1000rem;
 }
 
 .pt-1 {

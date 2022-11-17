@@ -1,6 +1,4 @@
-﻿using ModernPantryBackend.Models.DTOs;
-
-namespace ModernPantryBackend.Mappings
+﻿namespace ModernPantryBackend.Mappings
 {
     public class PantryMapperProfile : Profile
     {

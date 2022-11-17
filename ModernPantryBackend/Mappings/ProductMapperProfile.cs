@@ -16,13 +16,7 @@
                     dest.Count = src.Count;
                 });
 
-
             CreateMap<Product, GetProductDTO>();
-                //.AfterMap((src, dest) =>
-                //{
-                //    dest.Name = src.Name;
-                //    dest.Id = src.Id;
-                //});
         }
     }
 }

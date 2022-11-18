@@ -10,7 +10,7 @@ function Home() {
     <>
       <Headbar></Headbar>
       <div className="justify-center flex items-center h-screen">
-        <div className="flex justify-center items-center flex-col w-fullrounded text-black blurred pr-5 h-12">
+        <div className="flex justify-center items-center flex-col w-fullrounded text-black blurred pr-5 h-12 fade-in-anim">
           <p className="text-main">
             Modern Pantry
           </p>
@@ -18,7 +18,7 @@ function Home() {
             Your virtual storeroom
           </p>
         </div>
-        <input type="image" src="https://i.imgur.com/YtiHDru.png"></input>
+        <input className='fade-in-anim' type="image" src="https://i.imgur.com/YtiHDru.png"></input>
       </div>
     </>
   );

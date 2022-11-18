@@ -97,7 +97,7 @@ export default class Login extends Component {
 				<Headbar></Headbar>
 				<div className='container flex mx-auto items-center h-screen'>
 					<div className='flex w-full'></div>
-					<div className='flex flex-col w-4\/5'>
+					<div className='flex flex-col w-4\/5 fade-in-anim'>
 						<div className='flex flex-col items-center bg-white p-4 border border-gray-primary mb-4 rounded'>
 							<h1 className='flex justify-center w-full'>
 								<img

@@ -1,0 +1,31 @@
+.social-row {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+
+.icon {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 30%;
+	padding: 10px 20px;
+	margin: 0 15px;
+	transition: background-color 0.3s;
+}
+
+.fb-icon {
+	background-color: #4267b2;
+
+	&:hover {
+		background-color: #284680;
+	}
+}
+
+.google-icon {
+	background-color: #db4a39;
+
+	&:hover {
+		background-color: #a92517;
+	}
+}

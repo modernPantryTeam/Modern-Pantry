@@ -4,6 +4,12 @@ import authService from '../services/auth-service';
 import { Component } from 'react';
 import userService from '../services/user-service';
 import logger from '../logger/logger'
+import "../sass/css/login.css";
+import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
+import GoogleIcon from "@mui/icons-material/Google";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import Transitions from '../components/Transition'
+
 
 const addDataIntoCache = (cacheName, url, response) => {
   const data = new Response(JSON.stringify(response));
@@ -92,61 +98,68 @@ export default class Login extends Component {
   render() {
     return (
       <><Headbar></Headbar>
-        <div className="container flex mx-auto items-center h-screen">
-          <div className="flex w-full">
-          </div>
-          <div className="flex flex-col w-4\/5">
-            <div className="flex flex-col items-center bg-white p-4 border border-gray-primary mb-4 rounded">
-              <h1 className="flex justify-center w-full">
-                <img src="https://i.imgur.com/YtiHDru.png" alt="Pantry" className="mt-2 mb-2" />
-              </h1>
+        <Transitions>
+          <div className="container flex mx-auto items-center h-screen">
+            <div className="flex w-full">
+            </div>
+            <div className="flex flex-col w-4\/5">
+              <div className="flex flex-col items-center bg-white p-4 border border-gray-primary mb-4 rounded">
+                <h1 className="flex justify-center w-full">
+                  <img src="https://i.imgur.com/YtiHDru.png" alt="Pantry" className="mt-2 mb-2" />
+                </h1>
 
-              {this.state.message && (
-                <p className="mb-4 text-xs text-red-primary">
-                  {this.state.message}
+                {this.state.message && (
+                  <p className="mb-4 text-xs text-red-primary">
+                    {this.state.message}
+                  </p>
+                )}
+                <form onSubmit={this.handleLogin}>
+
+                  <input
+                    aria-label="Enter your Username"
+                    placeholder='Username'
+                    type="text"
+                    className="text-sm text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
+                    onChange={this.onChangeUsername}
+                    value={this.state.username} />
+
+
+                  <input
+                    aria-label="Enter your password"
+                    placeholder='Password'
+                    type="password"
+                    className="text-sm text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
+                    onChange={this.onChangePassword}
+                    value={this.state.password} />
+
+
+                  <button
+                    type="submit"
+                    disabled={this.state.loading}
+                    className={`bg-black-medium text-white w-full rounded h-8 font-bold`}
+                  >
+                    Login
+                    {this.state.loading && ("...")}
+                  </button>
+
+                </form>
+              </div>
+              <div className="flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary">
+                <p className="text-sm text-black">
+                  Or continue with:
                 </p>
-              )}
-              <form onSubmit={this.handleLogin}>
-
-                <input
-                  aria-label="Enter your Username"
-                  placeholder='Username'
-                  type="text"
-                  className="text-sm text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
-                  onChange={this.onChangeUsername}
-                  value={this.state.username} />
-
-
-                <input
-                  aria-label="Enter your password"
-                  placeholder='Password'
-                  type="password"
-                  className="text-sm text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
-                  onChange={this.onChangePassword}
-                  value={this.state.password} />
-
-
-                <button
-                  type="submit"
-                  disabled={this.state.loading}
-                  className={`bg-black-medium text-white w-full rounded h-8 font-bold`}
-                >
-                  Login
-                  {this.state.loading && ("...")}
-                </button>
-
-              </form>
-            </div>
-            <div className="flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary">
-              <p className="text-sm text-black">
-                Or continue with:
-              </p>
-              <p className="text-sm text-black">Sign in with Google</p>
-              <p className="text-sm text-black">Sign in with Facebook</p>
-              <p className="text-sm text-black">Sign in with Github</p>
+                <div className='social-row'>
+                  <button className='icon fb-icon'>
+                    <FacebookOutlinedIcon />
+                  </button>
+                  <button className='icon google-icon'>
+                    <GoogleIcon />
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </Transitions>
       </>
     );
   }

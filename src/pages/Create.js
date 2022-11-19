@@ -8,6 +8,7 @@ import Drawer from '../components/Drawer'
 import postService from '../services/post-service';
 import logger from '../logger/logger';
 import lang from 'i18next'
+import Transitions from '../components/Transition'
 
 export default class Create extends Component {
     constructor(props) {
@@ -126,128 +127,132 @@ export default class Create extends Component {
             return (
                 <>
                     <Drawer></Drawer>
-                    <Grid
-                        container
-                        spacing={0}
-                        direction="column"
-                        alignItems="center"
-                        justify="center"
-                        style={{ minHeight: '80vh' }}
-                    >
-                        <Grid item xs={3}>
-                            <Card style={{ width: '650px', marginTop: '20px' }} elevation={5}>
-                                <p className="pt-4 pl-2 text-medium">
-                                    Create your pantry
-                                </p>
-                                <CardContent>
-                                    {this.state.message && (
-                                        <p className="mb-4 text-xs text-red-primary">
-                                            {this.state.message}
-                                        </p>
-                                    )}
-                                    <form noValidate autoComplete="off" onSubmit={this.handleCreatePost}>
-
-
-                                        {this.state.fileSubmitError && (
-                                            <Button
-                                                style={{
-                                                    color: this.state.fileError ? '#ffffff' : 'white',
-                                                    borderColor: this.state.fileError ? '#d32f2f' : 'white'
-                                                }}
-                                                variant="text"
-                                                startIcon={<AddPhotoAlternateOutlinedIcon />}
-                                                onClick={this.onClickSelectFile}
-                                            >
-                                                {('Upload image')}
-                                            </Button>
+                    <Transitions>
+                        <Grid
+                            container
+                            spacing={0}
+                            direction="column"
+                            alignItems="center"
+                            justify="center"
+                            style={{ minHeight: '80vh' }}
+                        >
+                            <Grid item xs={3}>
+                                <Card style={{ width: '650px', marginTop: '20px' }} elevation={5}>
+                                    <p className="pt-4 pl-2 text-medium">
+                                        Create your pantry
+                                    </p>
+                                    <CardContent>
+                                        {this.state.message && (
+                                            <p className="mb-4 text-xs text-red-primary">
+                                                {this.state.message}
+                                            </p>
                                         )}
+                                        <form noValidate autoComplete="off" onSubmit={this.handleCreatePost}>
 
-                                        {!this.state.fileSubmitError && (
+
+                                            {this.state.fileSubmitError && (
+                                                <Button
+                                                    style={{
+                                                        color: this.state.fileError ? '#ffffff' : 'white',
+                                                        borderColor: this.state.fileError ? '#d32f2f' : 'white'
+                                                    }}
+                                                    variant="text"
+                                                    startIcon={<AddPhotoAlternateOutlinedIcon />}
+                                                    onClick={this.onClickSelectFile}
+                                                >
+                                                    {('Upload image')}
+                                                </Button>
+                                            )}
+
+                                            {!this.state.fileSubmitError && (
+                                                <Button
+                                                    disabled
+                                                    style={{ color: 'white' }}
+                                                    variant="text"
+                                                    startIcon={<AddPhotoAlternateOutlinedIcon />}
+                                                    onClick={this.onClickSelectFile}
+                                                >
+                                                    {('Upload successful')}
+                                                </Button>
+                                            )}
+
+                                            <input
+                                                hidden
+                                                type="file"
+                                                style={{ display: 'none' }}
+                                                ref={this.fileInputRef}
+                                                accept="image/*"
+                                                onChange={this.onChangeSaveFile}
+                                            />
+
+                                            <TextField
+                                                onChange={this.onChangeTitle}
+                                                style={{ marginTop: '10px' }}
+                                                label={('Pantry Name')}
+                                                variant="outlined"
+                                                fullWidth
+                                                required
+                                                color="secondary"
+                                                error={this.state.titleError}
+                                            />
+
+                                            <TextField
+                                                onChange={this.onChangeDescription}
+                                                label={('Description')}
+                                                style={{ marginTop: '10px' }}
+                                                variant="outlined"
+                                                fullWidth
+                                                required
+                                                multiline
+                                                color="secondary"
+                                                rows={4}
+                                                error={this.state.descriptionError}
+                                            />
+
                                             <Button
-                                                disabled
-                                                style={{ color: 'white' }}
+                                                style={{ marginTop: '10px', color: 'white' }}
+                                                type="submit"
                                                 variant="text"
-                                                startIcon={<AddPhotoAlternateOutlinedIcon />}
-                                                onClick={this.onClickSelectFile}
-                                            >
-                                                {('Upload successful')}
+                                                color="secondary"
+                                                endIcon={<SendOutlinedIcon />}>
+                                                {('Create')}
                                             </Button>
-                                        )}
-
-                                        <input
-                                            hidden
-                                            type="file"
-                                            style={{ display: 'none' }}
-                                            ref={this.fileInputRef}
-                                            accept="image/*"
-                                            onChange={this.onChangeSaveFile}
-                                        />
-
-                                        <TextField
-                                            onChange={this.onChangeTitle}
-                                            style={{ marginTop: '10px' }}
-                                            label={('Pantry Name')}
-                                            variant="outlined"
-                                            fullWidth
-                                            required
-                                            color="secondary"
-                                            error={this.state.titleError}
-                                        />
-
-                                        <TextField
-                                            onChange={this.onChangeDescription}
-                                            label={('Description')}
-                                            style={{ marginTop: '10px' }}
-                                            variant="outlined"
-                                            fullWidth
-                                            required
-                                            multiline
-                                            color="secondary"
-                                            rows={4}
-                                            error={this.state.descriptionError}
-                                        />
-
-                                        <Button
-                                            style={{ marginTop: '10px', color: 'white' }}
-                                            type="submit"
-                                            variant="text"
-                                            color="secondary"
-                                            endIcon={<SendOutlinedIcon />}>
-                                            {('Create')}
-                                        </Button>
 
 
 
-                                    </form>
-                                </CardContent>
-                            </Card>
+                                        </form>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
                         </Grid>
-                    </Grid>
+                    </Transitions>
                 </>
             );
         } else {
             return (
                 <>
                     <Drawer></Drawer>
-                    <Grid
-                        container
-                        spacing={0}
-                        direction="column"
-                        alignItems="center"
-                        justify="center"
-                        style={{ minHeight: '100vh' }}
-                    >
-                        <Grid item xs={3}>
-                            <Card style={{ width: '614px', marginTop: '20px' }} elevation={5}>
-                                <CardHeader
-                                    title='New title'
-                                />
-                                <CardContent>
-                                    <ButtonCustom link="/Profile" name={lang.t('profile')} icon={<AccountBoxOutlinedIcon />} />
-                                </CardContent>
-                            </Card>
+                    <Transitions>
+                        <Grid
+                            container
+                            spacing={0}
+                            direction="column"
+                            alignItems="center"
+                            justify="center"
+                            style={{ minHeight: '100vh' }}
+                        >
+                            <Grid item xs={3}>
+                                <Card style={{ width: '614px', marginTop: '20px' }} elevation={5}>
+                                    <CardHeader
+                                        title='New title'
+                                    />
+                                    <CardContent>
+                                        <ButtonCustom link="/Profile" name={lang.t('profile')} icon={<AccountBoxOutlinedIcon />} />
+                                    </CardContent>
+                                </Card>
+                            </Grid>
                         </Grid>
-                    </Grid>
+                    </Transitions>
                 </>
             );
         }

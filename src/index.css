@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  
+
   width: 100%;
   background: url(https://makviphomeservices.com/wp-content/uploads/2022/03/pantryOrganization.png) repeat;
   background-size: cover;
@@ -741,6 +741,16 @@ video {
   }
 }
 
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 @keyframes bounce {
 
   0%,
@@ -1172,14 +1182,47 @@ body {
 .centerd {
   margin: auto;
   width: 60%;
-  }
+}
 
-  .ds {
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 20px 0px;
-  }
+.ds {
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 20px 0px;
+}
 
-  .darkthemebg
-  {
-    opacity: 1;
-    background-color: #1e1e1e;
-  }
+.darkthemebg {
+  opacity: 1;
+  background-color: #1e1e1e;
+}
+
+.homeborder {
+  border: #fff solid 4.5px;
+}
+
+.home {
+  flex-direction: column-reverse;
+}
+
+.hometext {
+  font-size: 1.70rem;
+  line-height: 2.25rem;
+}
+
+.animate-in {
+    -webkit-animation: fadeIn .5s ease-in;
+    animation: fadeIn .5s ease-in;
+}
+
+.animate-out {
+    -webkit-transition: opacity .5s;
+    transition: opacity .5s;
+    opacity: 0;
+}
+
+@-webkit-keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

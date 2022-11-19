@@ -23,8 +23,10 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ModernPantryDBConnection")));
 builder.Services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped(typeof(IPantryRepository), typeof(PantryRepository));
+builder.Services.AddScoped(typeof(IProductRepository), typeof(ProductRepository));
 
 builder.Services.AddScoped(typeof(IPantryService), typeof(PantryService));
+builder.Services.AddScoped(typeof(IProductService), typeof(ProductService));
 
 var app = builder.Build();
 

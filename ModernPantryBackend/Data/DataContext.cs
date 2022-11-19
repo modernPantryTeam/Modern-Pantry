@@ -24,12 +24,43 @@
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //Database Seed
             modelBuilder.Entity<User>().HasData(
                 new User { Id = 1, Email = "test@test.com", Password = "123", Username = "TestUser1" },
                 new User { Id = 2, Email = "test@test.com", Password = "123", Username = "TestUser2" },
                 new User { Id = 3, Email = "test@test.com", Password = "123", Username = "TestUser3" }
             );
+            modelBuilder.Entity<Pantry>().HasData(
+                new Pantry { Id = 1, Name = "My Pantry 1" },
+                new Pantry { Id = 2, Name = "My Pantry 2" },
+                new Pantry { Id = 3, Name = "Our Pantry" },
+                new Pantry { Id = 4, Name = "Very Nice Storehouse" }
+                );
+            modelBuilder.Entity<PantryUser>().HasData(
+                new PantryUser { PantryId = 1, UserId = 1},
+                new PantryUser { PantryId = 2, UserId = 1 },
+                new PantryUser { PantryId = 3, UserId = 1 },
+                new PantryUser { PantryId = 3, UserId = 2 },
+                new PantryUser { PantryId = 4, UserId = 2 }
+                );
+            modelBuilder.Entity<Product>().HasData(
+                new Product { Id = 1, Name = "Goat Milk", PantryId = 1, AddDate = DateTime.Now },
+                new Product { Id = 2, Name = "Mocny Full", PantryId = 1, AddDate = DateTime.Now, Count = 6 }
+                );
+            modelBuilder.Entity<Category>().HasData(
+                new Category { Id = 1, Name = "Dairy" },
+                new Category { Id = 2, Name = "Alcochol" },
+                new Category { Id = 3, Name = "Bread" },
+                new Category { Id = 4, Name = "Fruid" },
+                new Category { Id = 5, Name = "Vegetables" },
+                new Category { Id = 6, Name = "Conserves" }
+                );
+            modelBuilder.Entity<CategoryProduct>().HasData(
+                new CategoryProduct { ProductId = 1, CategoryId = 1 },
+                new CategoryProduct { ProductId = 2, CategoryId = 2 }
+                );
 
+            //Database Configuration
             modelBuilder.Entity<PantryUser>().HasKey(u => new { u.UserId, u.PantryId });
 
             modelBuilder.Entity<PantryUser>()

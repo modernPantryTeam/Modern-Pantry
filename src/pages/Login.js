@@ -4,10 +4,7 @@ import authService from "../services/auth-service";
 import { Component } from "react";
 import userService from "../services/user-service";
 import logger from "../logger/logger";
-import "../sass/css/login.css";
-import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
-import GoogleIcon from "@mui/icons-material/Google";
-import GitHubIcon from "@mui/icons-material/GitHub";
+import GoogleLoginButton from "../components/GoogleLoginButton";
 
 const addDataIntoCache = (cacheName, url, response) => {
 	const data = new Response(JSON.stringify(response));
@@ -143,12 +140,7 @@ export default class Login extends Component {
 						<div className='flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary'>
 							<p className='text-sm text-black'>Or continue with:</p>
 							<div className='social-row'>
-								<button className='icon fb-icon'>
-									<FacebookOutlinedIcon />
-								</button>
-								<button className='icon google-icon'>
-									<GoogleIcon />
-								</button>
+								<GoogleLoginButton />
 							</div>
 						</div>
 					</div>

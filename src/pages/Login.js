@@ -1,10 +1,5 @@
 import React from 'react';
 import Headbar from '../components/Headbar';
-import { AppBar, Toolbar, Grid } from '@mui/material'
-import ButtonCustom from '../components/ButtonCustom'
-import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
-import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined';
-import ContactMailOutlinedIcon from '@mui/icons-material/ContactMailOutlined';
 import authService from '../services/auth-service';
 import { Component } from 'react';
 import userService from '../services/user-service';
@@ -100,10 +95,10 @@ export default class Login extends Component {
         <div className="container flex mx-auto items-center h-screen">
           <div className="flex w-full">
           </div>
-          <div className="flex flex-col w-5">
+          <div className="flex flex-col w-4\/5">
             <div className="flex flex-col items-center bg-white p-4 border border-gray-primary mb-4 rounded">
               <h1 className="flex justify-center w-full">
-                <img src="https://i.imgur.com/YtiHDru.png" alt="Pantry" className="mt-2 w-4/12 mb-2" />
+                <img src="https://i.imgur.com/YtiHDru.png" alt="Pantry" className="mt-2 mb-2" />
               </h1>
 
               {this.state.message && (

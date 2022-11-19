@@ -164,7 +164,7 @@ export default class Dashboard extends Component {
                     direction="row"
                     justifyContent="flex-start"
                 >
-                    <Button size="small" color="inherit" href="#">
+                    <Button size="small" color="inherit" href="/pantry">
                       Enter
                     </Button>
                     </Grid>
@@ -202,7 +202,7 @@ export default class Dashboard extends Component {
                       Enter
                     </Button>
                     </Grid>
-                    <Button style={{ justifyContent: 'flex-end' }} size="small" color="inherit" href="#">
+                    <Button style={{ justifyContent: 'flex-end' }} size="small" color="inherit" href="/miami">
                       Share
                     </Button>
                   </CardActions>

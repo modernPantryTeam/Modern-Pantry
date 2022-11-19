@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
-@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -11,7 +10,6 @@ body {
   position: relative;
   font-family: 'Quicksand';
   padding: 0;
-  overflow: hidden;
   margin: 0;
 }
 
@@ -542,6 +540,10 @@ video {
 
 .pl-2 {
   padding-left: 1rem;
+}
+
+.pl-4 {
+  padding-left: 1000rem;
 }
 
 .pt-1 {
@@ -1178,6 +1180,6 @@ body {
 
   .darkthemebg
   {
-    --tw-bg-opacity: 1;
+    opacity: 1;
     background-color: #1e1e1e;
   }

@@ -6,7 +6,9 @@ import SignUp from './pages/SignUp'
 import NotFound from './pages/not-found'
 import Dashboard from './pages/Dashboard'
 import Add from './pages/Create'
+import Statistics from './pages/Statistics'
 import Profile from './pages/Profile'
+import Pantry from './pages/Pantry'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
@@ -52,6 +54,12 @@ export default class App extends Component {
                     </Route>
                     <Route path="/profile">
                       <Profile />
+                    </Route>
+                    <Route path="/statistics">
+                      <Statistics />
+                    </Route>
+                    <Route path="/pantry">
+                      <Pantry />
                     </Route>
                     <Route component={NotFound} />
                   </Switch>

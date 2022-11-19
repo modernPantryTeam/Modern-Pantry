@@ -29,5 +29,11 @@
             if (pantryUser != null) _context.PantriesUsers.Remove(pantryUser);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<bool> PantryExists(int pantryId)
+        {
+            if (await _context.Pantries.AnyAsync(p => p.Id == pantryId)) return true;
+            else return false;
+        }
     }
 }

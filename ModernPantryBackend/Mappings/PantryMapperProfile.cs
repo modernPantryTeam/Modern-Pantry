@@ -1,6 +1,4 @@
-﻿using ModernPantryBackend.Models.DTOs;
-
-namespace ModernPantryBackend.Mappings
+﻿namespace ModernPantryBackend.Mappings
 {
     public class PantryMapperProfile : Profile
     {
@@ -13,6 +11,7 @@ namespace ModernPantryBackend.Mappings
                 {
                     dest.Name = src.Name;
                 });
+
             CreateMap<Pantry, GetPantryDTO>()
                 .ForMember(p => p.Users, c => c.Ignore())
                 .AfterMap((src, dest) =>

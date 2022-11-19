@@ -29,6 +29,9 @@
             {
                 return ServiceResponse.Error("Pantry not found.");
             }
+
+            //check if signed-in user belongs to pantry
+
             await _pantryRepository.Delete(pantry);
             return ServiceResponse.Success("Pantry deleted.");
         }
@@ -40,6 +43,9 @@
             {
                 return ServiceResponse.Error("Pantry not found.");
             }
+
+            //check if signed-in user belongs to pantry
+
             pantry.Name = model.Name;
             await _pantryRepository.Edit(pantry);
             return ServiceResponse.Success("Pantry edited.");
@@ -52,11 +58,19 @@
             {
                 return ServiceResponse.Error("Pantry not found.");
             }
+
+            //check if signed-in user belongs to pantry
+
             var pantryDto = _mapper.Map<GetPantryDTO>(pantry);
             var pantryUsers = await _pantryUserRepository.FindByConditions(pu => pu.PantryId == pantry.Id);
             foreach (PantryUser pantryUser in pantryUsers)
             {
-                pantryDto.Users.Add(_mapper.Map<GetUserDTO>((await _userRepository.FindByConditions(u => u.Id == pantryUser.UserId)).FirstOrDefault()));
+                pantryDto.Users.Add(_mapper.Map<GetUserDTO>
+                    ((
+                        await _userRepository
+                        .FindByConditions(u => u.Id == pantryUser.UserId))
+                        .FirstOrDefault()
+                    ));
             }
             return ServiceResponse<GetPantryDTO>.Success(pantryDto, "Pantry retrieved.");
         }
@@ -72,7 +86,12 @@
                 var pantryUsers = await _pantryUserRepository.FindByConditions(pu => pu.PantryId == pantry.Id);
                 foreach (PantryUser pantryUser in pantryUsers)
                 {
-                    pantryDto.Users.Add(_mapper.Map<GetUserDTO>((await _userRepository.FindByConditions(u => u.Id == pantryUser.UserId)).FirstOrDefault()));
+                    pantryDto.Users.Add(_mapper.Map<GetUserDTO>
+                        ((
+                            await _userRepository
+                            .FindByConditions(u => u.Id == pantryUser.UserId))
+                            .FirstOrDefault()
+                        ));
                 }
                 userPantriesDto.Add(pantryDto);
             }
@@ -81,12 +100,44 @@
 
         public async Task<ServiceResponse> RemoveUserFromPantry(int userId, int pantryId)
         {
+            if (!await _pantryRepository.PantryExists(pantryId))
+            {
+                return ServiceResponse.Error("Pantry doesn't exist.");
+            }
+
+            //check if signed-in user belongs to pantry
+           
+            if(!(await _userRepository.FindByConditions(u => u.Id == userId)).Any())
+            {
+                return ServiceResponse.Error("User doesn't exist.");
+            }
+            if(!(await _pantryUserRepository.FindByConditions(up => up.UserId == userId && up.PantryId == pantryId)).Any())
+            {
+                return ServiceResponse.Error("User not in pantry.");
+            }
+
             await _pantryRepository.RemoveUserFromPantry(userId, pantryId);
             return ServiceResponse.Success("User removed from pantry.");
         }
 
         public async Task<ServiceResponse> AddUserToPantry(int userId, int pantryId)
         {
+            if (!await _pantryRepository.PantryExists(pantryId))
+            {
+                return ServiceResponse.Error("Pantry doesn't exist.");
+            }
+
+            //check if signed-in user belongs to pantry
+
+            if (!(await _userRepository.FindByConditions(u => u.Id == userId)).Any())
+            {
+                return ServiceResponse.Error("User doesn't exist.");
+            }
+            if ((await _pantryUserRepository.FindByConditions(up => up.UserId == userId && up.PantryId == pantryId)).Any())
+            {
+                return ServiceResponse.Error("User already in pantry.");
+            }
+
             await _pantryRepository.AddUserToPantry(userId, pantryId);
             return ServiceResponse.Success("User added to pantry.");
         }

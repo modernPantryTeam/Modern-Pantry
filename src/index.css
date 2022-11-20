@@ -1145,7 +1145,12 @@ body {
 
 
 /* Media Queries */
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 0px) {
+  #pantry {
+    display: grid;
+    gap: 2rem;
+  }
+  
   .pantry-search-box {
     width: 540px;
     margin-left: auto;

@@ -1,4 +1,4 @@
-import { Button, Card, CardHeader, CardContent, TextField, Grid } from '@mui/material';
+import { Button, Card, CardHeader, CardContent, TextField, Grid, Select } from '@mui/material';
 import React, { Component } from 'react'
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
@@ -8,6 +8,9 @@ import Drawer from '../components/Drawer'
 import postService from '../services/post-service';
 import logger from '../logger/logger';
 import lang from 'i18next'
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
 import Transitions from '../components/Transition'
 
 export default class Create extends Component {
@@ -137,9 +140,9 @@ export default class Create extends Component {
                             style={{ minHeight: '80vh' }}
                         >
                             <Grid item xs={3}>
-                                <Card style={{ width: '650px', marginTop: '20px' }} elevation={5}>
+                                <Card style={{ width: '900px', marginTop: '20px' }} elevation={5}>
                                     <p className="pt-4 pl-2 text-medium">
-                                        Create your pantry
+                                        Add product
                                     </p>
                                     <CardContent>
                                         {this.state.message && (
@@ -148,33 +151,6 @@ export default class Create extends Component {
                                             </p>
                                         )}
                                         <form noValidate autoComplete="off" onSubmit={this.handleCreatePost}>
-
-
-                                            {this.state.fileSubmitError && (
-                                                <Button
-                                                    style={{
-                                                        color: this.state.fileError ? '#ffffff' : 'white',
-                                                        borderColor: this.state.fileError ? '#d32f2f' : 'white'
-                                                    }}
-                                                    variant="text"
-                                                    startIcon={<AddPhotoAlternateOutlinedIcon />}
-                                                    onClick={this.onClickSelectFile}
-                                                >
-                                                    {('Upload image')}
-                                                </Button>
-                                            )}
-
-                                            {!this.state.fileSubmitError && (
-                                                <Button
-                                                    disabled
-                                                    style={{ color: 'white' }}
-                                                    variant="text"
-                                                    startIcon={<AddPhotoAlternateOutlinedIcon />}
-                                                    onClick={this.onClickSelectFile}
-                                                >
-                                                    {('Upload successful')}
-                                                </Button>
-                                            )}
 
                                             <input
                                                 hidden
@@ -188,7 +164,7 @@ export default class Create extends Component {
                                             <TextField
                                                 onChange={this.onChangeTitle}
                                                 style={{ marginTop: '10px' }}
-                                                label={('Pantry Name')}
+                                                label={('Product name')}
                                                 variant="outlined"
                                                 fullWidth
                                                 required
@@ -196,18 +172,60 @@ export default class Create extends Component {
                                                 error={this.state.titleError}
                                             />
 
+                                            <FormControl 
+                                            style={{ marginTop: '10px' }}
+                                            fullWidth
+                                            variant="outlined"
+                                            required
+                                            >
+                                                <InputLabel>Category</InputLabel>
+                                                <Select
+                                                    fullWidth
+                                                    label={('Category')}
+                                                >
+                                                    <MenuItem>Drinks</MenuItem>
+                                                    <MenuItem>Snacks</MenuItem>
+                                                    <MenuItem>Vegetables</MenuItem>
+                                                    <MenuItem>Fruits</MenuItem>
+                                                    <MenuItem>Dairy</MenuItem>
+                                                    <MenuItem>Meat</MenuItem>
+                                                    <MenuItem>Uncategorized</MenuItem>
+                                                </Select>
+                                            </FormControl>
+
+                                            <FormControl 
+                                            style={{ marginTop: '10px' }}
+                                            fullWidth
+                                            variant="outlined"
+                                            color="secondary"
+                                            required
+                                            >
+                                                <InputLabel>Units</InputLabel>
+                                                <Select
+                                                    fullWidth
+                                                    label={('Units')}
+                                                >
+                                                    <MenuItem>KG</MenuItem>
+                                                    <MenuItem>G</MenuItem>
+                                                    <MenuItem>L</MenuItem>
+                                                    <MenuItem>ML</MenuItem>
+                                                    <MenuItem>Bottles</MenuItem>
+                                                    <MenuItem>Cans</MenuItem>
+                                                    <MenuItem>Boxes</MenuItem>
+                                                    <MenuItem>Pieces</MenuItem>
+                                                </Select>
+                                            </FormControl>
+
                                             <TextField
-                                                onChange={this.onChangeDescription}
-                                                label={('Description')}
-                                                style={{ marginTop: '10px' }}
-                                                variant="outlined"
-                                                fullWidth
-                                                required
-                                                multiline
-                                                color="secondary"
-                                                rows={4}
-                                                error={this.state.descriptionError}
-                                            />
+                                            onChange={this.onChangeTitle}
+                                            style={{ marginTop: '10px' }}
+                                            label={('Quantity')}
+                                            variant="outlined"
+                                            fullWidth
+                                            required
+                                            color="secondary"
+                                            error={this.state.titleError}
+                                        />
 
                                             <Button
                                                 style={{ marginTop: '24px', color: 'white' }}
@@ -215,7 +233,7 @@ export default class Create extends Component {
                                                 variant="text"
                                                 color="secondary"
                                                 endIcon={<SendOutlinedIcon />}>
-                                                {('Create')}
+                                                {('Add product')}
                                             </Button>
 
 

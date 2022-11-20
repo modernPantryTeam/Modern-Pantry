@@ -6,7 +6,7 @@ import { Grid, CardActionArea, CardMedia, Typography, CardActions, Button, Card,
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import postService from '../services/post-service';
-import Transitions from '../components/Transition'
+import Transitions from '../components/Transition';
 
 export default class Dashboard extends Component {
 
@@ -350,8 +350,6 @@ export default class Dashboard extends Component {
                         endIcon={<SendOutlinedIcon />}>
                         {('Create')}
                       </Button>
-
-
 
                     </form>
                   </CardContent>

@@ -9,6 +9,7 @@ import Create from './pages/Create'
 import Statistics from './pages/Statistics'
 import Profile from './pages/Profile'
 import Pantry from './pages/Pantry'
+import AddProduct from './pages/AddProduct'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useLocation, useHistory } from "react-router-dom";
@@ -46,6 +47,7 @@ const Animated = () => {
               <Route path="/profile" component={Profile}></Route>
               <Route path="/statistics" component={Statistics}></Route>
               <Route path="/pantry" component={Pantry}></Route>
+              <Route path="/add-product" component={AddProduct}></Route>
               <Route component={NotFound} />
             </Switch>
           </AnimatePresence>

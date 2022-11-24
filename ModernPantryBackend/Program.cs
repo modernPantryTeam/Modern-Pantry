@@ -10,10 +10,14 @@ global using ModernPantryBackend.Repositories;
 global using System.Net;
 global using ModernPantryBackend.Services;
 global using ModernPantryBackend.Models.DTOs;
+using Microsoft.AspNetCore.Identity;
+using FluentValidation;
+using ModernPantryBackend.Models.Validators;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddFluentValidation();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -24,9 +28,13 @@ builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(build
 builder.Services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped(typeof(IPantryRepository), typeof(PantryRepository));
 builder.Services.AddScoped(typeof(IProductRepository), typeof(ProductRepository));
+builder.Services.AddScoped(typeof(IPasswordHasher<User>), typeof(PasswordHasher<User>));
 
 builder.Services.AddScoped(typeof(IPantryService), typeof(PantryService));
 builder.Services.AddScoped(typeof(IProductService), typeof(ProductService));
+builder.Services.AddScoped(typeof(IAccountService), typeof(AccountService));
+
+builder.Services.AddScoped(typeof(IValidator<CreateUserDto>), typeof(CreateUserDtoValidator));
 
 var app = builder.Build();
 

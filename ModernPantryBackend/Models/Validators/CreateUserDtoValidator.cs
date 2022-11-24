@@ -15,8 +15,6 @@ namespace ModernPantryBackend.Models.Validators
             RuleFor(x => x.Password)
                 .NotEmpty();
 
-            RuleFor(x => x.ConfrimPassword).Equal(e => e.Password);
-
             RuleFor(x => x.Email)
                 .Custom((value, context) =>
                 {

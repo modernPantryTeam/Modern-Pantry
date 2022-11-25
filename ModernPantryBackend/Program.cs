@@ -28,6 +28,7 @@ builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(build
 builder.Services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped(typeof(IPantryRepository), typeof(PantryRepository));
 builder.Services.AddScoped(typeof(IProductRepository), typeof(ProductRepository));
+builder.Services.AddScoped(typeof(IAccountRepository), typeof(AccountRepository));
 builder.Services.AddScoped(typeof(IPasswordHasher<User>), typeof(PasswordHasher<User>));
 
 builder.Services.AddScoped(typeof(IPantryService), typeof(PantryService));

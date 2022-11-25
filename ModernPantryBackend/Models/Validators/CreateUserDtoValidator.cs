@@ -24,7 +24,7 @@ namespace ModernPantryBackend.Models.Validators
                         context.AddFailure("Email", "That email is taken");
                     }
                 });
-            RuleFor(x => x.Email)
+            RuleFor(x => x.Username)
                 .Custom((value, context) =>
                 {
                     var usernameInUse = dbContext.Users.Any(u => u.Username == value);

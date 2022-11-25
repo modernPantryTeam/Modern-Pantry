@@ -6,11 +6,13 @@ namespace ModernPantryBackend.Services
     {
         private readonly DataContext _context;
         private readonly IPasswordHasher<User> _passwordHasher;
+        private readonly IAccountRepository _accountRepository;
 
-        public AccountService(DataContext context, IPasswordHasher<User> passwordHasher)
+        public AccountService(DataContext context, IPasswordHasher<User> passwordHasher, IAccountRepository accountRepository)
         {
             _context = context;
             _passwordHasher = passwordHasher;
+            _accountRepository = accountRepository;
         }
         public async Task<ServiceResponse> CreateUser([FromBody] CreateUserDto model)
         {
@@ -21,12 +23,8 @@ namespace ModernPantryBackend.Services
                 Password = model.Password,
             };
             var hashedPassword = _passwordHasher.HashPassword(newUser, model.Password);
-
             newUser.Password = hashedPassword;
-
-            await _context.Users.AddAsync(newUser);
-            await _context.SaveChangesAsync();
-            //await _accountRepository.Create(newUser);
+            await _accountRepository.CreateUser(newUser);
             return ServiceResponse.Success("User added.");
         }
     }

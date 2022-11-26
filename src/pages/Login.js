@@ -5,6 +5,8 @@ import { Component } from "react";
 import userService from "../services/user-service";
 import logger from "../logger/logger";
 import GoogleLoginButton from "../components/GoogleLoginButton";
+import FacebookLoginButton from "../components/FacebookLoginButton";
+import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 
 const addDataIntoCache = (cacheName, url, response) => {
 	const data = new Response(JSON.stringify(response));
@@ -141,6 +143,7 @@ export default class Login extends Component {
 							<p className='text-sm text-black'>Or continue with:</p>
 							<div className='social-row'>
 								<GoogleLoginButton />
+								<FacebookLoginButton />
 							</div>
 						</div>
 					</div>

@@ -192,7 +192,7 @@ export default function MiniDrawer() {
 										{index === 4 && <AccountCircleIcon />}
 									</Link>
 									<Link style={{ color: "white" }} href='/'>
-										{index === 5 && <LogoutButton />}
+										{index === 5 && <LogoutIcon />}
 									</Link>
 								</ListItemIcon>
 								<ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />

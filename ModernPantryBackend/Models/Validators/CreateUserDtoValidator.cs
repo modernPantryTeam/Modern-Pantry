@@ -6,7 +6,7 @@ namespace ModernPantryBackend.Models.Validators
     {
         public CreateUserDtoValidator(DataContext dbContext)
         {
-            RuleFor(x => x.Username).NotEmpty();
+            RuleFor(x => x.UserName).NotEmpty();
 
             RuleFor(x => x.Email)
                 .NotEmpty()
@@ -24,10 +24,10 @@ namespace ModernPantryBackend.Models.Validators
                         context.AddFailure("Email", "That email is taken");
                     }
                 });
-            RuleFor(x => x.Username)
+            RuleFor(x => x.UserName)
                 .Custom((value, context) =>
                 {
-                    var usernameInUse = dbContext.Users.Any(u => u.Username == value);
+                    var usernameInUse = dbContext.Users.Any(u => u.UserName == value);
                     if (usernameInUse)
                     {
                         context.AddFailure("Username", "That username is taken");

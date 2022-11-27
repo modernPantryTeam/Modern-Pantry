@@ -19,11 +19,11 @@ namespace ModernPantryBackend.Services
             var newUser = new User()
             {
                 Email = model.Email,
-                Username = model.Username,
-                Password = model.Password,
+                UserName = model.UserName,
+                PasswordHash = model.Password,
             };
             var hashedPassword = _passwordHasher.HashPassword(newUser, model.Password);
-            newUser.Password = hashedPassword;
+            newUser.PasswordHash = hashedPassword;
             await _accountRepository.CreateUser(newUser);
             return ServiceResponse.Success("User added.");
         }

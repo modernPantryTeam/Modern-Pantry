@@ -36,6 +36,17 @@ builder.Services.AddScoped(typeof(IProductService), typeof(ProductService));
 builder.Services.AddScoped(typeof(IAccountService), typeof(AccountService));
 
 builder.Services.AddScoped(typeof(IValidator<CreateUserDto>), typeof(CreateUserDtoValidator));
+builder.Services.AddAuthentication();
+builder.Services.AddIdentity<User, IdentityRole<int>>(opt =>
+{
+    opt.Password.RequiredLength = 7;
+    opt.Password.RequireDigit = true;
+    opt.Password.RequireUppercase = true;
+
+    opt.User.RequireUniqueEmail = true;
+})
+.AddEntityFrameworkStores<DataContext>()
+.AddDefaultTokenProviders();
 
 var app = builder.Build();
 

@@ -13,7 +13,7 @@ namespace ModernPantryBackend.Controllers
             _accountService = accountService;
         }
 
-        [HttpPost("register")]
+        [HttpPost("Register")]
         public async Task<ServiceResponse> RegisterUser([FromBody] CreateUserDto model)
         {
             return await _accountService.CreateUser(model);

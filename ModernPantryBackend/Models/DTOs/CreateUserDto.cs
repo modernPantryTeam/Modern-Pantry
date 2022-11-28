@@ -1,4 +1,6 @@
-﻿namespace ModernPantryBackend.Models.DTOs
+﻿
+
+namespace ModernPantryBackend.Models.DTOs
 {
     public class CreateUserDto
     {

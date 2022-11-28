@@ -24,6 +24,7 @@ function LoginButton() {
 		google.accounts.id.renderButton(document.getElementById("googleSignIn"), {
 			theme: "outline",
 			size: "large",
+			width: "300px",
 		});
 	}, []);
 

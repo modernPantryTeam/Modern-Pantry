@@ -41,7 +41,7 @@ builder.Services.AddIdentity<User, IdentityRole<int>>(opt =>
 {
     opt.Password.RequiredLength = 7;
     opt.Password.RequireDigit = true;
-    opt.Password.RequireUppercase = false;
+    opt.Password.RequireUppercase = true;
     opt.Password.RequireNonAlphanumeric = false;
 
     opt.User.RequireUniqueEmail = true;
@@ -50,6 +50,9 @@ builder.Services.AddIdentity<User, IdentityRole<int>>(opt =>
 })
 .AddEntityFrameworkStores<DataContext>()
 .AddDefaultTokenProviders();
+
+builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
+builder.Services.AddSingleton<IEmailSender, SmtpEmailSender>();
 
 var app = builder.Build();
 

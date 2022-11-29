@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
+
 namespace ModernPantryBackend.Services
 {
     public class AccountService : IAccountService
@@ -33,12 +34,18 @@ namespace ModernPantryBackend.Services
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
             {
-                
+                string errorMessage = "";
+                string line = "";
                 foreach (var error in result.Errors)
                 {
-                    return ServiceResponse.Error(error.Description);
+                    line = error.Description + " ";
+                    errorMessage += line;
                 }
+                return ServiceResponse.Error(errorMessage);
             }
+            // token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            //var confirmationLink = Url.ActionLink("ConfirmEmail", "Identity", new { userId = user.Id, @token = token });
+            
             return ServiceResponse.Success("User added.");
         }
     }

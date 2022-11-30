@@ -11,13 +11,15 @@ namespace ModernPantryBackend.Controllers
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly IEmailSender _emailSender;
+        private readonly SignInManager<User> _signInManager;
 
-        public AccountController(IAccountService accountService, IMapper mapper, UserManager<User> userManager, IEmailSender emailSender)
+        public AccountController(IAccountService accountService, IMapper mapper, UserManager<User> userManager, IEmailSender emailSender, SignInManager<User> signInManager)
         {
             _accountService = accountService;
             _mapper = mapper;
             _userManager = userManager;
             _emailSender = emailSender;
+            _signInManager = signInManager;
         }
 
         [HttpPost("Register")]
@@ -43,9 +45,9 @@ namespace ModernPantryBackend.Controllers
             var confirmationLink = Url.ActionLink("ConfirmEmail", "Account", new { userId = user.Id.ToString(), @token = token });
             await _emailSender.SendEmailAsync("pantry.modern@gmail.com", user.Email, "Confirm your email address", confirmationLink);
 
-
             return ServiceResponse.Success("User added.");
         }
+
         [HttpGet]
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
@@ -65,6 +67,15 @@ namespace ModernPantryBackend.Controllers
                 }
                 return BadRequest(errorMessage);
             }
+            return Ok();
+        }
+
+        [HttpPost("Login")]
+        public async Task<IActionResult> LoginUser([FromBody] LoginUserDto model)
+        {
+            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
+            if (!result.Succeeded)
+               return Unauthorized("Ivalid username or password. Maybe you should confirm verifcation e-mail"); 
             return Ok();
         }
     }

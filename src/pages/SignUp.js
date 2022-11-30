@@ -181,7 +181,7 @@ export default class SignUp extends Component {
         <Transitions>
           <script src="https://apis.google.com/js/platform.js" async defer></script>
           <div className="container flex mx-auto items-center h-screen">
-            <div className="flex w-full">
+            <div className="sm:w-20 md:w-full lg:w-full">
             </div>
             <div className="flex flex-col w-4\/5">
               <div className="flex flex-col items-center bg-white p-4 border border-gray-primary mb-4 rounded">

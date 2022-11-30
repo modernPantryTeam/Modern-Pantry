@@ -7,6 +7,7 @@ import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternate
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import postService from '../services/post-service';
 import Transitions from '../components/Transition';
+import Share from '../components/Share'
 
 export default class Dashboard extends Component {
 
@@ -170,9 +171,7 @@ export default class Dashboard extends Component {
                           Enter
                         </Button>
                       </Grid>
-                      <Button style={{ justifyContent: 'flex-end' }} size="small" color="inherit" href="#">
-                        Share
-                      </Button>
+                      <Share></Share>
                     </CardActions>
                   </Card>
 
@@ -247,7 +246,7 @@ export default class Dashboard extends Component {
               </div>
               <button
                 type="button"
-                className={`bg-black text-white w-2 rounded h-8 font-bold`}
+                className={`bg-black text-white w-20 rounded h-8 font-bold`}
                 onClick={this.handleClick}
               >
                 {("Create")}

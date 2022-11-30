@@ -88,7 +88,7 @@ export default class Profile extends Component {
                                     </CardContent>
                                     <Box sx={{ display: 'flex', alignItems: 'center', pl: 5, pb: 5, pr: 5, pt: 0 }}>
                                         <form
-                                            onSubmit={this.sendEmail}
+                                            onSubmit={this.submit}
                                         >
                                             <input
                                                 type="text"

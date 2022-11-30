@@ -42,11 +42,11 @@ export default class Profile extends Component {
             return (
                 <><Drawer />
                     <Transitions>
-                        <div className='centerd rounded ds '>
+                        <div className="centerd1 sm:w-3/5 sm:mx-auto md:w-3/5 md:mx-auto lg:w-3/5 lg:mx-auto ds rounded">
                             <Card sx={{ display: 'flex' }}>
                                 <CardMedia
                                     component="img"
-                                    sx={{ width: 150 }}
+                                    sx={{ width: '8rem' }}
                                     image="https://i.imgur.com/poFWJfz.png"
                                     alt="avatar"
                                     style={{ margin: '20px' }}
@@ -78,7 +78,7 @@ export default class Profile extends Component {
                 <>
                     <Drawer></Drawer>
                     <Transitions>
-                        <div className='centerd rounded ds '>
+                        <div className='centerd sm:w-3/5 sm:mx-auto md:w-3/5 md:mx-auto lg:w-3/5 lg:mx-auto ds rounded'>
                             <Card sx={{ display: 'flex' }}>
                                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                                     <CardContent sx={{ flex: '1 0 auto' }}>

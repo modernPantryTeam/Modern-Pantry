@@ -128,6 +128,7 @@ export default class Create extends Component {
                 <>
                     <Drawer></Drawer>
                     <Transitions>
+                        <div className="px-4 pb-2 pt-4 lg:mx-auto md:mx-auto ml-14 sm:max-w-xl lg:max-w-screen-xl md:px-24 lg:px-8">
                         <Grid
                             container
                             spacing={0}
@@ -137,7 +138,8 @@ export default class Create extends Component {
                             style={{ minHeight: '80vh' }}
                         >
                             <Grid item xs={3}>
-                                <Card style={{ width: '650px', marginTop: '20px' }} elevation={5}>
+                                <div>
+                                <Card style={{marginTop: '20px' }} elevation={5}>
                                     <p className="pt-4 pl-2 text-medium">
                                         Create your pantry
                                     </p>
@@ -217,14 +219,13 @@ export default class Create extends Component {
                                                 endIcon={<SendOutlinedIcon />}>
                                                 {('Create')}
                                             </Button>
-
-
-
                                         </form>
                                     </CardContent>
                                 </Card>
+                                </div>
                             </Grid>
                         </Grid>
+                        </div>
                     </Transitions>
                 </>
             );
@@ -247,7 +248,7 @@ export default class Create extends Component {
                                         title='New title'
                                     />
                                     <CardContent>
-                                        <ButtonCustom link="/Profile" name={lang.t('profile')} icon={<AccountBoxOutlinedIcon />} />
+                                        <ButtonCustom link="/Profile" name="Profile" icon={<AccountBoxOutlinedIcon />} />
                                     </CardContent>
                                 </Card>
                             </Grid>

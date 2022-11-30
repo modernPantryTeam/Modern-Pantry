@@ -8,8 +8,8 @@ function Home() {
     <>
       <Headbar></Headbar>
       <Transitions>
-        <div className="justify-center flex items-center h-screen home md:flex-row lg:flex-row sm:flex-row fade-in">
-          <div className="px-20 py-8 text-center homeborder darkthemebg">
+        <div className="justify-center flex items-center h-screen home md:flex-row lg:flex-row sm:flex-row">
+          <div className="px-20 py-8 md:px-10 text-center homeborder darkthemebg">
             <div className="hometext sm:text-5xl">
               Modern Pantry
             </div>

@@ -30,6 +30,7 @@ builder.Services.AddScoped(typeof(IProductRepository), typeof(ProductRepository)
 
 builder.Services.AddScoped(typeof(IPantryService), typeof(PantryService));
 builder.Services.AddScoped(typeof(IProductService), typeof(ProductService));
+builder.Services.AddScoped(typeof(ICategoryService), typeof(CategoryService));
 
 var app = builder.Build();
 

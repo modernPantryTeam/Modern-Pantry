@@ -1,6 +1,7 @@
 {
   "name": "modernpantry",
   "version": "0.1.0",
+  "homepage": "https://zayooo00.github.io/Modern-Pantry/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.8.2",
@@ -21,6 +22,7 @@
     "eslint": "^8.26.0",
     "express": "^4.18.0",
     "express-handlebars": "^6.0.5",
+    "framer-motion": "^6.0.0",
     "i18next": "^21.8.1",
     "jss": "^10.9.0",
     "nodemailer": "^6.7.3",
@@ -34,6 +36,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -58,6 +62,7 @@
     ]
   },
   "devDependencies": {
+    "gh-pages": "^4.0.0",
     "tailwindcss": "^3.2.3"
   }
 }

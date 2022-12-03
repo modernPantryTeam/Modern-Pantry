@@ -5,12 +5,16 @@ import Login from './pages/Login'
 import SignUp from './pages/SignUp'
 import NotFound from './pages/not-found'
 import Dashboard from './pages/Dashboard'
-import Add from './pages/Create'
+import Create from './pages/Create'
 import Statistics from './pages/Statistics'
 import Profile from './pages/Profile'
 import Pantry from './pages/Pantry'
+import AddProduct from './pages/AddProduct'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { useLocation, useHistory } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
+import "./index.css";
 
 const darkTheme = createTheme({
   palette: {
@@ -25,48 +29,44 @@ const darkTheme = createTheme({
   }
 })
 
-export default class App extends Component {
-
-  
-  render() {
-    
-    return (
-      <Suspense fallback="Loading..." >
-        <>
-          <ThemeProvider theme={darkTheme}>
-            <CssBaseline />
-                <Router>
-                  <Switch>
-                    <Route exact path="/">
-                      <Home />
-                    </Route>
-                    <Route path="/login">
-                      <Login />
-                    </Route>
-                    <Route path="/sign-up">
-                      <SignUp />
-                    </Route>
-                    <Route path="/dashboard">
-                      <Dashboard />
-                    </Route>
-                    <Route path="/create">
-                      <Add />
-                    </Route>
-                    <Route path="/profile">
-                      <Profile />
-                    </Route>
-                    <Route path="/statistics">
-                      <Statistics />
-                    </Route>
-                    <Route path="/pantry">
-                      <Pantry />
-                    </Route>
-                    <Route component={NotFound} />
-                  </Switch>
-                </Router>
-          </ThemeProvider>
-        </>
-      </Suspense>
-    );
-  }
+const Animated = () => {
+  const location = useLocation();
+  return (
+    <Suspense fallback="Loading..." >
+      <>
+        <ThemeProvider theme={darkTheme}>
+          <CssBaseline />
+          <AnimatePresence exitBeforeEnter >
+            <Switch location={location}
+              key={location.pathname}>
+              <Route exact path="/" component={Home}></Route>
+              <Route path="/login" component={Login}></Route>
+              <Route path="/sign-up" component={SignUp}></Route>
+              <Route path="/dashboard" component={Dashboard}></Route>
+              <Route path="/create" component={Create}></Route>
+              <Route path="/profile" component={Profile}></Route>
+              <Route path="/statistics" component={Statistics}></Route>
+              <Route path="/pantry" component={Pantry}></Route>
+              <Route path="/add-product" component={AddProduct}></Route>
+              <Route component={NotFound} />
+            </Switch>
+          </AnimatePresence>
+        </ThemeProvider>
+      </>
+    </Suspense>
+  )
 }
+
+function App() {
+  return (
+    <div>
+      <>
+        <Router>
+          <Animated />
+        </Router>
+      </>
+    </div>
+  );
+}
+
+export default App;

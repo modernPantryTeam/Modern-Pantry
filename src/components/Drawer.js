@@ -147,7 +147,7 @@ export default function MiniDrawer() {
                 </DrawerHeader>
                 <Divider />
                 <List>
-                    {['My Pantries', 'Statistics', 'Notifications', 'Create', 'Profile', 'Logout'].map((text, index) => (
+                    {['My Pantries', 'Statistics', 'Create', 'Profile', 'Logout'].map((text, index) => (
                         <ListItem key={text} disablePadding sx={{ display: 'block' }}>
                             <ListItemButton
                                 sx={{
@@ -170,17 +170,14 @@ export default function MiniDrawer() {
                                     <Link style={{ color: "white", }} href='/statistics'>
                                         {index === 1 && <LeaderboardIcon />}
                                     </Link>
-                                    <Link style={{ color: "white", }} href='/notifications'>
-                                        {index === 2 && <NotificationBellSidebar/>}
-                                    </Link>
                                     <Link style={{ color: "white", }} href='/create'>
-                                        {index === 3 && <AddCircleOutlineIcon />}
+                                        {index === 2 && <AddCircleOutlineIcon />}
                                     </Link>
                                     <Link style={{ color: "white", }} href='/profile'>
-                                        {index === 4 && <AccountCircleIcon />}
+                                        {index === 3 && <AccountCircleIcon />}
                                     </Link>
-                                    <Link style={{ color: "white", }} href='/profile'>
-                                        {index === 5 && <LogoutIcon />}
+                                    <Link style={{ color: "white", }} href='/'>
+                                        {index === 4 && <LogoutIcon />}
                                     </Link>
 
                                 </ListItemIcon>

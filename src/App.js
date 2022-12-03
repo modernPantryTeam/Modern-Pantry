@@ -17,17 +17,17 @@ import { AnimatePresence } from "framer-motion";
 import "./index.css";
 
 const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-  typography: {
-    fontFamily: 'Quicksand',
-    fontWeightLight: 400,
-    fontWeightRegular: 500,
-    fontWeightMedium: 600,
-    fontWeightBold: 700,
-  }
-})
+	palette: {
+		mode: "dark",
+	},
+	typography: {
+		fontFamily: "Quicksand",
+		fontWeightLight: 400,
+		fontWeightRegular: 500,
+		fontWeightMedium: 600,
+		fontWeightBold: 700,
+	},
+});
 
 const Animated = () => {
   const location = useLocation();

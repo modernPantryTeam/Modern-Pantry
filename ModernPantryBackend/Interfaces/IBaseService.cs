@@ -1,4 +1,4 @@
-﻿namespace ModernPantryBackend.Services
+﻿namespace ModernPantryBackend.Interfaces
 {
     public interface IBaseService<T>
     {

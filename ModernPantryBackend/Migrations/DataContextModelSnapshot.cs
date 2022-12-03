@@ -22,7 +22,7 @@ namespace ModernPantryBackend.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("ModernPantryBackend.Models.SecondTestModel", b =>
+            modelBuilder.Entity("ModernPantryBackend.Models.Category", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -36,22 +36,69 @@ namespace ModernPantryBackend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SecondTestModels");
+                    b.ToTable("Categories");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Name = "N1"
+                            Name = "Dairy"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "N2"
+                            Name = "Alcochol"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Bread"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Fruid"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Vegetables"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Conserves"
                         });
                 });
 
-            modelBuilder.Entity("ModernPantryBackend.Models.TestModel", b =>
+            modelBuilder.Entity("ModernPantryBackend.Models.CategoryProduct", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CategoryId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CategoriesProducts");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = 1,
+                            ProductId = 1
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            ProductId = 2
+                        });
+                });
+
+            modelBuilder.Entity("ModernPantryBackend.Models.Pantry", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,38 +110,238 @@ namespace ModernPantryBackend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SecondTestModelId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("SecondTestModelId");
-
-                    b.ToTable("TestModels");
+                    b.ToTable("Pantries");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Name = "T1",
-                            SecondTestModelId = 1
+                            Name = "My Pantry 1"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "T2",
-                            SecondTestModelId = 2
+                            Name = "My Pantry 2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Our Pantry"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Very Nice Storehouse"
                         });
                 });
 
-            modelBuilder.Entity("ModernPantryBackend.Models.TestModel", b =>
+            modelBuilder.Entity("ModernPantryBackend.Models.PantryUser", b =>
                 {
-                    b.HasOne("ModernPantryBackend.Models.SecondTestModel", "SecondTestModel")
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PantryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "PantryId");
+
+                    b.HasIndex("PantryId");
+
+                    b.ToTable("PantriesUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            PantryId = 1
+                        },
+                        new
+                        {
+                            UserId = 1,
+                            PantryId = 2
+                        },
+                        new
+                        {
+                            UserId = 1,
+                            PantryId = 3
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            PantryId = 3
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            PantryId = 4
+                        });
+                });
+
+            modelBuilder.Entity("ModernPantryBackend.Models.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("AddDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ExpieryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PantryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PantryId");
+
+                    b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AddDate = new DateTime(2022, 11, 13, 14, 53, 56, 812, DateTimeKind.Local).AddTicks(4291),
+                            Name = "Goat Milk",
+                            PantryId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AddDate = new DateTime(2022, 11, 13, 14, 53, 56, 812, DateTimeKind.Local).AddTicks(4338),
+                            Count = 6,
+                            Name = "Mocny Full",
+                            PantryId = 1
+                        });
+                });
+
+            modelBuilder.Entity("ModernPantryBackend.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "test@test.com",
+                            Password = "123",
+                            Username = "TestUser1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "test@test.com",
+                            Password = "123",
+                            Username = "TestUser2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "test@test.com",
+                            Password = "123",
+                            Username = "TestUser3"
+                        });
+                });
+
+            modelBuilder.Entity("ModernPantryBackend.Models.CategoryProduct", b =>
+                {
+                    b.HasOne("ModernPantryBackend.Models.Category", "Category")
+                        .WithMany("CategoryProduct")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ModernPantryBackend.Models.Product", "Product")
+                        .WithMany("CategoryProduct")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("ModernPantryBackend.Models.PantryUser", b =>
+                {
+                    b.HasOne("ModernPantryBackend.Models.Pantry", "Pantry")
+                        .WithMany("PantryUser")
+                        .HasForeignKey("PantryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ModernPantryBackend.Models.User", "User")
+                        .WithMany("PantryUser")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pantry");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("ModernPantryBackend.Models.Product", b =>
+                {
+                    b.HasOne("ModernPantryBackend.Models.Pantry", "Pantry")
                         .WithMany()
-                        .HasForeignKey("SecondTestModelId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("PantryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("SecondTestModel");
+                    b.Navigation("Pantry");
+                });
+
+            modelBuilder.Entity("ModernPantryBackend.Models.Category", b =>
+                {
+                    b.Navigation("CategoryProduct");
+                });
+
+            modelBuilder.Entity("ModernPantryBackend.Models.Pantry", b =>
+                {
+                    b.Navigation("PantryUser");
+                });
+
+            modelBuilder.Entity("ModernPantryBackend.Models.Product", b =>
+                {
+                    b.Navigation("CategoryProduct");
+                });
+
+            modelBuilder.Entity("ModernPantryBackend.Models.User", b =>
+                {
+                    b.Navigation("PantryUser");
                 });
 #pragma warning restore 612, 618
         }

@@ -16,19 +16,19 @@ const notifications = [
     },
     {
         id: 2,
-        label: 'You need to resupply on beer'
+        label: 'Water is about to run out'
     },
     {
         id: 3,
-        label: 'You need to resupply on beer'
+        label: 'You need to resupply on Cola'
     },
     {
         id: 4,
-        label: 'You need to resupply on beer'
+        label: 'Bread is about to run out'
     },
     {
         id: 5,
-        label: 'You need to resupply on beer'
+        label: 'Cheese is about to expire'
     },
 ];
 

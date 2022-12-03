@@ -6,6 +6,8 @@ import { Grid, CardActionArea, CardMedia, Typography, CardActions, Button, Card,
 import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import postService from '../services/post-service';
+import Transitions from '../components/Transition';
+import Share from '../components/Share'
 
 export default class Dashboard extends Component {
 
@@ -137,224 +139,223 @@ export default class Dashboard extends Component {
       return (
         <>
           <Drawer></Drawer>
-          <div class="container">
-            <div class="pantry-result">
-              <div id="pantry" style={{ paddingLeft: "56px" }}>
-                <Card sx={{ maxWidth: 345 }}>
-                  <CardActionArea>
-                    <CardMedia
-                      component="img"
-                      height="200"
-                      image="https://i.imgur.com/LeAXVOG.png"
-                      alt="pantry image"
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        Beach House
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Ut dictum laoreet libero, eu facilisis erat fringilla rutrum.
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  <CardActions>
-                  <Grid
-                    container
-                    direction="row"
-                    justifyContent="flex-start"
-                >
-                    <Button size="small" color="inherit" href="#">
-                      Enter
-                    </Button>
-                    </Grid>
-                    <Button style={{ justifyContent: 'flex-end' }} size="small" color="inherit" href="#">
-                      Share
-                    </Button>
-                  </CardActions>
-                </Card>
+          <Transitions>
+            <div class="container">
+              <div class="pantry-result">
+                <div id="pantry" style={{ paddingLeft: "56px" }}>
+                  <Card sx={{ maxWidth: 345 }}>
+                    <CardActionArea>
+                      <CardMedia
+                        component="img"
+                        height="200"
+                        image="https://i.imgur.com/LeAXVOG.png"
+                        alt="pantry image"
+                      />
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                          Beach House
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                          Ut dictum laoreet libero, eu facilisis erat fringilla rutrum.
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                    <CardActions>
+                      <Grid
+                        container
+                        direction="row"
+                        justifyContent="flex-start"
+                      >
+                        <Button size="small" color="inherit" href="/pantry">
+                          Enter
+                        </Button>
+                      </Grid>
+                      <Share></Share>
+                    </CardActions>
+                  </Card>
 
-                <Card sx={{ maxWidth: 345 }}>
-                  <CardActionArea>
-                    <CardMedia
-                      component="img"
-                      height="200"
-                      image="https://i.imgur.com/LeAXVOG.png"
-                      alt="pantry image"
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        Miami
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Ut dictum laoreet libero, eu facilisis erat fringilla rutrum.
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  <CardActions>
-                  <Grid
-                    container
-                    direction="row"
-                    justifyContent="flex-start"
-                >
-                    <Button size="small" color="inherit" href="#">
-                      Enter
-                    </Button>
-                    </Grid>
-                    <Button style={{ justifyContent: 'flex-end' }} size="small" color="inherit" href="#">
-                      Share
-                    </Button>
-                  </CardActions>
-                </Card>
+                  <Card sx={{ maxWidth: 345 }}>
+                    <CardActionArea>
+                      <CardMedia
+                        component="img"
+                        height="200"
+                        image="https://i.imgur.com/LeAXVOG.png"
+                        alt="pantry image"
+                      />
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                          Miami
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                          Ut dictum laoreet libero, eu facilisis erat fringilla rutrum.
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                    <CardActions>
+                      <Grid
+                        container
+                        direction="row"
+                        justifyContent="flex-start"
+                      >
+                        <Button size="small" color="inherit" href="#">
+                          Enter
+                        </Button>
+                      </Grid>
+                      <Button style={{ justifyContent: 'flex-end' }} size="small" color="inherit" href="/miami">
+                        Share
+                      </Button>
+                    </CardActions>
+                  </Card>
 
-                <Card sx={{ maxWidth: 345 }}>
-                  <CardActionArea>
-                    <CardMedia
-                      component="img"
-                      height="200"
-                      image="https://i.imgur.com/LeAXVOG.png"
-                      alt="pantry image"
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        Los Angeles
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Ut dictum laoreet libero, eu facilisis erat fringilla rutrum.
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  <CardActions>
-                  <Grid
-                    container
-                    direction="row"
-                    justifyContent="flex-start"
-                >
-                    <Button size="small" color="inherit" href="#">
-                      Enter
-                    </Button>
-                    </Grid>
-                    <Button style={{ justifyContent: 'flex-end' }} size="small" color="inherit" href="#">
-                      Share
-                    </Button>
-                  </CardActions>
-                </Card>
+                  <Card sx={{ maxWidth: 345 }}>
+                    <CardActionArea>
+                      <CardMedia
+                        component="img"
+                        height="200"
+                        image="https://i.imgur.com/LeAXVOG.png"
+                        alt="pantry image"
+                      />
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                          Los Angeles
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                          Ut dictum laoreet libero, eu facilisis erat fringilla rutrum.
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                    <CardActions>
+                      <Grid
+                        container
+                        direction="row"
+                        justifyContent="flex-start"
+                      >
+                        <Button size="small" color="inherit" href="#">
+                          Enter
+                        </Button>
+                      </Grid>
+                      <Button style={{ justifyContent: 'flex-end' }} size="small" color="inherit" href="#">
+                        Share
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </div>
               </div>
+              <button
+                type="button"
+                className={`bg-black text-white w-20 rounded h-8 font-bold`}
+                onClick={this.handleClick}
+              >
+                {("Create")}
+              </button>
             </div>
-            <button
-              type="button"
-              className={`bg-black text-white w-2 rounded h-8 font-bold`}
-              onClick={this.handleClick}
-            >
-              {("Create")}
-            </button>
-          </div>
-
+          </Transitions>
         </>
       );
     } else {
       return (
         <>
           <Drawer></Drawer>
-          <Grid
-            container
-            spacing={0}
-            direction="column"
-            alignItems="center"
-            justify="center"
-            style={{ minHeight: '80vh' }}
-          >
-            <Grid item xs={3}>
-              <Card style={{ width: '40rem', marginTop: '20px' }} elevation={5}>
-                <p className="pt-4 pl-2 text-medium">
-                  Create your pantry
-                </p>
-                <CardContent>
-                  {this.state.message && (
-                    <p className="mb-4 text-xs text-red-primary">
-                      {this.state.message}
-                    </p>
-                  )}
-                  <form noValidate autoComplete="off" onSubmit={this.handleCreatePost}>
-
-
-                    {this.state.fileSubmitError && (
-                      <Button
-                        style={{
-                          color: this.state.fileError ? '#ffffff' : 'white',
-                          borderColor: this.state.fileError ? '#d32f2f' : 'white'
-                        }}
-                        variant="text"
-                        startIcon={<AddPhotoAlternateOutlinedIcon />}
-                        onClick={this.onClickSelectFile}
-                      >
-                        {('Upload image')}
-                      </Button>
+          <Transitions>
+            <Grid
+              container
+              spacing={0}
+              direction="column"
+              alignItems="center"
+              justify="center"
+              style={{ minHeight: '80vh' }}
+            >
+              <Grid item xs={3}>
+                <Card style={{ width: '40rem', marginTop: '20px' }} elevation={5}>
+                  <p className="pt-4 pl-2 text-medium">
+                    Create your pantry
+                  </p>
+                  <CardContent>
+                    {this.state.message && (
+                      <p className="mb-4 text-xs text-red-primary">
+                        {this.state.message}
+                      </p>
                     )}
+                    <form noValidate autoComplete="off" onSubmit={this.handleCreatePost}>
 
-                    {!this.state.fileSubmitError && (
+
+                      {this.state.fileSubmitError && (
+                        <Button
+                          style={{
+                            color: this.state.fileError ? '#ffffff' : 'white',
+                            borderColor: this.state.fileError ? '#d32f2f' : 'white'
+                          }}
+                          variant="text"
+                          startIcon={<AddPhotoAlternateOutlinedIcon />}
+                          onClick={this.onClickSelectFile}
+                        >
+                          {('Upload image')}
+                        </Button>
+                      )}
+
+                      {!this.state.fileSubmitError && (
+                        <Button
+                          disabled
+                          style={{ color: 'white' }}
+                          variant="text"
+                          startIcon={<AddPhotoAlternateOutlinedIcon />}
+                          onClick={this.onClickSelectFile}
+                        >
+                          {('Upload successful')}
+                        </Button>
+                      )}
+
+                      <input
+                        hidden
+                        type="file"
+                        style={{ display: 'none' }}
+                        ref={this.fileInputRef}
+                        accept="image/*"
+                        onChange={this.onChangeSaveFile}
+                      />
+
+                      <TextField
+                        onChange={this.onChangeTitle}
+                        style={{ marginTop: '10px' }}
+                        label={('Pantry Name')}
+                        variant="outlined"
+                        fullWidth
+                        required
+                        color="secondary"
+                        error={this.state.titleError}
+                      />
+
+                      <TextField
+                        onChange={this.onChangeDescription}
+                        label={('Description')}
+                        style={{ marginTop: '10px' }}
+                        variant="outlined"
+                        fullWidth
+                        required
+                        multiline
+                        color="secondary"
+                        rows={4}
+                        error={this.state.descriptionError}
+                      />
+
                       <Button
-                        disabled
-                        style={{ color: 'white' }}
+                        style={{ marginTop: '24px', color: 'white' }}
+                        type="submit"
                         variant="text"
-                        startIcon={<AddPhotoAlternateOutlinedIcon />}
-                        onClick={this.onClickSelectFile}
-                      >
-                        {('Upload successful')}
+                        color="secondary"
+                        endIcon={<SendOutlinedIcon />}>
+                        {('Create')}
                       </Button>
-                    )}
 
-                    <input
-                      hidden
-                      type="file"
-                      style={{ display: 'none' }}
-                      ref={this.fileInputRef}
-                      accept="image/*"
-                      onChange={this.onChangeSaveFile}
-                    />
-
-                    <TextField
-                      onChange={this.onChangeTitle}
-                      style={{ marginTop: '10px' }}
-                      label={('Pantry Name')}
-                      variant="outlined"
-                      fullWidth
-                      required
-                      color="secondary"
-                      error={this.state.titleError}
-                    />
-
-                    <TextField
-                      onChange={this.onChangeDescription}
-                      label={('Description')}
-                      style={{ marginTop: '10px' }}
-                      variant="outlined"
-                      fullWidth
-                      required
-                      multiline
-                      color="secondary"
-                      rows={4}
-                      error={this.state.descriptionError}
-                    />
-
-                    <Button
-                      style={{ marginTop: '24px', color: 'white' }}
-                      type="submit"
-                      variant="text"
-                      color="secondary"
-                      endIcon={<SendOutlinedIcon />}>
-                      {('Create')}
-                    </Button>
-
-
-
-                  </form>
-                </CardContent>
-              </Card>
+                    </form>
+                  </CardContent>
+                </Card>
+              </Grid>
             </Grid>
-          </Grid>
+          </Transitions>
         </>
       );
     }

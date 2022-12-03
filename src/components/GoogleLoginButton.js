@@ -15,6 +15,8 @@ function LoginButton() {
 		console.log("jwt: ", response.credential);
 	}
 
+	/* global google */
+
 	useEffect(() => {
 		google.accounts.id.initialize({
 			client_id: clientId,
@@ -24,7 +26,7 @@ function LoginButton() {
 		google.accounts.id.renderButton(document.getElementById("googleSignIn"), {
 			theme: "outline",
 			size: "large",
-			width: "300px",
+			width: "291",
 		});
 	}, []);
 

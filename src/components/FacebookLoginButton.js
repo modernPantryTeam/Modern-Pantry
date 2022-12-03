@@ -17,7 +17,7 @@ function FacebookLoginButton() {
 			// fields='name,email,picture'
 			render={renderProps => (
 				<button className='fb-login-btn' onClick={renderProps.onClick}>
-					Facebook Login <FacebookOutlinedIcon className='fb-login-icon' />
+					Continue with Facebook <FacebookOutlinedIcon className='fb-login-icon' />
 				</button>
 			)}
 		/>

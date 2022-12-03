@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  
+
   width: 100%;
   background: url(https://makviphomeservices.com/wp-content/uploads/2022/03/pantryOrganization.png) repeat;
   background-size: cover;
@@ -422,6 +422,11 @@ video {
   margin-right: auto;
 }
 
+.mx-1 {
+  margin-left: 1rem;
+  margin-right: auto;
+}
+
 .mr-1 {
   margin-right: 0.25rem;
 }
@@ -514,6 +519,11 @@ video {
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+.px-26 {
+  padding-left: 7rem;
+  padding-right: 7rem;
 }
 
 .py-5 {
@@ -738,6 +748,16 @@ video {
 @keyframes pulse {
   50% {
     opacity: .5;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
   }
 }
 
@@ -1135,7 +1155,12 @@ body {
 
 
 /* Media Queries */
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 0px) {
+  #pantry {
+    display: grid;
+    gap: 2rem;
+  }
+  
   .pantry-search-box {
     width: 540px;
     margin-left: auto;
@@ -1170,16 +1195,54 @@ body {
 }
 
 .centerd {
-  margin: auto;
-  width: 60%;
-  }
+  margin-left: 3.5rem;
+  width: 85%;
+}
 
-  .ds {
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 20px 0px;
-  }
+.centerd1 {
+  margin-left: 3.75rem;
+  width: 85%;
+}
 
-  .darkthemebg
-  {
-    opacity: 1;
-    background-color: #1e1e1e;
-  }
+.ds {
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 20px 0px;
+}
+
+.darkthemebg {
+  opacity: 1;
+  background-color: #1e1e1e;
+}
+
+.homeborder {
+  border: #fff solid 4.5px;
+}
+
+.home {
+  flex-direction: column-reverse;
+}
+
+.hometext {
+  font-size: 1.70rem;
+  line-height: 2.25rem;
+}
+
+.animate-in {
+    -webkit-animation: fadeIn .5s ease-in;
+    animation: fadeIn .5s ease-in;
+}
+
+.animate-out {
+    -webkit-transition: opacity .5s;
+    transition: opacity .5s;
+    opacity: 0;
+}
+
+@-webkit-keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

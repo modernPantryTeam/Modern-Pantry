@@ -18,6 +18,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped(sp => new HttpClient());
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ModernPantryDBConnection")));
@@ -27,6 +30,7 @@ builder.Services.AddScoped(typeof(IProductRepository), typeof(ProductRepository)
 
 builder.Services.AddScoped(typeof(IPantryService), typeof(PantryService));
 builder.Services.AddScoped(typeof(IProductService), typeof(ProductService));
+builder.Services.AddScoped(typeof(ICategoryService), typeof(CategoryService));
 
 var app = builder.Build();
 

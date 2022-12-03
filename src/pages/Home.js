@@ -1,25 +1,25 @@
-
 import * as React from 'react'
 import Headbar from '../components/Headbar'
-import Sidebar from '../components/Sidebar'
-import Offcanvas from 'react-bootstrap/Offcanvas'
+import Transitions from '../components/Transition'
 
 function Home() {
 
   return (
     <>
       <Headbar></Headbar>
-      <div className="justify-center flex items-center h-screen">
-        <div className="flex justify-center items-center flex-col w-fullrounded text-black blurred pr-5 h-12">
-          <p className="text-main">
-            Modern Pantry
-          </p>
-          <p className="text-medium">
-            Your virtual storeroom
-          </p>
+      <Transitions>
+        <div className="justify-center flex items-center h-screen home md:flex-row lg:flex-row sm:flex-row">
+          <div className="px-20 py-8 md:px-10 text-center homeborder darkthemebg">
+            <div className="hometext sm:text-5xl">
+              Modern Pantry
+            </div>
+            <p className="text-center md:text-base">
+              Your virtual storeroom
+            </p>
+          </div>
+          <img type="image" src="https://i.imgur.com/YtiHDru.png"></img>
         </div>
-        <input type="image" src="https://i.imgur.com/YtiHDru.png"></input>
-      </div>
+      </Transitions>
     </>
   );
 }

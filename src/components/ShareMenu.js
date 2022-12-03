@@ -2,7 +2,7 @@ import React from 'react'
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-const BasicMenu = ({ anchorEl, handleClose, open, menuItems }) => {
+const ShareMenu = ({ anchorEl, handleClose, open, menuItems }) => {
   return (
     <Menu
       anchorEl={anchorEl}
@@ -13,6 +13,9 @@ const BasicMenu = ({ anchorEl, handleClose, open, menuItems }) => {
         <MenuItem
           onClick={handleClose}
         >
+          <a href>
+            <input type="image" alt="pantry logo" src="https://i.imgur.com/IgrB5TO.png"></input>
+          </a>
           {item.label}
         </MenuItem>
       ))}
@@ -21,4 +24,4 @@ const BasicMenu = ({ anchorEl, handleClose, open, menuItems }) => {
   )
 }
 
-export default BasicMenu
+export default ShareMenu

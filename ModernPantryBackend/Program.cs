@@ -22,6 +22,9 @@ builder.Services.AddControllers().AddFluentValidation();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped(sp => new HttpClient());
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ModernPantryDBConnection")));
@@ -33,6 +36,7 @@ builder.Services.AddScoped(typeof(IPasswordHasher<User>), typeof(PasswordHasher<
 
 builder.Services.AddScoped(typeof(IPantryService), typeof(PantryService));
 builder.Services.AddScoped(typeof(IProductService), typeof(ProductService));
+
 builder.Services.AddScoped(typeof(IAccountService), typeof(AccountService));
 
 builder.Services.AddScoped(typeof(IValidator<CreateUserDto>), typeof(CreateUserDtoValidator));
@@ -54,6 +58,9 @@ builder.Services.AddIdentity<User, IdentityRole<int>>(opt =>
 
 builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
 builder.Services.AddSingleton<IEmailSender, SmtpEmailSender>();
+
+builder.Services.AddScoped(typeof(ICategoryService), typeof(CategoryService));
+
 
 var app = builder.Build();
 

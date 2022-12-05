@@ -5,6 +5,7 @@
         public UserMapperProfile()
         {
             CreateMap<User, GetUserDTO>();
+            CreateMap<CreateUserDto, User>();
         }
     }
 }

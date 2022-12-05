@@ -1,10 +1,13 @@
-﻿namespace ModernPantryBackend.Data
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
+namespace ModernPantryBackend.Data
 {
-    public class DataContext : DbContext
-    {
+    public class DataContext : IdentityDbContext<User, IdentityRole<int>, int>
+    { 
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
-        public DbSet<User> Users { get; set; }
+        //public DbSet<User> Users { get; set; }
         public DbSet<Pantry> Pantries { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
@@ -24,11 +27,12 @@
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             //Database Seed
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, Email = "test@test.com", Password = "123", Username = "TestUser1" },
-                new User { Id = 2, Email = "test@test.com", Password = "123", Username = "TestUser2" },
-                new User { Id = 3, Email = "test@test.com", Password = "123", Username = "TestUser3" }
+                new User { Id = 1, Email = "test@test.com", PasswordHash = "123", UserName = "TestUser1" },
+                new User { Id = 2, Email = "test@test.com", PasswordHash = "123", UserName = "TestUser2" },
+                new User { Id = 3, Email = "test@test.com", PasswordHash = "123", UserName = "TestUser3" }
             );
             modelBuilder.Entity<Pantry>().HasData(
                 new Pantry { Id = 1, Name = "My Pantry 1" },

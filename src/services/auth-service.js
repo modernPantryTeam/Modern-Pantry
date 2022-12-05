@@ -6,7 +6,7 @@ const apiUrl = "https://localhost:7183";
 class authService {
     async login(username, password) {
         const email = "";
-        return await axios.post(apiUrl + "/User/auth/login", {
+        return await axios.post(apiUrl + "/api/Account/Login", {
             username,
             password,
             email
@@ -24,7 +24,7 @@ class authService {
     }
 
     async register(username, password, email) {
-        return await axios.post(apiUrl + "/User/auth/register", {
+        return await axios.post(apiUrl + "/api/Account/Register", {
             username,
             password,
             email

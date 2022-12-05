@@ -2,7 +2,7 @@ import axios from "axios";
 import authService from "./auth-service";
 import authHeader from "./auth-header";
 
-const apiUrl = "https://localhost:7045";
+const apiUrl = "https://localhost:7183";
 
 class postService {
     async createPost(title, description, file, fileName) {

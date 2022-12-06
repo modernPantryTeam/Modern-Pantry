@@ -1,15 +1,16 @@
 import axios from "axios";
 import userService from "./user-service";
 
-const apiUrl = "https://localhost:7045";
+const apiUrl = "https://localhost:7183";
 
 class authService {
+
     async login(username, password) {
         const email = "";
-        return await axios.post(apiUrl + "/User/auth/login", {
+        return await axios.post(apiUrl + "/api/Account/Login", {
             username,
             password,
-            email
+            email,
         }).then(response => {
             if (response.data.token) {
                 localStorage.setItem("user", JSON.stringify(response.data));
@@ -24,7 +25,7 @@ class authService {
     }
 
     async register(username, password, email) {
-        return await axios.post(apiUrl + "/User/auth/register", {
+        return await axios.post(apiUrl + "/api/Account/Register", {
             username,
             password,
             email

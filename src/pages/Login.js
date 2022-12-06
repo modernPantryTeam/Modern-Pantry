@@ -3,7 +3,6 @@ import Headbar from "../components/Headbar";
 import authService from "../services/auth-service";
 import { Component } from "react";
 import userService from "../services/user-service";
-import logger from "../logger/logger";
 import GoogleLoginButton from "../components/GoogleLoginButton";
 import FacebookLoginButton from "../components/FacebookLoginButton";
 import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
@@ -63,8 +62,6 @@ export default class Login extends Component {
 						window.location.reload();
 					},
 					error => {
-						logger.log("Login.js");
-						logger.error(error);
 						const resMessage =
 							(error.response &&
 								error.response.data &&
@@ -79,8 +76,6 @@ export default class Login extends Component {
 				);
 			},
 			error => {
-				logger.log("Login.js");
-				logger.error(error);
 				const resMessage =
 					(error.response &&
 						error.response.data &&

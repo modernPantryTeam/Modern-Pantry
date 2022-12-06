@@ -1,5 +1,4 @@
 import axios from "axios";
-import userService from "./user-service";
 
 const apiUrl = "https://localhost:7183";
 

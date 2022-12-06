@@ -5,22 +5,8 @@ import { Component } from "react";
 import userService from "../services/user-service";
 import GoogleLoginButton from "../components/GoogleLoginButton";
 import FacebookLoginButton from "../components/FacebookLoginButton";
-import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 import "../sass/css/login.css";
-import GoogleIcon from "@mui/icons-material/Google";
-import GitHubIcon from "@mui/icons-material/GitHub";
 import Transitions from '../components/Transition'
-
-
-const addDataIntoCache = (cacheName, url, response) => {
-	const data = new Response(JSON.stringify(response));
-
-	if ("caches" in window) {
-		caches.open(cacheName).then(cache => {
-			cache.put(url, data);
-		});
-	}
-};
 
 export default class Login extends Component {
 	constructor(props) {

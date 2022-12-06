@@ -12,8 +12,6 @@ import Pantry from './pages/Pantry'
 import AddProduct from './pages/AddProduct'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { useLocation, useHistory } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
 import "./index.css";
 
 import authService from "./services/auth-service";

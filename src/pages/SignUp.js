@@ -163,6 +163,11 @@ export default class SignUp extends Component {
                 <h1 className="flex justify-center w-full">
                   <img src="https://i.imgur.com/YtiHDru.png" alt="Pantry" className="mt-2" />
                 </h1>
+                {this.state.message && (
+									<p className="mb-4 text-xs text-red-primary">
+										{this.state.message}
+									</p>
+								)}
                   <form
                     onSubmit={this.handleRegister}
                   >

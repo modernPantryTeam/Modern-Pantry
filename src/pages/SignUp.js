@@ -163,44 +163,6 @@ export default class SignUp extends Component {
                 <h1 className="flex justify-center w-full">
                   <img src="https://i.imgur.com/YtiHDru.png" alt="Pantry" className="mt-2" />
                 </h1>
-
-                {this.state.successful && (
-                  <form
-                    onSubmit={this.handleProfile}
-                  >
-
-                    <input
-                      type="text"
-                      placeholder="First name"
-                      className="text-sm text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
-                      onChange={this.onChangeName}
-                      value={this.state.Name}
-                    />
-
-                    <input
-                      type="text"
-                      placeholder="Last name"
-                      className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2"
-                      onChange={this.onChangeLastname}
-                      value={this.state.lastname}
-                    />
-
-                    <input
-                      type="text"
-                      placeholder=""
-                      className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2"
-                      onChange={this.onChangeDescription}
-                      value={this.state.description}
-                    />
-                    <button
-                      type="submit"
-                      className={`bg-blue-medium text-white w-full rounded h-8 font-bold`}
-                    >
-                      {this.state.loading && ("...")}
-                    </button>
-                  </form>)}
-                {!this.state.successful && <p className="mb-4 text-xs text-red-primary">{this.state.message}</p>}
-                {!this.state.successful && (
                   <form
                     onSubmit={this.handleRegister}
                   >
@@ -239,7 +201,7 @@ export default class SignUp extends Component {
                       Sign Up
                       {this.state.loading && ("...")}
                     </button>
-                  </form>)}
+                  </form>
               </div>
             </div>
           </div>

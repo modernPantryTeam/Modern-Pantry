@@ -20,12 +20,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
 {
 
-    options.AddDefaultPolicy(
+    options.AddPolicy("corspolicy",
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000", "https://localhost:3000")
-                .AllowAnyHeader()
-                .AllowAnyMethod();
+            policy.WithOrigins("http://localhost:3000")
+                .AllowAnyMethod()
+                .AllowAnyHeader();
         });
 });
 
@@ -82,8 +82,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("corspolicy");
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
-app.UseCors();

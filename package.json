@@ -3,7 +3,6 @@
 	"version": "0.1.0",
 	"homepage": "https://zayooo00.github.io/Modern-Pantry/",
 	"private": true,
-	"proxy": "https://localhost:7183/",
 	"dependencies": {
 		"@emotion/react": "^11.8.2",
 		"@emotion/styled": "^11.8.1",

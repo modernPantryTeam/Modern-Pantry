@@ -1,6 +1,4 @@
 import React from 'react'
-import Badge from '@mui/material/Badge';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import ShareMenu from './ShareMenu';
@@ -13,6 +11,7 @@ const QR = [
     },
 ];
 
+// eslint-disable-next-line no-empty-pattern
 const Share = ({}) => {
     const [open, setOpen] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);

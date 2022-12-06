@@ -1,5 +1,5 @@
 import React, { Suspense, Component } from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
@@ -12,61 +12,72 @@ import Pantry from './pages/Pantry'
 import AddProduct from './pages/AddProduct'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { useLocation, useHistory } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
 import "./index.css";
 
+import authService from "./services/auth-service";
+
 const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-  typography: {
-    fontFamily: 'Quicksand',
-    fontWeightLight: 400,
-    fontWeightRegular: 500,
-    fontWeightMedium: 600,
-    fontWeightBold: 700,
+	palette: {
+		mode: "dark",
+	},
+	typography: {
+		fontFamily: "Quicksand",
+		fontWeightLight: 400,
+		fontWeightRegular: 500,
+		fontWeightMedium: 600,
+		fontWeightBold: 700,
+	},
+});
+
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loggedIn: authService.loggedIn(),
+    };
   }
-})
 
-const Animated = () => {
-  const location = useLocation();
-  return (
-    <Suspense fallback="Loading..." >
+  render() {
+    return(
+      <Suspense fallback="Loading..." >
       <>
-        <ThemeProvider theme={darkTheme}>
-          <CssBaseline />
-          <AnimatePresence exitBeforeEnter >
-            <Switch location={location}
-              key={location.pathname}>
-              <Route exact path="/" component={Home}></Route>
-              <Route path="/login" component={Login}></Route>
-              <Route path="/sign-up" component={SignUp}></Route>
-              <Route path="/dashboard" component={Dashboard}></Route>
-              <Route path="/create" component={Create}></Route>
-              <Route path="/profile" component={Profile}></Route>
-              <Route path="/statistics" component={Statistics}></Route>
-              <Route path="/pantry" component={Pantry}></Route>
-              <Route path="/add-product" component={AddProduct}></Route>
-              <Route component={NotFound} />
-            </Switch>
-          </AnimatePresence>
-        </ThemeProvider>
-      </>
-    </Suspense>
-  )
-}
-
-function App() {
-  return (
-    <div>
-      <>
+      <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
         <Router>
-          <Animated />
+          <Switch>
+            <Route exact path="/">
+              {this.state.loggedIn ? <Redirect to="/dashboard" /> : <Home />}
+            </Route>
+            <Route path="/login">
+              {this.state.loggedIn ? <Redirect to="/profile" /> : <Login />}
+            </Route>
+            <Route path="/sign-up">
+              {this.state.loggedIn ? <Redirect to="/" /> : <SignUp />}
+            </Route>
+            <Route path="/create">
+              {!this.state.loggedIn ? <Redirect to="/login" /> : <Create />}
+            </Route>
+            <Route path="/profile">
+              {!this.state.loggedIn ? <Redirect to="/login" /> : <Profile />}
+            </Route>
+            <Route path="/dashboard">
+              {!this.state.loggedIn ? <Redirect to="/login" /> : <Dashboard />}
+            </Route>
+            <Route path="/statistics">
+              {!this.state.loggedIn ? <Redirect to="/login" /> : <Statistics />}
+            </Route>
+            <Route path="/pantry">
+              {!this.state.loggedIn ? <Redirect to="/login" /> : <Pantry />}
+            </Route>
+            <Route path="/add-product">
+              {!this.state.loggedIn ? <Redirect to="/login" /> : <AddProduct />}
+            </Route>
+            <Route component={NotFound} />
+          </Switch>
         </Router>
-      </>
-    </div>
-  );
+      </ThemeProvider>
+    </>
+    </Suspense>
+    );
+  }
 }
-
-export default App;

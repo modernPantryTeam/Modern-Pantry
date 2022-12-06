@@ -1,52 +1,52 @@
 import axios from "axios";
-import userService from "./user-service";
 
-const apiUrl = "https://localhost:7045";
+const apiUrl = "https://localhost:7183";
 
 class authService {
-    async login(username, password) {
-        const email = "";
-        return await axios.post(apiUrl + "/User/auth/login", {
-            username,
-            password,
-            email
-        }).then(response => {
-            if (response.data.token) {
-                localStorage.setItem("user", JSON.stringify(response.data));
-            }
-            return response.data;
-        }
-        );
-    }
+	async login(username, password) {
+		const email = "";
+		return await axios
+			.post(apiUrl + "/api/Account/Login", {
+				username,
+				password,
+				email,
+			})
+			.then(response => {
+				if (response.data.token) {
+					localStorage.setItem("user", JSON.stringify(response.data));
+				}
+				return response.data;
+			});
+	}
 
-    logout() {
-        localStorage.removeItem("user");
-    }
+	logout() {
+		localStorage.removeItem("user");
+	}
 
-    async register(username, password, email) {
-        return await axios.post(apiUrl + "/User/auth/register", {
-            username,
-            password,
-            email
-        });
-    }
+	async register(username, password, email) {
+		return await axios.post(apiUrl + "/api/Account/Register", {
+			username,
+			password,
+			email,
+		});
+	}
 
-    getCurrentUser() {
-        while(localStorage.getItem("user") == null);
-        return JSON.parse(localStorage.getItem("user"));
-    }
+	getCurrentUser() {
+		while (localStorage.getItem("user") == null);
+		return JSON.parse(localStorage.getItem("user"));
+	}
 
-    loggedIn() {
-        if (localStorage.getItem("user") === null) {
-            return false;
-        }
-        return true;
-    }
+	loggedIn() {
+		if (localStorage.getItem("user") === null) {
+			return false;
+		}
+		return true;
+	}
 
-    getToken() {
-        const user = this.getCurrentUser();
-        return user.token;
-    }
+	getToken() {
+		const user = this.getCurrentUser();
+		return user.token;
+	}
 }
 
 export default new authService();

@@ -13,7 +13,8 @@ What is Modern Pantry? It is an application that we have created so that people 
 - collects information about your preserves and notifies you about closing in expiry dates
 - offers statistics and summaries
 - allows you to create your own pantry and share it with friends
-- and much more.
+- view your own pantry by using QR code
+- and much more
 
 ### Getting started
 - Install[![Node][node.js]][node-url]

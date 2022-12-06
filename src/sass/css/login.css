@@ -1,11 +1,33 @@
 .social-row {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  width: 150%;
+  display: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 90%;
+}
+
+.fb-login-btn {
+  position: relative;
+  width: 100%;
+  text-align: center;
+  color: #4267b2;
+  margin-top: 10px;
+  padding: 5px 0;
+  border: 1px solid #4267b2;
+  border-radius: 5px;
+  font-weight: bold;
+  -webkit-transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.3s, color 0.3s;
+}
+.fb-login-btn:hover {
+  background-color: #4267b2;
+  color: #fff;
+}
+
+.fb-login-icon {
+  position: absolute;
+  right: 10px;
+  top: 5px;
 }
 
 .icon {

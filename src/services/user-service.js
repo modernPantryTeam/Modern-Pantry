@@ -2,7 +2,7 @@ import axios from "axios";
 import authHeader from "./auth-header";
 import authService from "./auth-service";
 
-const apiUrl = "https://localhost:7045";
+const apiUrl = "https://localhost:7183";
 
 class userService {
     async login() {

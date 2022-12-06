@@ -3,24 +3,76 @@ global using Microsoft.EntityFrameworkCore;
 global using System.Linq.Expressions;
 global using ModernPantryBackend.Models;
 global using ModernPantryBackend.Data;
-global using ModernPantryBackend.Services.TestModelService;
-global using ModernPantryBackend.Services.SecondTestModelService;
-global using ModernPantryBackend.Repositories.BaseRepository;
-global using ModernPantryBackend.Repositories.TestModelRepository;
+global using AutoMapper;
+global using Microsoft.Extensions.DependencyInjection;
+global using ModernPantryBackend.Interfaces;
+global using ModernPantryBackend.Repositories;
+global using System.Net;
+global using ModernPantryBackend.Services;
+global using ModernPantryBackend.Models.DTOs;
+using Microsoft.AspNetCore.Identity;
+using FluentValidation;
+using ModernPantryBackend.Models.Validators;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddCors(options =>
+{
+
+    options.AddPolicy("corspolicy",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000")
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
+
+builder.Services.AddControllers().AddFluentValidation();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddScoped(sp => new HttpClient());
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ModernPantryDBConnection")));
 builder.Services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
-builder.Services.AddTransient(typeof(ITestModelRepository), typeof(TestModelRepository));
+builder.Services.AddScoped(typeof(IPantryRepository), typeof(PantryRepository));
+builder.Services.AddScoped(typeof(IProductRepository), typeof(ProductRepository));
+builder.Services.AddScoped(typeof(IAccountRepository), typeof(AccountRepository));
+builder.Services.AddScoped(typeof(IPasswordHasher<User>), typeof(PasswordHasher<User>));
 
-builder.Services.AddScoped(typeof(ITestModelService), typeof(TestModelService));
-builder.Services.AddScoped(typeof(ISecondTestModelService), typeof(SecondTestModelService));
+builder.Services.AddScoped(typeof(IPantryService), typeof(PantryService));
+builder.Services.AddScoped(typeof(IProductService), typeof(ProductService));
+
+builder.Services.AddScoped(typeof(IAccountService), typeof(AccountService));
+
+builder.Services.AddScoped(typeof(IValidator<CreateUserDto>), typeof(CreateUserDtoValidator));
+builder.Services.AddScoped(typeof(IValidator<LoginUserDto>), typeof(LoginUserDtoValidator));
+builder.Services.AddAuthentication();
+builder.Services.AddIdentity<User, IdentityRole<int>>(opt =>
+{
+    opt.Password.RequiredLength = 7;
+    opt.Password.RequireDigit = true;
+    opt.Password.RequireUppercase = true;
+    opt.Password.RequireNonAlphanumeric = false;
+
+    opt.User.RequireUniqueEmail = true;
+
+    opt.SignIn.RequireConfirmedEmail = true;
+})
+.AddEntityFrameworkStores<DataContext>()
+.AddDefaultTokenProviders();
+
+builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
+builder.Services.AddSingleton<IEmailSender, SmtpEmailSender>();
+
+builder.Services.AddScoped(typeof(ICategoryService), typeof(CategoryService));
+
 
 var app = builder.Build();
 
@@ -30,6 +82,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("corspolicy");
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

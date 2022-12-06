@@ -16,7 +16,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import "bootstrap/dist/css/bootstrap.min.css";
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import WButtonCustom from './WButtonCustom'
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
@@ -25,7 +24,6 @@ import { Grid } from '@mui/material'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import NotificationBell from './NotificationBell'
-import NotificationBellSidebar from './NotificationBellSidebar';
 
 const drawerWidth = 240;
 

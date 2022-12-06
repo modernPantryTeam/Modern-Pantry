@@ -19,13 +19,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-
     options.AddDefaultPolicy(
-        policy =>
+        builder =>
         {
-            policy.WithOrigins("http://localhost:3000", "https://localhost:3000")
-                .AllowAnyHeader()
-                .AllowAnyMethod();
+            builder.AllowAnyOrigin();
+            builder.AllowAnyHeader();
+            builder.AllowAnyMethod();
         });
 });
 
@@ -73,7 +72,6 @@ builder.Services.AddSingleton<IEmailSender, SmtpEmailSender>();
 
 builder.Services.AddScoped(typeof(ICategoryService), typeof(CategoryService));
 
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -84,6 +82,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
+app.UseAuthentication();
 app.MapControllers();
 app.Run();
 app.UseCors();

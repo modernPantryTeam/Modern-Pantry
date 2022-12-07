@@ -73,7 +73,6 @@ builder.Services.AddSingleton<IEmailSender, SmtpEmailSender>();
 
 builder.Services.AddScoped(typeof(ICategoryService), typeof(CategoryService));
 
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -85,5 +84,6 @@ if (app.Environment.IsDevelopment())
 app.UseCors("corspolicy");
 app.UseHttpsRedirection();
 app.UseAuthorization();
+app.UseAuthentication();
 app.MapControllers();
 app.Run();

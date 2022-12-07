@@ -25,7 +25,6 @@ namespace ModernPantryBackend.Controllers
         [HttpPost("Register")]
         public async Task<ServiceResponse> RegisterUser([FromBody] CreateUserDto model)
         {
-            //return await _accountService.CreateUser(model);
             var user = _mapper.Map<User>(model);
             var result = await _userManager.CreateAsync(user, model.Password);
 
@@ -49,11 +48,11 @@ namespace ModernPantryBackend.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        public async Task<ServiceResponse> ConfirmEmail(string userId, string token)
         {
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
-                return NotFound();
+                return ServiceResponse.Error("User not found.", HttpStatusCode.NotFound);
             var result = await _userManager.ConfirmEmailAsync(user, token);
 
             if (!result.Succeeded)
@@ -65,18 +64,19 @@ namespace ModernPantryBackend.Controllers
                     line = error.Description + " ";
                     errorMessage += line;
                 }
-                return BadRequest(errorMessage);
+                return ServiceResponse.Error(errorMessage, HttpStatusCode.BadRequest);
             }
-            return Ok();
+            return ServiceResponse.Success("Email confirmed.");
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> LoginUser([FromBody] LoginUserDto model)
+        public async Task<ServiceResponse> LoginUser([FromBody] LoginUserDto model)
         {
             var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
             if (!result.Succeeded)
-               return Unauthorized("Ivalid username or password. Maybe you should confirm verifcation e-mail"); 
-            return Ok();
+                return ServiceResponse.Error("Ivalid username or password. Maybe you should confirm verifcation e-mail",
+                    HttpStatusCode.Unauthorized);
+            return ServiceResponse.Success("Login successful.");
         }
     }
 }

@@ -45,7 +45,7 @@ namespace ModernPantryBackend.Controllers
             var confirmationLink = Url.ActionLink("ConfirmEmail", "Account", new { userId = user.Id.ToString(), @token = token });
             await _emailSender.SendEmailAsync("pantry.modern@gmail.com", user.Email, "Confirm your email address", confirmationLink);
 
-            return ServiceResponse.Success("User added.");
+            return ServiceResponse.Success("Account has been created, please check your email.");
         }
 
         [HttpGet]

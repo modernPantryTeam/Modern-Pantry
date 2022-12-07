@@ -78,10 +78,6 @@ export default class SignUp extends Component {
             successful: true,
             loading: false
           });
-          authService.login(
-            this.state.username,
-            this.state.password
-          )
         },
         error => {
           const resMessage = (
@@ -116,22 +112,6 @@ export default class SignUp extends Component {
             message: response.data.message,
             loading: false
           });
-          userService.login().then(
-            () => {
-              window.location.reload();
-            },
-            error => {
-              const resMessage = (
-                error.response &&
-                error.response.data &&
-                error.response.data.message) ||
-                error.message ||
-                error.toString();
-              this.setState({
-                loading: false,
-                message: resMessage
-              });
-            });
         },
         error => {
           console.log(error);
@@ -164,7 +144,7 @@ export default class SignUp extends Component {
                   <img src="https://i.imgur.com/YtiHDru.png" alt="Pantry" className="mt-2" />
                 </h1>
                 {this.state.message && (
-									<p className="mb-4 text-xs text-red-primary">
+									<p className="text-xs text-black">
 										{this.state.message}
 									</p>
 								)}

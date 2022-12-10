@@ -10,7 +10,8 @@ global using ModernPantryBackend.Repositories;
 global using System.Net;
 global using ModernPantryBackend.Services;
 global using ModernPantryBackend.Models.DTOs;
-using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Identity;
+global using System.Security.Claims;
 using FluentValidation;
 using ModernPantryBackend.Models.Validators;
 using FluentValidation.AspNetCore;
@@ -71,6 +72,7 @@ builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp")
 builder.Services.AddSingleton<IEmailSender, SmtpEmailSender>();
 
 builder.Services.AddScoped(typeof(ICategoryService), typeof(CategoryService));
+builder.Services.AddScoped(typeof(IHelperService), typeof(HelperService));
 
 var app = builder.Build();
 
@@ -84,5 +86,17 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseAuthentication();
 app.MapControllers();
+
+app.Use(async (http, next) =>
+{
+    if (http.User.FindFirstValue(ClaimTypes.NameIdentifier) == null && !http.Request.Path.Value.Contains("api/Account"))
+    {
+        http.Response.StatusCode = 401;
+        http.Response.WriteAsJsonAsync("User not logged in.");
+    }
+    else await next();
+});
+
 app.Run();
 app.UseCors();
+

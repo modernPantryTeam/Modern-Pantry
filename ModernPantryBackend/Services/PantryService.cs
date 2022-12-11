@@ -1,4 +1,6 @@
-﻿namespace ModernPantryBackend.Services
+﻿using ModernPantryBackend.Models;
+
+namespace ModernPantryBackend.Services
 {
     public class PantryService : IPantryService
     {
@@ -6,26 +8,26 @@
         private readonly IBaseRepository<PantryUser> _pantryUserRepository;
         private readonly IBaseRepository<User> _userRepository;
         private readonly IMapper _mapper;
-        private readonly IHttpContextAccessor _contextAccessor;
         private readonly IHelperService _helperService;
 
-        public PantryService(IPantryRepository pantryRepository, IMapper mapper, IBaseRepository<PantryUser> pantryUserRepository, IBaseRepository<User> userRepository, IHttpContextAccessor contextAccessor, IHelperService helperService)
+        public PantryService(IPantryRepository pantryRepository, IMapper mapper, IBaseRepository<PantryUser> pantryUserRepository,
+            IBaseRepository<User> userRepository, IHelperService helperService)
         {
             _pantryRepository = pantryRepository;
             _mapper = mapper;
             _pantryUserRepository = pantryUserRepository;
             _userRepository = userRepository;
-            _contextAccessor = contextAccessor;
             _helperService = helperService;
         }
 
         public async Task<ServiceResponse> Create(CreatePantryDTO model)
         {
-            var currentUser = await _helperService.GetUser(_contextAccessor);
+            var currentUser = await _helperService.GetCurrentlyLoggedInUser();
             if (currentUser == null)
             {
-                return ServiceResponse.Error("User not found.");
+                return ServiceResponse.Error("Logged in user not found.");
             }
+
             var newPantry = await _pantryRepository.Create(_mapper.Map<Pantry>(model));
             await _pantryUserRepository.Create(new PantryUser { PantryId = newPantry.Id, UserId = currentUser.Id });
             return ServiceResponse.Success("Pantry added.");
@@ -39,20 +41,13 @@
                 return ServiceResponse.Error("Pantry not found.");
             }
 
-            var currentUser = await _helperService.GetUser(_contextAccessor);
-            if (currentUser == null)
+            var pantryUserPairQuery = await _helperService.GetPantryUserPair(pantry.Id, true);
+            if (!pantryUserPairQuery.SuccessStatus)
             {
-                return ServiceResponse.Error("User not found.");
+                return ServiceResponse.Error(pantryUserPairQuery.Message);
             }
 
-            var pantryUserPair = (await _pantryUserRepository
-                .FindByConditions(pu => pu.UserId == currentUser.Id && pu.PantryId == pantry.Id)).FirstOrDefault();
-            if (pantryUserPair == null)
-            {
-                return ServiceResponse.Error("User does not belong to pantry.");
-            }
-
-            await _pantryUserRepository.Delete(pantryUserPair);
+            await _pantryUserRepository.Delete(pantryUserPairQuery.Content);
             await _pantryRepository.Delete(pantry);
             return ServiceResponse.Success("Pantry deleted.");
         }
@@ -65,17 +60,10 @@
                 return ServiceResponse.Error("Pantry not found.");
             }
 
-            var currentUser = await _helperService.GetUser(_contextAccessor);
-            if (currentUser == null)
+            var pantryUserPairQuery = await _helperService.GetPantryUserPair(pantry.Id, false);
+            if (!pantryUserPairQuery.SuccessStatus)
             {
-                return ServiceResponse.Error("User not found.");
-            }
-
-            var pantryUserPair = (await _pantryUserRepository
-                .FindByConditions(pu => pu.UserId == currentUser.Id && pu.PantryId == pantry.Id)).FirstOrDefault();
-            if (pantryUserPair == null)
-            {
-                return ServiceResponse.Error("User does not belong to pantry.");
+                return ServiceResponse.Error(pantryUserPairQuery.Message);
             }
 
             pantry.Name = model.Name;
@@ -91,17 +79,10 @@
                 return ServiceResponse.Error("Pantry not found.");
             }
 
-            var currentUser = await _helperService.GetUser(_contextAccessor);
-            if (currentUser == null)
+            var pantryUserPairQuery = await _helperService.GetPantryUserPair(pantry.Id, false);
+            if (!pantryUserPairQuery.SuccessStatus)
             {
-                return ServiceResponse.Error("User not found.");
-            }
-
-            var pantryUserPair = (await _pantryUserRepository
-                .FindByConditions(pu => pu.UserId == currentUser.Id && pu.PantryId == pantry.Id)).FirstOrDefault();
-            if (pantryUserPair == null)
-            {
-                return ServiceResponse.Error("User does not belong to pantry.");
+                return ServiceResponse.Error(pantryUserPairQuery.Message);
             }
 
             var pantryDto = _mapper.Map<GetPantryDTO>(pantry);
@@ -120,10 +101,10 @@
 
         public async Task<ServiceResponse> GetCurrentUserPantries()
         {
-            var currentUser = await _helperService.GetUser(_contextAccessor);
+            var currentUser = await _helperService.GetCurrentlyLoggedInUser();
             if (currentUser == null)
             {
-                return ServiceResponse.Error("User not found.");
+                return ServiceResponse.Error("Logged in user not found.");
             }
 
             var userPantries = await _pantryRepository.GetCurrentUserPantries(currentUser.Id);
@@ -153,17 +134,10 @@
                 return ServiceResponse.Error("Pantry doesn't exist.");
             }
 
-            var currentUser = await _helperService.GetUser(_contextAccessor);
-            if (currentUser == null)
+            var pantryUserPairQuery = await _helperService.GetPantryUserPair(pantryId, false);
+            if (!pantryUserPairQuery.SuccessStatus)
             {
-                return ServiceResponse.Error("User not found.");
-            }
-
-            var pantryUserPair = (await _pantryUserRepository
-                .FindByConditions(pu => pu.UserId == currentUser.Id && pu.PantryId == pantryId)).FirstOrDefault();
-            if (pantryUserPair == null)
-            {
-                return ServiceResponse.Error("User does not belong to pantry.");
+                return ServiceResponse.Error(pantryUserPairQuery.Message);
             }
 
             if (!(await _userRepository.FindByConditions(u => u.Id == userId)).Any())
@@ -187,17 +161,10 @@
                 return ServiceResponse.Error("Pantry doesn't exist.");
             }
 
-            var currentUser = await _helperService.GetUser(_contextAccessor);
-            if (currentUser == null)
+            var pantryUserPairQuery = await _helperService.GetPantryUserPair(pantryId, false);
+            if (!pantryUserPairQuery.SuccessStatus)
             {
-                return ServiceResponse.Error("User not found.");
-            }
-
-            var pantryUserPair = (await _pantryUserRepository
-                .FindByConditions(pu => pu.UserId == currentUser.Id && pu.PantryId == pantryId)).FirstOrDefault();
-            if (pantryUserPair == null)
-            {
-                return ServiceResponse.Error("User does not belong to pantry.");
+                return ServiceResponse.Error(pantryUserPairQuery.Message);
             }
 
             if (!(await _userRepository.FindByConditions(u => u.Id == userId)).Any())

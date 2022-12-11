@@ -2,6 +2,7 @@
 {
     public interface IHelperService
     {
-        public Task<User> GetUser(IHttpContextAccessor contextAccessor);
+        public Task<User> GetCurrentlyLoggedInUser();
+        public Task<ServiceResponse<PantryUser?>> GetPantryUserPair(int pantryId, bool retrievePair);
     }
 }

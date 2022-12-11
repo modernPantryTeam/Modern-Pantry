@@ -75,12 +75,16 @@ export default class Login extends Component {
 			// }
 
 			response => {
-				this.setState({
-					message: response.message,
-					successful: true,
-					loading: false,
-				});
-				console.log(response.message);
+				if (response.successStatus === false) {
+					this.setState({
+						message: response.message,
+						successful: false,
+						loading: false,
+					});
+					console.log(response.message);
+				} else {
+					window.location.reload();
+				}
 			}
 		);
 	}

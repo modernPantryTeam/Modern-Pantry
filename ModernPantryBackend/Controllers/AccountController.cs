@@ -75,7 +75,7 @@ namespace ModernPantryBackend.Controllers
         {
             var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
             if (!result.Succeeded)
-                return ServiceResponse.Error("Ivalid username or password. Maybe you should confirm verifcation e-mail",
+                return ServiceResponse.Error("Ivalid username or password. Maybe you should confirm verifcation e-mail.",
                     HttpStatusCode.Unauthorized);
             return ServiceResponse.Success("Login successful.");
         }

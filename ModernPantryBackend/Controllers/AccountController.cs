@@ -71,18 +71,13 @@ namespace ModernPantryBackend.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> LoginUser([FromBody] LoginUserDto model)
+        public async Task<ServiceResponse> LoginUser([FromBody] LoginUserDto model)
         {
             var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
             if (!result.Succeeded)
-<<<<<<< Updated upstream
-               return Unauthorized("Ivalid username or password. Maybe you should confirm verifcation e-mail"); 
-            return Ok();
-=======
-                return ServiceResponse.Error("Ivalid username or password. Maybe you should confirm verifcation e-mail.",
+                return ServiceResponse.Error("Ivalid username or password. Maybe you should confirm verifcation e-mail",
                     HttpStatusCode.Unauthorized);
             return ServiceResponse.Success("Login successful.");
->>>>>>> Stashed changes
         }
     }
 }

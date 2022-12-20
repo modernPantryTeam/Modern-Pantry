@@ -7,13 +7,12 @@ namespace ModernPantryBackend.Data
     { 
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
-        //public DbSet<User> Users { get; set; }
         public DbSet<Pantry> Pantries { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<PantryUser> PantriesUsers { get; set; }
         public DbSet<CategoryProduct> CategoriesProducts { get; set; }
-
+        public DbSet<PantryInvite> PantryInvites { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -88,6 +87,18 @@ namespace ModernPantryBackend.Data
                 .HasOne(t => t.Product)
                 .WithMany(t => t.CategoryProduct)
                 .HasForeignKey(t => t.ProductId);
+
+            modelBuilder.Entity<PantryInvite>()
+                .HasOne(t => t.Reciever)
+                .WithMany(t => t.RecievedPantryInvites)
+                .HasForeignKey(t => t.RecieverId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<PantryInvite>()
+                .HasOne(t => t.Sender)
+                .WithMany(t => t.SentPantryInvites)
+                .HasForeignKey(t => t.SenderId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

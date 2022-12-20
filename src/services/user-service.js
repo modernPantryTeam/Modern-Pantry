@@ -8,7 +8,7 @@ class userService {
     async login() {
         const user = authService.getCurrentUser();
         const userId = user.id;
-        return await axios.get(apiUrl + "/Profile/" + userId, authHeader).then(response => {
+        return await axios.get(apiUrl + "/api/Account" + userId, authHeader).then(response => {
             if(response.data.name)
                 localStorage.setItem("profile", JSON.stringify(response.data));
                 
@@ -17,23 +17,11 @@ class userService {
         );
     }
 
-    async register(name, lastname, description) {
-        const user = authService.getCurrentUser();
-        const userid = user.id;
-        return await axios.post(apiUrl + "/Profile", {
-            userid,
-            name,
-            lastname,
-            description
-        })
-    }
-
-    async update(userId, name, lastname, description) {
-        return await axios.put(apiUrl + "/Profile/", {
-            userId,
-            name,
-            lastname,
-            description
+    async update(username, password, email) {
+        return await axios.put(apiUrl + "/api/Account", {
+            username,
+            password,
+            email
         }, {
             headers: {
                 Authorization: 'Bearer ' + authService.getToken()

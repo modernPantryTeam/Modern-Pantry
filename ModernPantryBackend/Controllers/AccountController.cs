@@ -79,14 +79,16 @@ namespace ModernPantryBackend.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> LoginUser([FromBody] LoginUserDto model)
+        public async Task<ServiceResponse> LoginUser([FromBody] LoginUserDto model)
         {
             var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
             if (!result.Succeeded)
-               return Unauthorized("Ivalid username or password. Maybe you should confirm verifcation e-mail");
+                return ServiceResponse.Error("Ivalid username or password. Maybe you should confirm verifcation e-mail",
+                     HttpStatusCode.Unauthorized);
             var user = await _userManager.FindByNameAsync(model.UserName);
             if (user == null)
-                return Unauthorized("Ivalid username or password. Maybe you should confirm verifcation e-mail");
+                return ServiceResponse.Error("Ivalid username or password. Maybe you should confirm verifcation e-mail",
+                    HttpStatusCode.Unauthorized);
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
@@ -98,7 +100,7 @@ namespace ModernPantryBackend.Controllers
 
             var tokenHandler = new JwtSecurityTokenHandler();
             string Token = tokenHandler.WriteToken(token);
-            return Ok(Token);
+            return ServiceResponse.Success(Token);
         }
     }
 }

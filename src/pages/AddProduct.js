@@ -1,6 +1,5 @@
 import { Button, Card, CardHeader, CardContent, TextField, Grid, Select } from '@mui/material';
 import React, { Component } from 'react'
-import AddPhotoAlternateOutlinedIcon from '@mui/icons-material/AddPhotoAlternateOutlined';
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 import ButtonCustom from '../components/ButtonCustom'
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
@@ -172,11 +171,11 @@ export default class Create extends Component {
                                                 error={this.state.titleError}
                                             />
 
-                                            <FormControl 
-                                            style={{ marginTop: '10px' }}
-                                            fullWidth
-                                            variant="outlined"
-                                            required
+                                            <FormControl
+                                                style={{ marginTop: '10px' }}
+                                                fullWidth
+                                                variant="outlined"
+                                                required
                                             >
                                                 <InputLabel>Category</InputLabel>
                                                 <Select
@@ -193,12 +192,12 @@ export default class Create extends Component {
                                                 </Select>
                                             </FormControl>
 
-                                            <FormControl 
-                                            style={{ marginTop: '10px' }}
-                                            fullWidth
-                                            variant="outlined"
-                                            color="secondary"
-                                            required
+                                            <FormControl
+                                                style={{ marginTop: '10px' }}
+                                                fullWidth
+                                                variant="outlined"
+                                                color="secondary"
+                                                required
                                             >
                                                 <InputLabel>Units</InputLabel>
                                                 <Select
@@ -217,15 +216,15 @@ export default class Create extends Component {
                                             </FormControl>
 
                                             <TextField
-                                            onChange={this.onChangeTitle}
-                                            style={{ marginTop: '10px' }}
-                                            label={('Quantity')}
-                                            variant="outlined"
-                                            fullWidth
-                                            required
-                                            color="secondary"
-                                            error={this.state.titleError}
-                                        />
+                                                onChange={this.onChangeTitle}
+                                                style={{ marginTop: '10px' }}
+                                                label={('Quantity')}
+                                                variant="outlined"
+                                                fullWidth
+                                                required
+                                                color="secondary"
+                                                error={this.state.titleError}
+                                            />
 
                                             <Button
                                                 style={{ marginTop: '24px', color: 'white' }}

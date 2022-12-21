@@ -1,6 +1,5 @@
 import axios from "axios";
 import authService from "./auth-service";
-import authHeader from "./auth-header";
 
 const apiUrl = "https://localhost:7045";
 

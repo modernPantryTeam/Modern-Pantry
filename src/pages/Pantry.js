@@ -22,7 +22,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import Drawer from '../components/Drawer'
-import { AppBar, Grid } from '@mui/material'
+import { Grid } from '@mui/material'
 import Transitions from '../components/Transition'
 
 function createData(products, category, amount, unit, expiry) {

@@ -9,7 +9,7 @@ import Transitions from '../components/Transition';
 import authService from '../services/auth-service';
 import userService from '../services/user-service';
 
-export default class Profile extends Component {
+export default class User extends Component {
 
     constructor(props) {
         super(props);
@@ -24,7 +24,6 @@ export default class Profile extends Component {
         this.state = {
             open: false,
             currentUser: authService.getCurrentUser(),
-            currentProfile: authService.getCurrentUser(),
             username: "",
             email: "",
             password: "",
@@ -48,9 +47,9 @@ export default class Profile extends Component {
     componentDidMount() {
 
         this.setState({
-            username: this.state.currentProfile.username,
-            email: this.state.currentProfile.email,
-            password: this.state.currentProfile.password
+            username: this.state.currentUser.username,
+            email: this.state.currentUser.email,
+            password: this.state.currentUser.password
         });
 
     }
@@ -76,7 +75,6 @@ export default class Profile extends Component {
     handleUpdate(e) {
         e.preventDefault();
         userService.update(
-            this.state.currentProfile.userId,
             this.state.username,
             this.state.email,
             this.state.password,
@@ -91,7 +89,7 @@ export default class Profile extends Component {
                             updated: true
                         });
                     },
-                    );
+                );
             },
         );
     }
@@ -113,7 +111,7 @@ export default class Profile extends Component {
                                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                                     <CardContent sx={{ flex: '1 0 auto' }}>
                                         <Typography style={{ margin: '20px', paddingLeft: '25px' }} component="div" variant="h5">
-                                        {this.state.currentProfile.username}
+                                            {this.state.currentUser.username}
 
                                         </Typography>
                                     </CardContent>
@@ -148,6 +146,7 @@ export default class Profile extends Component {
                                     </CardContent>
                                     <Box sx={{ display: 'flex', alignItems: 'center', pl: 5, pb: 5, pr: 5, pt: 0 }}>
                                         <form onSubmit={this.handleUpdate}>
+
                                             <input
                                                 type="text"
                                                 onChange={this.onChangeUsername}
@@ -156,7 +155,6 @@ export default class Profile extends Component {
                                                 name="username"
                                             />
 
-
                                             <input
                                                 type="text"
                                                 onChange={this.onChangeEmail}
@@ -164,19 +162,22 @@ export default class Profile extends Component {
                                                 className="text-sm darkthemebg text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
                                                 name="email"
                                             />
+
                                             <input
                                                 type="password"
                                                 onChange={this.onChangePassword}
                                                 value={this.state.password}
                                                 className="text-sm darkthemebg text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
-                                                name="subject"
+                                                name="password"
                                             />
+
                                             <button
                                                 type="submit"
                                                 className={`mt-2 text-white w-40 rounded h-8 font-bold border margin`}
                                             >
                                                 Confirm
                                             </button>
+
                                         </form>
                                     </Box>
                                 </Box>

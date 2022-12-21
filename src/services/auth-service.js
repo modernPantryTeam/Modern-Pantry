@@ -4,15 +4,18 @@ const apiUrl = "https://localhost:7183";
 
 class authService {
 	async login(username, password) {
+		const email = "";
 		return await axios
 			.post(apiUrl + "/api/Account/Login", {
 				username,
 				password,
+				email,
 			})
 			.then(response => {
-				if (response.data.token) {
+				if (response.data.successStatus === true) {
 					localStorage.setItem("user", JSON.stringify(response.data));
 				}
+				// console.log(response.data);
 				return response.data;
 			});
 	}

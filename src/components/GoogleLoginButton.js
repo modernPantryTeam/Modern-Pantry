@@ -1,7 +1,5 @@
 import React from "react";
 import "../sass/css/login.css";
-import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
-import GoogleIcon from "@mui/icons-material/Google";
 // import { GoogleLogin } from "react-google-login";
 // import { refreshTokenSetup } from "../utils/refreshTokenSetup";
 // import { gapi } from "gapi-script";

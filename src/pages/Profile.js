@@ -111,8 +111,7 @@ export default class User extends Component {
                                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                                     <CardContent sx={{ flex: '1 0 auto' }}>
                                         <Typography style={{ margin: '20px', paddingLeft: '25px' }} component="div" variant="h5">
-                                            {this.state.currentUser.username}
-
+                                        {this.state.username}
                                         </Typography>
                                     </CardContent>
                                     <Box sx={{ display: 'flex', alignItems: 'center', pl: 5, pb: 5 }}>
@@ -151,6 +150,7 @@ export default class User extends Component {
                                                 type="text"
                                                 onChange={this.onChangeUsername}
                                                 value={this.state.username}
+                                                placeholder="Username"
                                                 className="text-sm darkthemebg text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
                                                 name="username"
                                             />
@@ -159,6 +159,7 @@ export default class User extends Component {
                                                 type="text"
                                                 onChange={this.onChangeEmail}
                                                 value={this.state.email}
+                                                placeholder="Email"
                                                 className="text-sm darkthemebg text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
                                                 name="email"
                                             />
@@ -167,6 +168,7 @@ export default class User extends Component {
                                                 type="password"
                                                 onChange={this.onChangePassword}
                                                 value={this.state.password}
+                                                placeholder="Password"
                                                 className="text-sm darkthemebg text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
                                                 name="password"
                                             />

@@ -153,6 +153,7 @@ export default class User extends Component {
                                                 placeholder="Username"
                                                 className="text-sm darkthemebg text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
                                                 name="username"
+                                                required
                                             />
 
                                             <input
@@ -162,6 +163,7 @@ export default class User extends Component {
                                                 placeholder="Email"
                                                 className="text-sm darkthemebg text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
                                                 name="email"
+                                                required
                                             />
 
                                             <input
@@ -171,6 +173,7 @@ export default class User extends Component {
                                                 placeholder="Password"
                                                 className="text-sm darkthemebg text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
                                                 name="password"
+                                                required
                                             />
 
                                             <button

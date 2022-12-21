@@ -13,7 +13,6 @@ export default class Dashboard extends Component {
 
   constructor(props) {
     super(props);
-    this.popup = this.popup.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleCreatePost = this.handleCreatePost.bind(this);
     this.onChangeSaveFile = this.onChangeSaveFile.bind(this);
@@ -36,15 +35,6 @@ export default class Dashboard extends Component {
     }
 
     this.fileInputRef = React.createRef();
-  }
-
-  popup(e) {
-    e.preventDefault();
-    emailjs.popup(e.target)
-      .then((result) => {
-      }, (error) => {
-      });
-    e.target.reset()
   }
 
   handleClick(e) {
@@ -133,9 +123,7 @@ export default class Dashboard extends Component {
     }
   }
 
-
   render() {
-    if (!this.state.send) {
       return (
         <>
           <Drawer></Drawer>
@@ -244,120 +232,9 @@ export default class Dashboard extends Component {
                   </Card>
                 </div>
               </div>
-              <button
-                type="button"
-                className={`bg-black text-white w-20 rounded h-8 font-bold`}
-                onClick={this.handleClick}
-              >
-                {("Create")}
-              </button>
             </div>
           </Transitions>
         </>
       );
-    } else {
-      return (
-        <>
-          <Drawer></Drawer>
-          <Transitions>
-            <Grid
-              container
-              spacing={0}
-              direction="column"
-              alignItems="center"
-              justify="center"
-              style={{ minHeight: '80vh' }}
-            >
-              <Grid item xs={3}>
-                <Card style={{ width: '40rem', marginTop: '20px' }} elevation={5}>
-                  <p className="pt-4 pl-2 text-medium">
-                    Create your pantry
-                  </p>
-                  <CardContent>
-                    {this.state.message && (
-                      <p className="mb-4 text-xs text-red-primary">
-                        {this.state.message}
-                      </p>
-                    )}
-                    <form noValidate autoComplete="off" onSubmit={this.handleCreatePost}>
-
-
-                      {this.state.fileSubmitError && (
-                        <Button
-                          style={{
-                            color: this.state.fileError ? '#ffffff' : 'white',
-                            borderColor: this.state.fileError ? '#d32f2f' : 'white'
-                          }}
-                          variant="text"
-                          startIcon={<AddPhotoAlternateOutlinedIcon />}
-                          onClick={this.onClickSelectFile}
-                        >
-                          {('Upload image')}
-                        </Button>
-                      )}
-
-                      {!this.state.fileSubmitError && (
-                        <Button
-                          disabled
-                          style={{ color: 'white' }}
-                          variant="text"
-                          startIcon={<AddPhotoAlternateOutlinedIcon />}
-                          onClick={this.onClickSelectFile}
-                        >
-                          {('Upload successful')}
-                        </Button>
-                      )}
-
-                      <input
-                        hidden
-                        type="file"
-                        style={{ display: 'none' }}
-                        ref={this.fileInputRef}
-                        accept="image/*"
-                        onChange={this.onChangeSaveFile}
-                      />
-
-                      <TextField
-                        onChange={this.onChangeTitle}
-                        style={{ marginTop: '10px' }}
-                        label={('Pantry Name')}
-                        variant="outlined"
-                        fullWidth
-                        required
-                        color="secondary"
-                        error={this.state.titleError}
-                      />
-
-                      <TextField
-                        onChange={this.onChangeDescription}
-                        label={('Description')}
-                        style={{ marginTop: '10px' }}
-                        variant="outlined"
-                        fullWidth
-                        required
-                        multiline
-                        color="secondary"
-                        rows={4}
-                        error={this.state.descriptionError}
-                      />
-
-                      <Button
-                        style={{ marginTop: '24px', color: 'white' }}
-                        type="submit"
-                        variant="text"
-                        color="secondary"
-                        endIcon={<SendOutlinedIcon />}>
-                        {('Create')}
-                      </Button>
-
-                    </form>
-                  </CardContent>
-                </Card>
-              </Grid>
-            </Grid>
-          </Transitions>
-        </>
-      );
-    }
   }
 }

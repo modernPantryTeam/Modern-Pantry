@@ -57,11 +57,11 @@ namespace ModernPantryBackend.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        public async Task<ServiceResponse> ConfirmEmail(string userId, string token)
         {
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
-                return NotFound();
+                return ServiceResponse.Error("User not found.", HttpStatusCode.NotFound);
             var result = await _userManager.ConfirmEmailAsync(user, token);
 
             if (!result.Succeeded)
@@ -73,9 +73,9 @@ namespace ModernPantryBackend.Controllers
                     line = error.Description + " ";
                     errorMessage += line;
                 }
-                return BadRequest(errorMessage);
+                return ServiceResponse.Error(errorMessage, HttpStatusCode.BadRequest);
             }
-            return Ok();
+            return ServiceResponse.Success("Email confirmed.");
         }
 
         [HttpPost("Login")]

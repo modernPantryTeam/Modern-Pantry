@@ -278,6 +278,9 @@ namespace ModernPantryBackend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("PantryId")
+                        .HasColumnType("int");
+
                     b.Property<int>("RecieverId")
                         .HasColumnType("int");
 
@@ -285,6 +288,8 @@ namespace ModernPantryBackend.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PantryId");
 
                     b.HasIndex("RecieverId");
 
@@ -369,14 +374,14 @@ namespace ModernPantryBackend.Migrations
                         new
                         {
                             Id = 1,
-                            AddDate = new DateTime(2022, 12, 12, 16, 59, 2, 992, DateTimeKind.Local).AddTicks(3051),
+                            AddDate = new DateTime(2022, 12, 24, 14, 47, 37, 710, DateTimeKind.Local).AddTicks(5252),
                             Name = "Goat Milk",
                             PantryId = 1
                         },
                         new
                         {
                             Id = 2,
-                            AddDate = new DateTime(2022, 12, 12, 16, 59, 2, 992, DateTimeKind.Local).AddTicks(3090),
+                            AddDate = new DateTime(2022, 12, 24, 14, 47, 37, 710, DateTimeKind.Local).AddTicks(5292),
                             Count = 6,
                             Name = "Mocny Full",
                             PantryId = 1
@@ -455,7 +460,7 @@ namespace ModernPantryBackend.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3365acdc-aa8c-404d-8ca5-6dd0a925a686",
+                            ConcurrencyStamp = "7f510fc9-4ae4-42ed-9af3-b3f3f5883324",
                             Email = "test@test.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -468,7 +473,7 @@ namespace ModernPantryBackend.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "5f01dce5-9751-499f-906d-44e08ebbdb32",
+                            ConcurrencyStamp = "d823dd67-663e-4936-8a1c-d7bb5769870c",
                             Email = "test@test.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -481,7 +486,7 @@ namespace ModernPantryBackend.Migrations
                         {
                             Id = 3,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3fef616d-fb48-46ea-9544-74d7c8f134ad",
+                            ConcurrencyStamp = "def8a242-69db-42a8-9f62-097c1cc99b19",
                             Email = "test@test.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -564,6 +569,12 @@ namespace ModernPantryBackend.Migrations
 
             modelBuilder.Entity("ModernPantryBackend.Models.PantryInvite", b =>
                 {
+                    b.HasOne("ModernPantryBackend.Models.Pantry", "Pantry")
+                        .WithMany()
+                        .HasForeignKey("PantryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ModernPantryBackend.Models.User", "Reciever")
                         .WithMany("RecievedPantryInvites")
                         .HasForeignKey("RecieverId")
@@ -575,6 +586,8 @@ namespace ModernPantryBackend.Migrations
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("Pantry");
 
                     b.Navigation("Reciever");
 

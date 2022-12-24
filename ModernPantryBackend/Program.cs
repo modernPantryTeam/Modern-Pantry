@@ -45,9 +45,12 @@ builder.Services.AddScoped(typeof(IPantryRepository), typeof(PantryRepository));
 builder.Services.AddScoped(typeof(IProductRepository), typeof(ProductRepository));
 builder.Services.AddScoped(typeof(IAccountRepository), typeof(AccountRepository));
 builder.Services.AddScoped(typeof(IPasswordHasher<User>), typeof(PasswordHasher<User>));
+builder.Services.AddScoped(typeof(IPantryInvitesRepository), typeof(PantryInvitesRepository));
 
 builder.Services.AddScoped(typeof(IPantryService), typeof(PantryService));
 builder.Services.AddScoped(typeof(IProductService), typeof(ProductService));
+builder.Services.AddScoped(typeof(IProductService), typeof(ProductService));
+builder.Services.AddScoped(typeof(IPantryInvitesService), typeof(PantryInvitesService));
 
 builder.Services.AddScoped(typeof(IAccountService), typeof(AccountService));
 

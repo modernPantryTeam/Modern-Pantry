@@ -15,6 +15,7 @@ namespace ModernPantryBackend.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    PantryId = table.Column<int>(type: "int", nullable: false),
                     SenderId = table.Column<int>(type: "int", nullable: false),
                     RecieverId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -31,6 +32,12 @@ namespace ModernPantryBackend.Migrations
                         column: x => x.SenderId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PantryInvites_Pantries_PantryId",
+                        column: x => x.PantryId,
+                        principalTable: "Pantries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.UpdateData(
@@ -38,35 +45,40 @@ namespace ModernPantryBackend.Migrations
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "ConcurrencyStamp",
-                value: "3365acdc-aa8c-404d-8ca5-6dd0a925a686");
+                value: "7f510fc9-4ae4-42ed-9af3-b3f3f5883324");
 
             migrationBuilder.UpdateData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "ConcurrencyStamp",
-                value: "5f01dce5-9751-499f-906d-44e08ebbdb32");
+                value: "d823dd67-663e-4936-8a1c-d7bb5769870c");
 
             migrationBuilder.UpdateData(
                 table: "AspNetUsers",
                 keyColumn: "Id",
                 keyValue: 3,
                 column: "ConcurrencyStamp",
-                value: "3fef616d-fb48-46ea-9544-74d7c8f134ad");
+                value: "def8a242-69db-42a8-9f62-097c1cc99b19");
 
             migrationBuilder.UpdateData(
                 table: "Products",
                 keyColumn: "Id",
                 keyValue: 1,
                 column: "AddDate",
-                value: new DateTime(2022, 12, 12, 16, 59, 2, 992, DateTimeKind.Local).AddTicks(3051));
+                value: new DateTime(2022, 12, 24, 14, 47, 37, 710, DateTimeKind.Local).AddTicks(5252));
 
             migrationBuilder.UpdateData(
                 table: "Products",
                 keyColumn: "Id",
                 keyValue: 2,
                 column: "AddDate",
-                value: new DateTime(2022, 12, 12, 16, 59, 2, 992, DateTimeKind.Local).AddTicks(3090));
+                value: new DateTime(2022, 12, 24, 14, 47, 37, 710, DateTimeKind.Local).AddTicks(5292));
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PantryInvites_PantryId",
+                table: "PantryInvites",
+                column: "PantryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PantryInvites_RecieverId",

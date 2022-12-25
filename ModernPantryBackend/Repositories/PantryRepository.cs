@@ -12,7 +12,11 @@
 
         public async Task<IEnumerable<Pantry>> GetCurrentUserPantries(int userId)
         {
-            return await _context.Pantries.Where(p => p.PantryUser.Any(pu => pu.UserId == userId)).ToListAsync();
+            return await _context.Pantries
+                .Where(p => p.PantryUser.Any(pu => pu.UserId == userId))
+                .Include(p => p.Products)
+                .Include(p => p.PantryUser)
+                .ToListAsync();
         }
 
         public async Task RemoveUserFromPantry(int userId, int pantryId)
@@ -35,6 +39,7 @@
         {
             return await _context.Set<Pantry>()
                 .Where(expresion)
+                .Include(p => p.Products)
                 .Include(p => p.PantryUser)
                 .ToListAsync();
         }

@@ -15,8 +15,8 @@
 
         public async Task<bool> PantryInviteExists(int pantryId, int senderId, int recieverId)
         {
-            if (await _context.PantryInvites.AnyAsync(
-                p => p.Id == pantryId 
+            if (await _context.PantryInvites.AnyAsync(p => 
+                p.PantryId == pantryId 
                 && p.SenderId == senderId 
                 && p.RecieverId == recieverId)) return true;
             else return false;

@@ -10,7 +10,7 @@
                     dest.Sender.Username = src.Sender.UserName;
                     dest.Sender.Id = src.Sender.Id;
                     dest.Sender.Email = src.Sender.Email;
-                    dest.InviteId == src.Id;
+                    dest.InviteId = src.Id;
                 });
         }
     }

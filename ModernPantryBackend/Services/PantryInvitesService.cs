@@ -1,6 +1,4 @@
-﻿using ModernPantryBackend.Models;
-
-namespace ModernPantryBackend.Services
+﻿namespace ModernPantryBackend.Services
 {
     public class PantryInvitesService : IPantryInvitesService
     {
@@ -9,16 +7,15 @@ namespace ModernPantryBackend.Services
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly IPantryRepository _pantryRepository;
-        private readonly IBaseRepository<PantryUser> _pantryUserRepository;
 
-        public PantryInvitesService(IPantryInvitesRepository pantryInvitesRepository, IHelperService helperService, IMapper mapper, UserManager<User> userManager, IPantryRepository pantryRepository, IBaseRepository<PantryUser> pantryUserRepository)
+        public PantryInvitesService(IPantryInvitesRepository pantryInvitesRepository, IHelperService helperService,
+            IMapper mapper, UserManager<User> userManager, IPantryRepository pantryRepository)
         {
             _pantryInvitesRepository = pantryInvitesRepository;
             _helperService = helperService;
             _mapper = mapper;
             _userManager = userManager;
             _pantryRepository = pantryRepository;
-            _pantryUserRepository = pantryUserRepository;
         }
 
         public async Task<ServiceResponse> GetCurrentInvites()
@@ -42,15 +39,28 @@ namespace ModernPantryBackend.Services
             {
                 return ServiceResponse.Error("Invited user not found.");
             }
+            if((await _helperService.GetCurrentlyLoggedInUser()).Id != invitedUser.Id)
+            {
+                return ServiceResponse.Error("Cannot process invites that are not yours.");
+            }
 
             if(!await _pantryRepository.PantryExists(pantryInvite.PantryId))
             {
                 return ServiceResponse.Error("Pantry doesn't exist.");
             }
 
-            await _pantryRepository.AddUserToPantry(invitedUser.Id, pantryInvite.PantryId);
-            return ServiceResponse.Success("User added to pantry.");
-
+            string message = "";
+            if (accept)
+            {
+                await _pantryRepository.AddUserToPantry(invitedUser.Id, pantryInvite.PantryId);
+                message = "Invite accepted, user added to pantry.";
+            }
+            else
+            {
+                message = "Invite declined.";
+            }
+            await _pantryInvitesRepository.Delete(pantryInvite);
+            return ServiceResponse.Success(message);
         }
 
         public async Task<ServiceResponse> SendInvite(string inviteRecieverEmail, int pantryId)
@@ -61,17 +71,26 @@ namespace ModernPantryBackend.Services
                 return ServiceResponse.Error("Invited user not found.");
             }
 
-            if (!await _pantryRepository.PantryExists(pantryId))
+            var pantry = (await _pantryRepository.FindByConditions(p => p.Id == pantryId)).FirstOrDefault();
+            if (pantry == null)
             {
                 return ServiceResponse.Error("Pantry not found.");
             }
+            if(pantry.PantryUser.Any(pu => pu.UserId == invitedUser.Id))
+            {
+                return ServiceResponse.Error("User already in pantry");
+            }
 
             var currentUser = await _helperService.GetCurrentlyLoggedInUser();
+            if (!pantry.PantryUser.Any(pu => pu.UserId == currentUser.Id))
+            {
+                return ServiceResponse.Error("Cannot invite users to pantries you are not a member of.");
+            }
             if (await _pantryInvitesRepository.PantryInviteExists(pantryId, currentUser.Id, invitedUser.Id))
             {
                 return ServiceResponse.Error("User already invited.");
             }
-            
+
             await _pantryInvitesRepository.Create(new PantryInvite
             {
                 PantryId = pantryId,

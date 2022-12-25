@@ -15,6 +15,7 @@ global using System.Security.Claims;
 using FluentValidation;
 using ModernPantryBackend.Models.Validators;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -84,6 +85,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseExceptionHandler(c => c.Run(async context =>
+{
+    var exception = context.Features.Get<IExceptionHandlerPathFeature>().Error;
+    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+    await context.Response.WriteAsJsonAsync(ServiceResponse.Error(exception.Message, HttpStatusCode.InternalServerError));
+}));
 
 app.UseHttpsRedirection();
 app.UseAuthorization();

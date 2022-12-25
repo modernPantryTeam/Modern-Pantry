@@ -15,6 +15,7 @@ global using System.Security.Claims;
 using FluentValidation;
 using ModernPantryBackend.Models.Validators;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,9 +47,12 @@ builder.Services.AddScoped(typeof(IPantryRepository), typeof(PantryRepository));
 builder.Services.AddScoped(typeof(IProductRepository), typeof(ProductRepository));
 builder.Services.AddScoped(typeof(IAccountRepository), typeof(AccountRepository));
 builder.Services.AddScoped(typeof(IPasswordHasher<User>), typeof(PasswordHasher<User>));
+builder.Services.AddScoped(typeof(IPantryInvitesRepository), typeof(PantryInvitesRepository));
 
 builder.Services.AddScoped(typeof(IPantryService), typeof(PantryService));
 builder.Services.AddScoped(typeof(IProductService), typeof(ProductService));
+builder.Services.AddScoped(typeof(IProductService), typeof(ProductService));
+builder.Services.AddScoped(typeof(IPantryInvitesService), typeof(PantryInvitesService));
 
 builder.Services.AddScoped(typeof(IAccountService), typeof(AccountService));
 
@@ -83,6 +87,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseExceptionHandler(c => c.Run(async context =>
+{
+    var exception = context.Features.Get<IExceptionHandlerPathFeature>().Error;
+    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+    await context.Response.WriteAsJsonAsync(ServiceResponse.Error(exception.Message, HttpStatusCode.InternalServerError));
+}));
 app.UseCors("corspolicy");
 app.UseHttpsRedirection();
 app.UseAuthorization();

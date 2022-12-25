@@ -17,7 +17,10 @@
 
         public async Task RemoveUserFromPantry(int userId, int pantryId)
         {
-            var pantryUser = await _context.PantriesUsers.FirstOrDefaultAsync(pu => pu.UserId == userId && pu.PantryId == pantryId);
+            var pantryUser = await _context.PantriesUsers.FirstOrDefaultAsync(pu => 
+                pu.UserId == userId 
+                && pu.PantryId == pantryId);
+
             if (pantryUser != null) _context.PantriesUsers.Remove(pantryUser);
             await _context.SaveChangesAsync();
         }
@@ -26,6 +29,14 @@
         {
             if (await _context.Pantries.AnyAsync(p => p.Id == pantryId)) return true;
             else return false;
+        }
+
+        public async override Task<IEnumerable<Pantry>> FindByConditions(Expression<Func<Pantry, bool>> expresion)
+        {
+            return await _context.Set<Pantry>()
+                .Where(expresion)
+                .Include(p => p.PantryUser)
+                .ToListAsync();
         }
     }
 }

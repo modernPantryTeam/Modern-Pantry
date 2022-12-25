@@ -1,6 +1,4 @@
-﻿using ModernPantryBackend.Interfaces;
-
-namespace ModernPantryBackend.Services
+﻿namespace ModernPantryBackend.Services
 {
     public class HelperService : IHelperService
     {
@@ -8,7 +6,8 @@ namespace ModernPantryBackend.Services
         private readonly IBaseRepository<PantryUser> _pantryUserRepository;
         private readonly IHttpContextAccessor _contextAccessor;
 
-        public HelperService(IBaseRepository<User> userRepository, IBaseRepository<PantryUser> pantryUserRepository, IHttpContextAccessor contextAccessor)
+        public HelperService(IBaseRepository<User> userRepository, IBaseRepository<PantryUser> pantryUserRepository,
+            IHttpContextAccessor contextAccessor)
         {
             _userRepository = userRepository;
             _pantryUserRepository = pantryUserRepository;

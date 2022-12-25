@@ -17,7 +17,7 @@ function Home() {
               Your virtual storeroom
             </p>
           </div>
-          <img type="image" src="https://i.imgur.com/YtiHDru.png"></img>
+          <img type="image" src="https://i.imgur.com/YtiHDru.png" alt="pantry"></img>
         </div>
       </Transitions>
     </>

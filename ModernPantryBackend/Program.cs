@@ -21,12 +21,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(
-        builder =>
+
+    options.AddPolicy("corspolicy",
+        policy =>
         {
-            builder.AllowAnyOrigin();
-            builder.AllowAnyHeader();
-            builder.AllowAnyMethod();
+            policy.WithOrigins("http://localhost:3000")
+                .AllowAnyMethod()
+                .AllowAnyHeader();
         });
 });
 
@@ -92,7 +93,7 @@ app.UseExceptionHandler(c => c.Run(async context =>
     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
     await context.Response.WriteAsJsonAsync(ServiceResponse.Error(exception.Message, HttpStatusCode.InternalServerError));
 }));
-
+app.UseCors("corspolicy");
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseAuthentication();

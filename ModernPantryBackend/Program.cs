@@ -109,7 +109,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseAuthentication();
 
 app.UseExceptionHandler(c => c.Run(async context =>
 {

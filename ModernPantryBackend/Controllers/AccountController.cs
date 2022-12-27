@@ -33,7 +33,6 @@ namespace ModernPantryBackend.Controllers
         [HttpPost("Register")]
         public async Task<ServiceResponse> RegisterUser([FromBody] CreateUserDto model)
         {
-            //return await _accountService.CreateUser(model);
             var user = _mapper.Map<User>(model);
             var result = await _userManager.CreateAsync(user, model.Password);
 

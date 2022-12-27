@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import authService from '../services/auth-service';
 import userService from '../services/user-service';
-import logger from '../logger/logger'
 import Headbar from '../components/Headbar';
+import Transitions from '../components/Transition'
 
 export default class SignUp extends Component {
   constructor(props) {
@@ -19,9 +19,6 @@ export default class SignUp extends Component {
       username: "",
       password: "",
       email: "",
-      name: "",
-      lastname: "",
-      description: "",
       successful: false,
       loading: false,
       message: ""
@@ -71,18 +68,11 @@ export default class SignUp extends Component {
       loading: true
     });
 
-    logger.log("SignUp.js")
-    logger.log(this.state.username)
-    logger.log(this.state.password)
-    logger.log(this.state.email)
-
     authService.register(
       this.state.username,
       this.state.password,
       this.state.email).then(
         response => {
-          logger.log("SignUp.js")
-          logger.log(response)
           this.setState({
             message: response.data.message,
             successful: true,
@@ -94,8 +84,6 @@ export default class SignUp extends Component {
           )
         },
         error => {
-          logger.log("SignUp.js")
-          logger.error(error);
           const resMessage = (
             error.response &&
             error.response.data &&
@@ -119,19 +107,11 @@ export default class SignUp extends Component {
       loading: true
     });
 
-
-    logger.log("SignUp.js")
-    logger.log(this.state.name)
-    logger.log(this.state.lastname)
-    logger.log(this.state.description)
-
     userService.register(
       this.state.name,
       this.state.lastname,
       this.state.description).then(
         response => {
-          logger.log("SignUp.js")
-          logger.log(response);
           this.setState({
             message: response.data.message,
             loading: false
@@ -141,8 +121,6 @@ export default class SignUp extends Component {
               window.location.reload();
             },
             error => {
-              logger.log("SignUp.js")
-              logger.error(error)
               const resMessage = (
                 error.response &&
                 error.response.data &&
@@ -156,8 +134,6 @@ export default class SignUp extends Component {
             });
         },
         error => {
-          logger.log("SignUp.js")
-          logger.error(error)
           console.log(error);
           const resMessage = (
             error.response &&
@@ -177,104 +153,65 @@ export default class SignUp extends Component {
     return (
       <><><Headbar></Headbar>
       </>
-        <script src="https://apis.google.com/js/platform.js" async defer></script>
-        <div className="container flex mx-auto items-center h-screen">
-          <div className="flex w-full">
-          </div>
-          <div className="flex flex-col w-4\/5">
-            <div className="flex flex-col items-center bg-white p-4 border border-gray-primary mb-4 rounded">
-              <h1 className="flex justify-center w-full">
-                <img src="https://i.imgur.com/YtiHDru.png" alt="Pantry" className="mt-2" />
-              </h1>
-
-              {this.state.successful && (
-                <form
-                  onSubmit={this.handleProfile}
-                >
-
-                  <input
-                    type="text"
-                    placeholder="First name"
-                    className="text-sm text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
-                    onChange={this.onChangeName}
-                    value={this.state.Name}
-                  />
-
-                  <input
-                    type="text"
-                    placeholder="Last name"
-                    className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2"
-                    onChange={this.onChangeLastname}
-                    value={this.state.lastname}
-                  />
-
-                  <input
-                    type="text"
-                    placeholder=""
-                    className="text-sm text-gray-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2"
-                    onChange={this.onChangeDescription}
-                    value={this.state.description}
-                  />
-                  <button
-                    type="submit"
-                    className={`bg-blue-medium text-white w-full rounded h-8 font-bold`}
-                  >
-                    {this.state.loading && ("...")}
-                  </button>
-                </form>)}
-              {!this.state.successful && <p className="mb-4 text-xs text-red-primary">{this.state.message}</p>}
-              {!this.state.successful && (
-                <form
-                  onSubmit={this.handleRegister}
-                >
-
-                  <input
-                    type="text"
-                    placeholder="Username"
-                    className="text-sm text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
-                    onChange={this.onChangeUsername}
-                    value={this.state.username}
-                    disabled={this.state.successful}
-                  />
-
-                  <input
-                    type="text"
-                    placeholder="Email address"
-                    className="text-sm text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
-                    onChange={this.onChangeEmail}
-                    value={this.state.email}
-                    disabled={this.state.successful}
-                  />
-
-                  <input
-                    type="password"
-                    placeholder="Password"
-                    className="text-sm text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
-                    onChange={this.onChangePassword}
-                    value={this.state.password}
-                    disabled={this.state.successful}
-                  />
-                  <button
-                    disabled={this.state.loading || this.state.successful}
-                    type="submit"
-                    className={`bg-black-medium text-white w-full rounded h-8 font-bold`}
-                  >
-                    Sign Up
-                    {this.state.loading && ("...")}
-                  </button>
-                </form>)}
+        <Transitions>
+          <script src="https://apis.google.com/js/platform.js" async defer></script>
+          <div className="container flex mx-auto items-center h-screen">
+            <div className="sm:w-20 md:w-full lg:w-full">
             </div>
-            <div className="flex justify-center items-center flex-col w-full bg-white p-4 rounded border border-gray-primary">
-              <p className="text-sm text-black">
-                Or continue with:
-              </p>
-              <p className="text-sm text-black">Sign in with Google</p>
-              <p className="text-sm text-black">Sign in with Facebook</p>
-              <p className="text-sm text-black">Sign in with Github</p>
+            <div className="flex flex-col w-4\/5">
+              <div className="flex flex-col items-center bg-white p-4 border border-gray-primary mb-4 rounded">
+                <h1 className="flex justify-center w-full">
+                  <img src="https://i.imgur.com/YtiHDru.png" alt="Pantry" className="mt-2" />
+                </h1>
+                {this.state.message && (
+									<p className="mb-4 text-xs text-red-primary">
+										{this.state.message}
+									</p>
+								)}
+                  <form
+                    onSubmit={this.handleRegister}
+                  >
+
+                    <input
+                      type="text"
+                      placeholder="Username"
+                      className="text-sm text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
+                      onChange={this.onChangeUsername}
+                      value={this.state.username}
+                      disabled={this.state.successful}
+                    />
+
+                    <input
+                      type="text"
+                      placeholder="Email address"
+                      className="text-sm text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
+                      onChange={this.onChangeEmail}
+                      value={this.state.email}
+                      disabled={this.state.successful}
+                    />
+
+                    <input
+                      type="password"
+                      placeholder="Password"
+                      className="text-sm text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
+                      onChange={this.onChangePassword}
+                      value={this.state.password}
+                      disabled={this.state.successful}
+                    />
+                    <button
+                      disabled={this.state.loading || this.state.successful}
+                      type="submit"
+                      className={`bg-black-medium text-white w-full rounded h-8 font-bold`}
+                    >
+                      Sign Up
+                      {this.state.loading && ("...")}
+                    </button>
+                  </form>
+              </div>
             </div>
           </div>
-        </div></>
-
+        </Transitions>
+      </>
     );
   }
 }

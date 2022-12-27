@@ -1,0 +1,22 @@
+.fade-in-anim {
+  -webkit-animation: fade-in-anim 2s forwards;
+          animation: fade-in-anim 2s forwards;
+}
+
+@-webkit-keyframes fade-in-anim {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-anim {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}/*# sourceMappingURL=animations.css.map */

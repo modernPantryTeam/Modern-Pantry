@@ -10,13 +10,15 @@ global using ModernPantryBackend.Repositories;
 global using System.Net;
 global using ModernPantryBackend.Services;
 global using ModernPantryBackend.Models.DTOs;
-using Microsoft.AspNetCore.Identity;
+global using Microsoft.AspNetCore.Identity;
+global using System.Security.Claims;
 using FluentValidation;
 using ModernPantryBackend.Models.Validators;
 using FluentValidation.AspNetCore;
 using ModernPantryBackend.Authentication;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,10 +42,25 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddCors(options =>
+{
+
+    options.AddPolicy("corspolicy",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:3000")
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
+
 builder.Services.AddControllers().AddFluentValidation();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped(sp => new HttpClient());
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -53,9 +70,13 @@ builder.Services.AddScoped(typeof(IPantryRepository), typeof(PantryRepository));
 builder.Services.AddScoped(typeof(IProductRepository), typeof(ProductRepository));
 builder.Services.AddScoped(typeof(IAccountRepository), typeof(AccountRepository));
 builder.Services.AddScoped(typeof(IPasswordHasher<User>), typeof(PasswordHasher<User>));
+builder.Services.AddScoped(typeof(IPantryInvitesRepository), typeof(PantryInvitesRepository));
 
 builder.Services.AddScoped(typeof(IPantryService), typeof(PantryService));
 builder.Services.AddScoped(typeof(IProductService), typeof(ProductService));
+builder.Services.AddScoped(typeof(IProductService), typeof(ProductService));
+builder.Services.AddScoped(typeof(IPantryInvitesService), typeof(PantryInvitesService));
+
 builder.Services.AddScoped(typeof(IAccountService), typeof(AccountService));
 
 builder.Services.AddScoped(typeof(IValidator<CreateUserDto>), typeof(CreateUserDtoValidator));
@@ -78,6 +99,9 @@ builder.Services.AddIdentity<User, IdentityRole<int>>(opt =>
 builder.Services.Configure<SmtpOptions>(builder.Configuration.GetSection("Smtp"));
 builder.Services.AddSingleton<IEmailSender, SmtpEmailSender>();
 
+builder.Services.AddScoped(typeof(ICategoryService), typeof(CategoryService));
+builder.Services.AddScoped(typeof(IHelperService), typeof(HelperService));
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -86,7 +110,29 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseAuthentication();
+
+app.UseExceptionHandler(c => c.Run(async context =>
+{
+    var exception = context.Features.Get<IExceptionHandlerPathFeature>().Error;
+    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+    await context.Response.WriteAsJsonAsync(ServiceResponse.Error(exception.Message, HttpStatusCode.InternalServerError));
+}));
+app.UseCors("corspolicy");
 app.UseHttpsRedirection();
 app.UseAuthorization();
+app.UseAuthentication();
 app.MapControllers();
+
+app.Use(async (http, next) =>
+{
+    if (http.User.FindFirstValue(ClaimTypes.NameIdentifier) == null && !http.Request.Path.Value.Contains("api/Account"))
+    {
+        http.Response.StatusCode = 401;
+        http.Response.WriteAsJsonAsync("User not logged in.");
+    }
+    else await next();
+});
+
 app.Run();
+app.UseCors();
+

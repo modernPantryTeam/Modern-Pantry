@@ -7,8 +7,6 @@ using System.Text;
 
 namespace ModernPantryBackend.Services
 {
-
-
     [AttributeUsage(AttributeTargets.Class)]
     public class CustomAuthorization : Attribute, IAuthorizationFilter
     {

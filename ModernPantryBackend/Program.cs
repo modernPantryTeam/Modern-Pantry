@@ -36,8 +36,10 @@ builder.Services.AddAuthentication(options =>
     cfg.SaveToken = true;
     cfg.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidIssuer = authenticationSettings.JwtIssuer,
-        ValidAudience = authenticationSettings.JwtIssuer,
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        //ValidIssuer = authenticationSettings.JwtIssuer,
+        //ValidAudience = authenticationSettings.JwtIssuer,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey)),
     };
 });
@@ -122,15 +124,15 @@ app.UseAuthorization();
 app.UseAuthentication();
 app.MapControllers();
 
-app.Use(async (http, next) =>
-{
-    if (http.User.FindFirstValue(ClaimTypes.NameIdentifier) == null && !http.Request.Path.Value.Contains("api/Account"))
-    {
-        http.Response.StatusCode = 401;
-        http.Response.WriteAsJsonAsync("User not logged in.");
-    }
-    else await next();
-});
+//app.Use(async (http, next) =>
+//{
+//    if (http.User.FindFirstValue(ClaimTypes.NameIdentifier) == null && !http.Request.Path.Value.Contains("api/Account"))
+//    {
+//        http.Response.StatusCode = 401;
+//        http.Response.WriteAsJsonAsync("User not logged in.");
+//    }
+//    else await next();
+//});
 
 app.Run();
 app.UseCors();

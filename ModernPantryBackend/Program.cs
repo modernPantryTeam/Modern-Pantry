@@ -83,7 +83,7 @@ builder.Services.AddScoped(typeof(IAccountService), typeof(AccountService));
 
 builder.Services.AddScoped(typeof(IValidator<CreateUserDto>), typeof(CreateUserDtoValidator));
 builder.Services.AddScoped(typeof(IValidator<LoginUserDto>), typeof(LoginUserDtoValidator));
-builder.Services.AddAuthentication();
+
 builder.Services.AddIdentity<User, IdentityRole<int>>(opt =>
 {
     opt.Password.RequiredLength = 7;
@@ -123,16 +123,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseAuthentication();
 app.MapControllers();
-
-//app.Use(async (http, next) =>
-//{
-//    if (http.User.FindFirstValue(ClaimTypes.NameIdentifier) == null && !http.Request.Path.Value.Contains("api/Account"))
-//    {
-//        http.Response.StatusCode = 401;
-//        http.Response.WriteAsJsonAsync("User not logged in.");
-//    }
-//    else await next();
-//});
 
 app.Run();
 app.UseCors();

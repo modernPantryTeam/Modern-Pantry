@@ -4,6 +4,7 @@ using System.Net.Http;
 
 namespace ModernPantryBackend.Controllers
 {
+    [CustomAuthorization]
     [Route("api/[controller]")]
     [ApiController]
     public class QRController : ControllerBase

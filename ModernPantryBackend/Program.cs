@@ -100,6 +100,7 @@ builder.Services.AddScoped(typeof(IPantryService), typeof(PantryService));
 builder.Services.AddScoped(typeof(IProductService), typeof(ProductService));
 builder.Services.AddScoped(typeof(IProductService), typeof(ProductService));
 builder.Services.AddScoped(typeof(IPantryInvitesService), typeof(PantryInvitesService));
+builder.Services.AddScoped(typeof(INotificationsService), typeof(NotificationsService));
 
 builder.Services.AddScoped(typeof(IAccountService), typeof(AccountService));
 

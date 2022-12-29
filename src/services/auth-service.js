@@ -15,7 +15,6 @@ class authService {
 				if (response.data.successStatus === true) {
 					localStorage.setItem("user", JSON.stringify(response.data));
 				}
-				// console.log(response.data);
 				return response.data;
 			});
 	}
@@ -46,7 +45,6 @@ class authService {
 
 	getToken() {
 		const user = this.getCurrentUser();
-		console.log(user.message)
 		return user.message;
 	}
 }

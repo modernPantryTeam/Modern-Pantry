@@ -35,10 +35,15 @@ function Dashboard() {
 		// });
 		console.log("clicked");
 	};
+	// window.addEventListener("DOMContentLoaded", () => {
+	// 	pantryService.getPantries().then(response => {
+	// 		console.log(response.content);
+	// 		setPantries(response.content);
+	// 	});
+	// });
 
 	useEffect(() => {
 		pantryService.getPantries().then(response => {
-			console.log(response.content);
 			setPantries(response.content);
 		});
 	});

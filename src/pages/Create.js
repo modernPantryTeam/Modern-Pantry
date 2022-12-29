@@ -37,10 +37,10 @@ export default class Create extends Component {
 				nameError: true,
 			});
 		}
-		authService.getToken();
+
 		pantryService.createPantry(this.state.name).then(response => {
 			this.setState({
-				name: response.message,
+				message: response.message,
 			});
 		});
 	}
@@ -151,6 +151,3 @@ export default class Create extends Component {
 		);
 	}
 }
-
-
-

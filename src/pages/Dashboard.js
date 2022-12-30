@@ -35,19 +35,12 @@ function Dashboard() {
 		// });
 		console.log("clicked");
 	};
-	// window.addEventListener("DOMContentLoaded", () => {
-	// 	pantryService.getPantries().then(response => {
-	// 		console.log(response.content);
-	// 		setPantries(response.content);
-	// 	});
-	// });
-
-	useEffect(() => {
+	document.addEventListener("DOMContentLoaded", () => {
 		pantryService.getPantries().then(response => {
 			setPantries(response.content);
 		});
 	});
-	render();
+
 	if (pantries.length === 0) {
 		return (
 			<>

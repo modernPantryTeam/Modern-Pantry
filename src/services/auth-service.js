@@ -4,12 +4,17 @@ const apiUrl = "https://localhost:7183";
 
 class authService {
 	async login(username, password) {
-		const email = "";
+		var data = JSON.stringify({
+			username: username,
+			password: password,
+		});
+
 		return await axios
-			.post(apiUrl + "/api/Account/Login", {
-				username,
-				password,
-				email,
+			.post(apiUrl + "/api/Account/Login", data, {
+				withCredentials: true,
+				headers: {
+					"Content-Type": "application/json",
+				},
 			})
 			.then(response => {
 				if (response.data.successStatus === true) {

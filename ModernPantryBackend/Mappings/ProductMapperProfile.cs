@@ -13,7 +13,8 @@
                     dest.Name = src.Name;
                     dest.ExpieryDate = src.ExpieryDate;
                     dest.PantryId = src.PantryId;
-                    dest.Count = src.Count;
+                    dest.Amount = src.Amount;
+                    dest.Unit = src.Unit;
                 });
 
             CreateMap<Product, GetProductDTO>();

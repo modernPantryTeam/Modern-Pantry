@@ -44,6 +44,16 @@
                 return ServiceResponse.Error("Invalid categories.");
             }
 
+            if(!Enum.IsDefined<Unit>(model.Unit))
+            {
+                return ServiceResponse.Error("Invalid unit.");
+            }
+
+            if(model.Amount <= 0 || model.Amount > 100000)
+            {
+                return ServiceResponse.Error("Invalid amount.");
+            }
+
             var newProduct = _mapper.Map<Product>(model);
             newProduct.AddDate = DateTime.Now;
             await _productRepository.Create(newProduct, model.CategoryIds);
@@ -86,6 +96,16 @@
                 return ServiceResponse.Error("Product not found.");
             }
 
+            if (!Enum.IsDefined<Unit>(model.Unit))
+            {
+                return ServiceResponse.Error("Invalid unit.");
+            }
+
+            if (model.Amount <= 0 || model.Amount > 100000)
+            {
+                return ServiceResponse.Error("Invalid amount.");
+            }
+
             var pantryUserPairQuery = await _helperService.GetPantryUserPair(product.PantryId, false);
             if (!pantryUserPairQuery.SuccessStatus)
             {
@@ -94,7 +114,8 @@
 
             product.Name = model.Name;
             product.ExpieryDate = model.ExpieryDate;
-            product.Count = model.Count;
+            product.Amount = model.Amount;
+            product.Unit = model.Unit;
 
             await _productRepository.Edit(product, model.CategoryIds);
             return ServiceResponse.Success("Product edited.");

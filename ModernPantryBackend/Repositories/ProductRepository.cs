@@ -1,4 +1,6 @@
-﻿namespace ModernPantryBackend.Repositories
+﻿using System.Linq;
+
+namespace ModernPantryBackend.Repositories
 {
     public class ProductRepository : BaseRepository<Product>, IProductRepository
     {
@@ -47,5 +49,14 @@
             
             await _context.SaveChangesAsync();
         }
+
+        public async override Task<IEnumerable<Product>> FindByConditions(Expression<Func<Product, bool>> expresion)
+        {
+            return await _context.Set<Product>()
+                .Where(expresion)
+                .Include(p => p.CategoryProduct)
+                .ToListAsync();
+        }
     }
+  
 }

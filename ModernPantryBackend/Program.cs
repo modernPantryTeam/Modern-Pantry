@@ -101,6 +101,7 @@ builder.Services.AddScoped(typeof(IProductService), typeof(ProductService));
 builder.Services.AddScoped(typeof(IProductService), typeof(ProductService));
 builder.Services.AddScoped(typeof(IPantryInvitesService), typeof(PantryInvitesService));
 builder.Services.AddScoped(typeof(INotificationsService), typeof(NotificationsService));
+builder.Services.AddScoped(typeof(ISummaryService), typeof(SummaryService));
 
 builder.Services.AddScoped(typeof(IAccountService), typeof(AccountService));
 
@@ -141,6 +142,7 @@ app.UseExceptionHandler(c => c.Run(async context =>
     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
     await context.Response.WriteAsJsonAsync(ServiceResponse.Error(exception.Message, HttpStatusCode.InternalServerError));
 }));
+
 app.UseCors("corspolicy");
 app.UseHttpsRedirection();
 app.UseAuthorization();

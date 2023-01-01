@@ -48,13 +48,13 @@ namespace ModernPantryBackend.Data
                 );
             modelBuilder.Entity<Product>().HasData(
                 new Product { Id = 1, Name = "Goat Milk", PantryId = 1, AddDate = DateTime.Now },
-                new Product { Id = 2, Name = "Mocny Full", PantryId = 1, AddDate = DateTime.Now, Count = 6 }
+                new Product { Id = 2, Name = "Mocny Full", PantryId = 1, AddDate = DateTime.Now, Amount = 6 }
                 );
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Dairy" },
                 new Category { Id = 2, Name = "Alcochol" },
                 new Category { Id = 3, Name = "Bread" },
-                new Category { Id = 4, Name = "Fruid" },
+                new Category { Id = 4, Name = "Fruit" },
                 new Category { Id = 5, Name = "Vegetables" },
                 new Category { Id = 6, Name = "Conserves" }
                 );

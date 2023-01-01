@@ -18,6 +18,7 @@
                 {
                     dest.Name = src.Name;
                     dest.Id = src.Id;
+                    dest.CreationDate = src.CreationDate;
                 });
         }
     }

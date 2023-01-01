@@ -1,4 +1,6 @@
-﻿namespace ModernPantryBackend.Services
+﻿using ModernPantryBackend.Models;
+
+namespace ModernPantryBackend.Services
 {
     public class SummaryService : ISummaryService
     {
@@ -28,7 +30,7 @@
                 return ServiceResponse.Error("User is not a member of this pantry.");
             }
 
-            var products = await _productRepository.FindByConditions(p => p.PantryId == pantryId);
+            var products = await _productRepository.FindByConditions(p => p.PantryId == pantryId, false);
             Summary summary = new();
             var categories = await _categoryRepository.FindAll();
 
@@ -49,22 +51,10 @@
                     AmountPerUnit = AmountPerUnit
                 });
             }
-            summary.TotalItemCount = pantry.Products.Count();
 
+            summary.TotalItemCount = pantry.Products.Count();
+            summary.PantryAge = DateTime.Now - pantry.CreationDate;
             return ServiceResponse<Summary>.Success(summary, "Summary retrieved.");
         }
-    }
-
-    public class Summary
-    {
-        public int TotalItemCount { get; set; } = 0;
-        public List<CategorySummary> CategorySummaries { get; set; } = new();
-    }
-
-    public class CategorySummary
-    {
-        public string CategoryName { get; set; }
-        public int CurrentItemCount { get; set; }
-        public Dictionary<Unit, float> AmountPerUnit { get; set; } = new();
     }
 }

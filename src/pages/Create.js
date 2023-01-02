@@ -72,40 +72,6 @@ export default class Create extends Component {
 												noValidate
 												autoComplete='off'
 												onSubmit={this.handleCreatePantry}>
-												{/* {this.state.fileSubmitError && (
-                                                <Button
-                                                    style={{
-                                                        color: this.state.fileError ? '#ffffff' : 'white',
-                                                        borderColor: this.state.fileError ? '#d32f2f' : 'white'
-                                                    }}
-                                                    variant="text"
-                                                    startIcon={<AddPhotoAlternateOutlinedIcon />}
-                                                    onClick={this.onClickSelectFile}
-                                                >
-                                                    {('Upload image')}
-                                                </Button>
-                                            )} */}
-
-												{/* {!this.state.fileSubmitError && (
-                                                    <Button
-                                                        disabled
-                                                        style={{ color: 'white' }}
-                                                        variant="text"
-                                                        startIcon={<AddPhotoAlternateOutlinedIcon />}
-                                                        onClick={this.onClickSelectFile}
-                                                    >
-                                                        {('Upload successful')}
-                                                    </Button>
-                                                )} */}
-
-												{/* <input
-                                                hidden
-                                                type="file"
-                                                style={{ display: 'none' }}
-                                                ref={this.fileInputRef}
-                                                accept="image/*"
-                                                onChange={this.onChangeSaveFile}
-                                            /> */}
 
 												<TextField
 													onChange={this.onChangeName}
@@ -124,7 +90,6 @@ export default class Create extends Component {
 													style={{ marginTop: "10px" }}
 													variant='outlined'
 													fullWidth
-													required
 													multiline
 													color='secondary'
 													rows={4}

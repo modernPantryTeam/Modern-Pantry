@@ -1,29 +1,14 @@
 import * as React from "react";
-import { useEffect } from "react";
 import { useState } from "react";
-import { Component } from "react";
 import Drawer from "../components/Drawer";
-import emailjs from "emailjs-com";
-import {
-	Grid,
-	CardActionArea,
-	CardMedia,
-	Typography,
-	CardActions,
-	Button,
-	Card,
-	CardContent,
-	TextField,
-} from "@mui/material";
-import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
+import WButtonCustom from '../components/WButtonCustom.js'
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
-import postService from "../services/post-service";
 import pantryService from "../services/pantry-service";
 import Transitions from "../components/Transition";
 import Share from "../components/Share";
-import { render } from "@testing-library/react";
 import "../sass/css/dashboard.css";
-import authService from "../services/auth-service";
+import {Grid, CardActionArea, CardMedia, Typography, CardActions, Button, Card, CardContent} from "@mui/material";
+
 
 function Dashboard() {
 	const [pantries, setPantries] = useState([]);
@@ -48,13 +33,11 @@ function Dashboard() {
 				<Transitions>
 					<section>
 						<div className='pantry-info'>
-							<p className='pantry-info__heading'>
-								You don't own any pantry yet. Click link below to create pantry
+							<p className="text-base text-gray-700 md:text-lg text-white">
+								You don't own any pantry yet, click the link below to create one.
 							</p>
 							<div className='button-box'>
-								<a className='pantry-info__link' href='/create'>
-									Create <SendOutlinedIcon />
-								</a>
+							<WButtonCustom link="/create" name="Create" icon={<SendOutlinedIcon />} />
 							</div>
 						</div>
 					</section>

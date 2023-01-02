@@ -5,18 +5,30 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import Transitions from '../components/Transition'
+import Transitions from '../components/Transition';
+import authService from '../services/auth-service';
+import userService from '../services/user-service';
 
-export default class Profile extends Component {
+export default class User extends Component {
 
     constructor(props) {
         super(props);
 
         this.popup = this.popup.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.handleUpdate = this.handleUpdate.bind(this);
+        this.onChangeUsername = this.onChangeUsername.bind(this);
+        this.onChangeEmail = this.onChangeEmail.bind(this);
+        this.onChangePassword = this.onChangePassword.bind(this);
 
         this.state = {
-            send: false
+            open: false,
+            currentUser: authService.getCurrentUser(),
+            username: "",
+            email: "",
+            password: "",
+            message: "",
+            updated: false
         };
     }
 
@@ -28,12 +40,62 @@ export default class Profile extends Component {
     handleClick(e) {
         e.preventDefault();
         this.setState({
-            send: true
+            open: true
         });
     }
 
+    componentDidMount() {
+
+        this.setState({
+            username: this.state.currentUser.username,
+            email: this.state.currentUser.email,
+            password: this.state.currentUser.password
+        });
+
+    }
+
+    onChangeUsername(e) {
+        this.setState({
+            username: e.target.value
+        });
+    }
+
+    onChangeEmail(e) {
+        this.setState({
+            email: e.target.value
+        });
+    }
+
+    onChangePassword(e) {
+        this.setState({
+            password: e.target.value
+        });
+    }
+
+    handleUpdate(e) {
+        e.preventDefault();
+        userService.update(
+            this.state.username,
+            this.state.email,
+            this.state.password,
+        ).then(
+            response => {
+                this.setState({
+                    message: response.data.message
+                });
+                userService.login().then(
+                    () => {
+                        this.setState({
+                            updated: true
+                        });
+                    },
+                );
+            },
+        );
+    }
+
     render() {
-        if (!this.state.send) {
+        if (!this.state.open) {
             return (
                 <><Drawer />
                     <Transitions>
@@ -49,7 +111,7 @@ export default class Profile extends Component {
                                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                                     <CardContent sx={{ flex: '1 0 auto' }}>
                                         <Typography style={{ margin: '20px', paddingLeft: '25px' }} component="div" variant="h5">
-                                            Username
+                                        {this.state.username}
                                         </Typography>
                                     </CardContent>
                                     <Box sx={{ display: 'flex', alignItems: 'center', pl: 5, pb: 5 }}>
@@ -82,35 +144,45 @@ export default class Profile extends Component {
                                         </Typography>
                                     </CardContent>
                                     <Box sx={{ display: 'flex', alignItems: 'center', pl: 5, pb: 5, pr: 5, pt: 0 }}>
-                                        <form
-                                            onSubmit={this.submit}
-                                        >
+                                        <form onSubmit={this.handleUpdate}>
+
                                             <input
                                                 type="text"
+                                                onChange={this.onChangeUsername}
+                                                value={this.state.username}
                                                 placeholder="Username"
                                                 className="text-sm darkthemebg text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
                                                 name="username"
+                                                required
                                             />
-
 
                                             <input
                                                 type="text"
+                                                onChange={this.onChangeEmail}
+                                                value={this.state.email}
                                                 placeholder="Email"
                                                 className="text-sm darkthemebg text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
                                                 name="email"
+                                                required
                                             />
+
                                             <input
                                                 type="password"
+                                                onChange={this.onChangePassword}
+                                                value={this.state.password}
                                                 placeholder="Password"
                                                 className="text-sm darkthemebg text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
-                                                name="subject"
+                                                name="password"
+                                                required
                                             />
+
                                             <button
                                                 type="submit"
                                                 className={`mt-2 text-white w-40 rounded h-8 font-bold border margin`}
                                             >
                                                 Confirm
                                             </button>
+
                                         </form>
                                     </Box>
                                 </Box>

@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { Card, CardHeader, CardContent, Typography, Grid } from '@mui/material'
+import { Typography} from '@mui/material'
 import WButtonCustom from '../components/WButtonCustom';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import Transitions from '../components/Transition'

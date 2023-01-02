@@ -52,7 +52,7 @@ namespace ModernPantryBackend.Controllers
             var confirmationLink = Url.ActionLink("ConfirmEmail", "Account", new { userId = user.Id.ToString(), @token = token });
             await _emailSender.SendEmailAsync("pantry.modern@gmail.com", user.Email, "Confirm your email address", confirmationLink);
 
-            return ServiceResponse.Success("User added.");
+            return ServiceResponse.Success("Account has been created, please check your email.");
         }
 
         [HttpGet]
@@ -82,11 +82,11 @@ namespace ModernPantryBackend.Controllers
         {
             var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
             if (!result.Succeeded)
-                return ServiceResponse.Error("Ivalid username or password. Maybe you should confirm verifcation e-mail",
+                return ServiceResponse.Error("Ivalid username or password. Maybe you should confirm verifcation e-mail.",
                      HttpStatusCode.Unauthorized);
             var user = await _userManager.FindByNameAsync(model.UserName);
             if (user == null)
-                return ServiceResponse.Error("Ivalid username or password. Maybe you should confirm verifcation e-mail",
+                return ServiceResponse.Error("Ivalid username or password. Maybe you should confirm verifcation e-mai.l",
                     HttpStatusCode.Unauthorized);
             var claims = new List<Claim>()
             {

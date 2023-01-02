@@ -20,6 +20,7 @@ class authService {
 				if (response.data.successStatus === true) {
 					localStorage.setItem("user", JSON.stringify(response.data));
 				}
+				// console.log(response.data);
 				return response.data;
 			});
 	}

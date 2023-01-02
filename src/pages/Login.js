@@ -2,7 +2,6 @@ import React from "react";
 import Headbar from "../components/Headbar";
 import authService from "../services/auth-service";
 import { Component } from "react";
-import userService from "../services/user-service";
 import GoogleLoginButton from "../components/GoogleLoginButton";
 import FacebookLoginButton from "../components/FacebookLoginButton";
 import "../sass/css/login.css";

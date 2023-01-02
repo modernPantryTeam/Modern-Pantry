@@ -22,7 +22,6 @@ import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import { Grid } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import LogoutIcon from "@mui/icons-material/Logout";
 import LogoutButton from "./LogoutButton";
 import NotificationBell from "./NotificationBell";
 

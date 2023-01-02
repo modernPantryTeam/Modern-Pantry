@@ -34,7 +34,7 @@ function Dashboard() {
 					<section>
 						<div className='pantry-info'>
 							<p className="text-base text-gray-700 md:text-lg text-white">
-								You don't own any pantry yet, click the link below to create one.
+								You don't own any pantries, click the button below to create one.
 							</p>
 							<div className='button-box'>
 							<WButtonCustom link="/create" name="Create" icon={<SendOutlinedIcon />} />

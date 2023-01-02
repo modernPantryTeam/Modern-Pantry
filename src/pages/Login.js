@@ -6,6 +6,7 @@ import GoogleLoginButton from "../components/GoogleLoginButton";
 import FacebookLoginButton from "../components/FacebookLoginButton";
 import "../sass/css/login.css";
 import Transitions from "../components/Transition";
+import Spinner from 'react-bootstrap/Spinner';
 
 export default class Login extends Component {
 	constructor(props) {
@@ -41,37 +42,6 @@ export default class Login extends Component {
 		});
 
 		authService.login(this.state.username, this.state.password).then(
-			// () => {
-			// 	userService.login().then(
-			// 		() => {
-			// 			window.location.reload();
-			// 		},
-			// 		error => {
-			// 			const resMessage =
-			// 				(error.response &&
-			// 					error.response.data &&
-			// 					error.response.data.message) ||
-			// 				error.message ||
-			// 				error.toString();
-			// 			this.setState({
-			// 				loading: false,
-			// 				message: resMessage,
-			// 			});
-			// 		}
-			// 	);
-			// },
-			// error => {
-			// 	const resMessage =
-			// 		(error.response &&
-			// 			error.response.data &&
-			// 			error.response.data.message) ||
-			// 		error.message ||
-			// 		error.toString();
-			// 	this.setState({
-			// 		loading: false,
-			// 		message: resMessage,
-			// 	});
-			// }
 
 			response => {
 				if (response.successStatus === false) {
@@ -128,13 +98,14 @@ export default class Login extends Component {
 										onChange={this.onChangePassword}
 										value={this.state.password}
 									/>
-
 									<button
 										type='submit'
 										disabled={this.state.loading}
 										className={`bg-black-medium text-white w-full rounded h-8 font-bold`}>
-										Login
-										{this.state.loading && "..."}
+										Login  
+										{this.state.loading && <Spinner size="sm" animation="border" role="status">
+											<span className="visually-hidden">Logging...</span>
+										</Spinner>}
 									</button>
 								</form>
 							</div>

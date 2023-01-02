@@ -3,6 +3,13 @@ import authService from '../services/auth-service';
 import userService from '../services/user-service';
 import Headbar from '../components/Headbar';
 import Transitions from '../components/Transition'
+import Spinner from 'react-bootstrap/Spinner';
+import { Redirect } from "react-router-dom";
+import {useEffect} from 'react';
+
+const delay = ms => new Promise(
+  resolve => setTimeout(resolve, ms)
+);
 
 export default class SignUp extends Component {
   constructor(props) {
@@ -144,7 +151,7 @@ export default class SignUp extends Component {
                   <img src="https://i.imgur.com/YtiHDru.png" alt="Pantry" className="mt-2" />
                 </h1>
                 {this.state.message && (
-									<p className="text-xs text-black">
+									<p className='mb-4 text-xs text-red-primary'>
 										{this.state.message}
 									</p>
 								)}
@@ -183,8 +190,11 @@ export default class SignUp extends Component {
                       type="submit"
                       className={`bg-black-medium text-white w-full rounded h-8 font-bold`}
                     >
-                      Sign Up
-                      {this.state.loading && ("...")}
+                      Sign Up  
+                      {this.state.loading && <Spinner size="sm" animation="border" role="status">
+											<span className="visually-hidden">Signing up...</span>
+										</Spinner>}
+                    {this.state.successful && <Redirect replace to="/login" />}
                     </button>
                   </form>
               </div>

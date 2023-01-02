@@ -6,5 +6,6 @@
         public string Name { get; set; }
 
         public virtual IEnumerable<PantryUser> PantryUser { get; set; }
+        public virtual IEnumerable<Product> Products { get; set; }
     }
 }

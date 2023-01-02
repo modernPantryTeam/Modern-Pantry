@@ -7,13 +7,12 @@ namespace ModernPantryBackend.Data
     { 
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
-        //public DbSet<User> Users { get; set; }
         public DbSet<Pantry> Pantries { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<PantryUser> PantriesUsers { get; set; }
         public DbSet<CategoryProduct> CategoriesProducts { get; set; }
-
+        public DbSet<PantryInvite> PantryInvites { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -49,13 +48,13 @@ namespace ModernPantryBackend.Data
                 );
             modelBuilder.Entity<Product>().HasData(
                 new Product { Id = 1, Name = "Goat Milk", PantryId = 1, AddDate = DateTime.Now },
-                new Product { Id = 2, Name = "Mocny Full", PantryId = 1, AddDate = DateTime.Now, Count = 6 }
+                new Product { Id = 2, Name = "Mocny Full", PantryId = 1, AddDate = DateTime.Now, Amount = 6 }
                 );
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Dairy" },
                 new Category { Id = 2, Name = "Alcochol" },
                 new Category { Id = 3, Name = "Bread" },
-                new Category { Id = 4, Name = "Fruid" },
+                new Category { Id = 4, Name = "Fruit" },
                 new Category { Id = 5, Name = "Vegetables" },
                 new Category { Id = 6, Name = "Conserves" }
                 );
@@ -88,6 +87,18 @@ namespace ModernPantryBackend.Data
                 .HasOne(t => t.Product)
                 .WithMany(t => t.CategoryProduct)
                 .HasForeignKey(t => t.ProductId);
+
+            modelBuilder.Entity<PantryInvite>()
+                .HasOne(t => t.Reciever)
+                .WithMany(t => t.RecievedPantryInvites)
+                .HasForeignKey(t => t.RecieverId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<PantryInvite>()
+                .HasOne(t => t.Sender)
+                .WithMany(t => t.SentPantryInvites)
+                .HasForeignKey(t => t.SenderId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ModernPantryBackend.Data;
 
@@ -11,9 +12,10 @@ using ModernPantryBackend.Data;
 namespace ModernPantryBackend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20221224134738_pantryInvites")]
+    partial class pantryInvites
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,7 +192,7 @@ namespace ModernPantryBackend.Migrations
                         new
                         {
                             Id = 4,
-                            Name = "Fruit"
+                            Name = "Fruid"
                         },
                         new
                         {
@@ -351,8 +353,8 @@ namespace ModernPantryBackend.Migrations
                     b.Property<DateTime>("AddDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<float>("Amount")
-                        .HasColumnType("real");
+                    b.Property<int?>("Count")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("ExpieryDate")
                         .HasColumnType("datetime2");
@@ -362,9 +364,6 @@ namespace ModernPantryBackend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PantryId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Unit")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -377,20 +376,17 @@ namespace ModernPantryBackend.Migrations
                         new
                         {
                             Id = 1,
-                            AddDate = new DateTime(2022, 12, 31, 15, 46, 43, 729, DateTimeKind.Local).AddTicks(6997),
-                            Amount = 0f,
+                            AddDate = new DateTime(2022, 12, 24, 14, 47, 37, 710, DateTimeKind.Local).AddTicks(5252),
                             Name = "Goat Milk",
-                            PantryId = 1,
-                            Unit = 0
+                            PantryId = 1
                         },
                         new
                         {
                             Id = 2,
-                            AddDate = new DateTime(2022, 12, 31, 15, 46, 43, 729, DateTimeKind.Local).AddTicks(7036),
-                            Amount = 6f,
+                            AddDate = new DateTime(2022, 12, 24, 14, 47, 37, 710, DateTimeKind.Local).AddTicks(5292),
+                            Count = 6,
                             Name = "Mocny Full",
-                            PantryId = 1,
-                            Unit = 0
+                            PantryId = 1
                         });
                 });
 
@@ -466,7 +462,7 @@ namespace ModernPantryBackend.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "437fbd8f-d132-40af-ab4c-9f5aa367c2d9",
+                            ConcurrencyStamp = "7f510fc9-4ae4-42ed-9af3-b3f3f5883324",
                             Email = "test@test.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -479,7 +475,7 @@ namespace ModernPantryBackend.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "30029fcc-b991-40c8-b992-8f7717ca66ad",
+                            ConcurrencyStamp = "d823dd67-663e-4936-8a1c-d7bb5769870c",
                             Email = "test@test.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -492,7 +488,7 @@ namespace ModernPantryBackend.Migrations
                         {
                             Id = 3,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d8c3a9d7-85df-49f5-bf61-f7b50ca1366a",
+                            ConcurrencyStamp = "def8a242-69db-42a8-9f62-097c1cc99b19",
                             Email = "test@test.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
@@ -622,7 +618,7 @@ namespace ModernPantryBackend.Migrations
             modelBuilder.Entity("ModernPantryBackend.Models.Product", b =>
                 {
                     b.HasOne("ModernPantryBackend.Models.Pantry", "Pantry")
-                        .WithMany("Products")
+                        .WithMany()
                         .HasForeignKey("PantryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -638,8 +634,6 @@ namespace ModernPantryBackend.Migrations
             modelBuilder.Entity("ModernPantryBackend.Models.Pantry", b =>
                 {
                     b.Navigation("PantryUser");
-
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("ModernPantryBackend.Models.Product", b =>

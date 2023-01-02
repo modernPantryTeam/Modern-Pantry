@@ -4,14 +4,6 @@
     {
         public PantryRepository(DataContext context) : base(context) { }
 
-        public async override Task<Pantry> Create(Pantry model)
-        {
-            var newPantry = await base.Create(model);
-            await _context.PantriesUsers.AddAsync(new PantryUser { PantryId = newPantry.Id, UserId = 1 });
-            await _context.SaveChangesAsync();
-            return newPantry;
-        }
-
         public async Task AddUserToPantry(int userId, int pantryId)
         {
             await _context.PantriesUsers.AddAsync(new PantryUser { PantryId = pantryId, UserId = userId });
@@ -20,12 +12,19 @@
 
         public async Task<IEnumerable<Pantry>> GetCurrentUserPantries(int userId)
         {
-            return await _context.Pantries.Where(p => p.PantryUser.Any(pu => pu.UserId == userId)).ToListAsync();
+            return await _context.Pantries
+                .Where(p => p.PantryUser.Any(pu => pu.UserId == userId))
+                .Include(p => p.Products)
+                .Include(p => p.PantryUser)
+                .ToListAsync();
         }
 
         public async Task RemoveUserFromPantry(int userId, int pantryId)
         {
-            var pantryUser = await _context.PantriesUsers.FirstOrDefaultAsync(pu => pu.UserId == userId && pu.PantryId == pantryId);
+            var pantryUser = await _context.PantriesUsers.FirstOrDefaultAsync(pu => 
+                pu.UserId == userId 
+                && pu.PantryId == pantryId);
+
             if (pantryUser != null) _context.PantriesUsers.Remove(pantryUser);
             await _context.SaveChangesAsync();
         }
@@ -34,6 +33,15 @@
         {
             if (await _context.Pantries.AnyAsync(p => p.Id == pantryId)) return true;
             else return false;
+        }
+
+        public async override Task<IEnumerable<Pantry>> FindByConditions(Expression<Func<Pantry, bool>> expresion)
+        {
+            return await _context.Set<Pantry>()
+                .Where(expresion)
+                .Include(p => p.Products)
+                .Include(p => p.PantryUser)
+                .ToListAsync();
         }
     }
 }

@@ -7,28 +7,51 @@
         private readonly IBaseRepository<CategoryProduct> _categoryProductRepository;
         private readonly IBaseRepository<Category> _categoryRepository;
         private readonly IPantryRepository _pantryRepository;
+        private readonly IHelperService _helperService;
 
         public ProductService(IProductRepository productRepository, IMapper mapper,
-            IBaseRepository<CategoryProduct> categoryProductRepository, IBaseRepository<Category> categoryRepository, IPantryRepository pantryRepository)
+            IBaseRepository<CategoryProduct> categoryProductRepository, IBaseRepository<Category> categoryRepository,
+            IPantryRepository pantryRepository, IHelperService helperService)
         {
             _productRepository = productRepository;
             _mapper = mapper;
             _categoryProductRepository = categoryProductRepository;
             _categoryRepository = categoryRepository;
             _pantryRepository = pantryRepository;
+            _helperService = helperService;
         }
 
         public async Task<ServiceResponse> Create(CreateProductDTO model)
         {
-            //check if signed-in user belongs to pantry
+            if (!(await _pantryRepository.FindByConditions(p => p.Id == model.PantryId)).Any())
+            {
+                return ServiceResponse.Error("Pantry not found.");
+            }
+
+            var pantryUserPairQuery = await _helperService.GetPantryUserPair(model.PantryId, false);
+            if (!pantryUserPairQuery.SuccessStatus)
+            {
+                return ServiceResponse.Error(pantryUserPairQuery.Message);
+            }
 
             if (!model.CategoryIds.Any())
             {
                 return ServiceResponse.Error("A product must be assigned to at least one category.");
             }
+
             if (((await _categoryRepository.FindAll()).Select(c => c.Id).ToList()).Intersect(model.CategoryIds).Count() != model.CategoryIds.Count)
             {
                 return ServiceResponse.Error("Invalid categories.");
+            }
+
+            if(!Enum.IsDefined<Unit>(model.Unit))
+            {
+                return ServiceResponse.Error("Invalid unit.");
+            }
+
+            if(model.Amount <= 0 || model.Amount > 100000)
+            {
+                return ServiceResponse.Error("Invalid amount.");
             }
 
             var newProduct = _mapper.Map<Product>(model);
@@ -39,12 +62,16 @@
 
         public async Task<ServiceResponse> Delete(int id)
         {
-            //check if signed-in user belongs to pantry
-
             var product = (await _productRepository.FindByConditions(p => p.Id == id)).FirstOrDefault();
             if (product == null)
             {
                 return ServiceResponse.Error("Product not found.");
+            }
+
+            var pantryUserPairQuery = await _helperService.GetPantryUserPair(product.PantryId, false);
+            if (!pantryUserPairQuery.SuccessStatus)
+            {
+                return ServiceResponse.Error(pantryUserPairQuery.Message);
             }
 
             await _productRepository.Delete(product);
@@ -53,25 +80,42 @@
 
         public async Task<ServiceResponse> Edit(EditProductDTO model)
         {
-            //check if signed-in user belongs to pantry
+            if (!model.CategoryIds.Any())
+            {
+                return ServiceResponse.Error("A product must be assigned to at least one category.");
+            }
+
+            if (((await _categoryRepository.FindAll()).Select(c => c.Id).ToList()).Intersect(model.CategoryIds).Count() != model.CategoryIds.Count)
+            {
+                return ServiceResponse.Error("Invalid categories.");
+            }
 
             var product = (await _productRepository.FindByConditions(p => p.Id == model.Id)).FirstOrDefault();
             if (product == null)
             {
                 return ServiceResponse.Error("Product not found.");
             }
-            if (!model.CategoryIds.Any())
+
+            if (!Enum.IsDefined<Unit>(model.Unit))
             {
-                return ServiceResponse.Error("A product must be assigned to at least one category.");
+                return ServiceResponse.Error("Invalid unit.");
             }
-            if (((await _categoryRepository.FindAll()).Select(c => c.Id).ToList()).Intersect(model.CategoryIds).Count() != model.CategoryIds.Count)
+
+            if (model.Amount <= 0 || model.Amount > 100000)
             {
-                return ServiceResponse.Error("Invalid categories.");
+                return ServiceResponse.Error("Invalid amount.");
+            }
+
+            var pantryUserPairQuery = await _helperService.GetPantryUserPair(product.PantryId, false);
+            if (!pantryUserPairQuery.SuccessStatus)
+            {
+                return ServiceResponse.Error(pantryUserPairQuery.Message);
             }
 
             product.Name = model.Name;
             product.ExpieryDate = model.ExpieryDate;
-            product.Count = model.Count;
+            product.Amount = model.Amount;
+            product.Unit = model.Unit;
 
             await _productRepository.Edit(product, model.CategoryIds);
             return ServiceResponse.Success("Product edited.");
@@ -87,7 +131,11 @@
 
             var productDto = _mapper.Map<GetProductDTO>(product);
 
-            //check if signed-in user belongs to pantry
+            var pantryUserPairQuery = await _helperService.GetPantryUserPair(product.PantryId, false);
+            if (!pantryUserPairQuery.SuccessStatus)
+            {
+                return ServiceResponse.Error(pantryUserPairQuery.Message);
+            }
 
             var productCategories = await _categoryProductRepository.FindByConditions(pc => pc.ProductId == product.Id);
             foreach (CategoryProduct categoryProduct in productCategories)
@@ -99,7 +147,6 @@
                         .FirstOrDefault()
                     ));
             }
-
             return ServiceResponse<GetProductDTO>.Success(productDto, "Product retrieved.");
         }
 
@@ -110,7 +157,11 @@
                 return ServiceResponse.Error("Pantry doesn't exist.");
             }
 
-            //check if signed-in user belongs to pantry
+            var pantryUserPairQuery = await _helperService.GetPantryUserPair(pantryId, false);
+            if (!pantryUserPairQuery.SuccessStatus)
+            {
+                return ServiceResponse.Error(pantryUserPairQuery.Message);
+            }
 
             var pantryProducts = await _productRepository.FindByConditions(p => p.PantryId == pantryId);
             List<GetProductDTO> pantryProductsDtos = new();

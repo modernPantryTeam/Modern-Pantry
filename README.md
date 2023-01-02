@@ -27,7 +27,7 @@ What is Modern Pantry? It is an application that we have created so that people 
   ```
 - Install NPM packages
   ```sh
-  npm install
+  npm install --force
   ```
 
 ### Usage

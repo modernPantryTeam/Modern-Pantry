@@ -1,237 +1,102 @@
-import * as React from 'react'
-import { Component } from 'react'
-import Drawer from '../components/Drawer'
-import { Grid, CardActionArea, CardMedia, Typography, CardActions, Button, Card, CardContent } from '@mui/material';
-import postService from '../services/post-service';
-import Transitions from '../components/Transition';
-import Share from '../components/Share'
+import * as React from "react";
+import { useState } from "react";
+import Drawer from "../components/Drawer";
+import WButtonCustom from '../components/WButtonCustom.js'
+import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
+import pantryService from "../services/pantry-service";
+import Transitions from "../components/Transition";
+import Share from "../components/Share";
+import "../sass/css/dashboard.css";
+import {Grid, CardActionArea, CardMedia, Typography, CardActions, Button, Card, CardContent} from "@mui/material";
 
-export default class Dashboard extends Component {
 
-  constructor(props) {
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-    this.handleCreatePost = this.handleCreatePost.bind(this);
-    this.onChangeSaveFile = this.onChangeSaveFile.bind(this);
-    this.onChangeDescription = this.onChangeDescription.bind(this);
-    this.onChangeTitle = this.onChangeTitle.bind(this);
-    this.onClickSelectFile = this.onClickSelectFile.bind(this);
+function Dashboard() {
+	const [pantries, setPantries] = useState([]);
 
-    this.state = {
-      send: false,
-      file: {},
-      fileName: "",
-      title: "",
-      description: "",
-      titleError: false,
-      descriptionError: false,
-      fileError: false,
-      uploadError: true,
-      fileSubmitError: true,
-      message: ""
-    }
+	const handleClick = () => {
+		// e.preventDefault();
+		// this.setState({
+		// 	send: true,
+		// });
+		console.log("clicked");
+	};
+	document.addEventListener("DOMContentLoaded", () => {
+		pantryService.getPantries().then(response => {
+			setPantries(response.content);
+		});
+	});
 
-    this.fileInputRef = React.createRef();
-  }
+	if (pantries.length === 0) {
+		return (
+			<>
+				<Drawer></Drawer>
+				<Transitions>
+					<section>
+						<div className='pantry-info'>
+							<p className="text-base text-gray-700 md:text-lg text-white">
+								You don't own any pantry yet, click the link below to create one.
+							</p>
+							<div className='button-box'>
+							<WButtonCustom link="/create" name="Create" icon={<SendOutlinedIcon />} />
+							</div>
+						</div>
+					</section>
+				</Transitions>
+			</>
+		);
+	} else {
+		var renderedOutput = pantries.map(card => (
+			<div>
+				{
+					<Card sx={{ maxWidth: 345 }}>
+						<CardActionArea>
+							<CardMedia
+								component='img'
+								height='200'
+								image='https://i.imgur.com/LeAXVOG.png'
+								alt='pantry image'
+							/>
+							<CardContent>
+								<Typography gutterBottom variant='h5' component='div'>
+									{card.name}
+								</Typography>
+								<Typography variant='body2' color='text.secondary'>
+									Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
+									dictum laoreet libero, eu facilisis erat fringilla rutrum.
+								</Typography>
+							</CardContent>
+						</CardActionArea>
+						<CardActions>
+							<Grid container direction='row' justifyContent='flex-start'>
+								<Button
+									size='small'
+									color='inherit'
+									href={`/pantry/${card.id}`}>
+									Enter
+								</Button>
+							</Grid>
+							<Share></Share>
+						</CardActions>
+					</Card>
+				}
+			</div>
+		));
 
-  handleClick(e) {
-    e.preventDefault();
-    this.setState({
-      send: true
-    });
-  }
-
-  onClickSelectFile(e) {
-    e.preventDefault();
-    this.fileInputRef.current.click();
-  }
-
-  onChangeTitle(e) {
-    this.setState({
-      title: e.target.value
-    });
-  }
-
-  onChangeDescription(e) {
-    this.setState({
-      description: e.target.value
-    });
-  }
-
-  onChangeSaveFile(e) {
-    this.setState({
-      file: e.target.files[0],
-      fileName: e.target.files[0].name,
-      fileSubmitError: false
-    });
-  }
-
-  handleCreatePost(e) {
-    e.preventDefault();
-    this.setState({
-      titleError: false,
-      descriptionError: false,
-      message: ""
-    });
-
-    if (this.state.title === "") {
-      this.setState({
-        titleError: true
-      });
-    }
-    if (this.state.description === "") {
-      this.setState({
-        descriptionError: true
-      });
-    }
-    if (this.state.fileName === "") {
-      this.setState({
-        fileError: true
-      });
-    }
-
-    if (this.state.title && this.state.description && this.state.fileName) {
-
-      postService.createPost(
-        this.state.title,
-        this.state.description,
-        this.state.file,
-        this.state.fileName
-      ).then(
-        () => {
-          this.setState({
-            uploadError: false
-          });
-        },
-        error => {
-          const resMessage = (
-            error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-            error.message ||
-            error.toString();
-          this.setState({
-            uploadError: true,
-            message: resMessage
-          });
-        }
-      );
-
-    }
-  }
-
-  render() {
-      return (
-        <>
-          <Drawer></Drawer>
-          <Transitions>
-            <div class="container">
-              <div class="pantry-result">
-                <div id="pantry" style={{ paddingLeft: "56px" }}>
-                  <Card sx={{ maxWidth: 345 }}>
-                    <CardActionArea>
-                      <CardMedia
-                        component="img"
-                        height="200"
-                        image="https://i.imgur.com/LeAXVOG.png"
-                        alt="pantry image"
-                      />
-                      <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                          Beach House
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                          Ut dictum laoreet libero, eu facilisis erat fringilla rutrum.
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                    <CardActions>
-                      <Grid
-                        container
-                        direction="row"
-                        justifyContent="flex-start"
-                      >
-                        <Button size="small" color="inherit" href="/pantry">
-                          Enter
-                        </Button>
-                      </Grid>
-                      <Share></Share>
-                    </CardActions>
-                  </Card>
-
-                  <Card sx={{ maxWidth: 345 }}>
-                    <CardActionArea>
-                      <CardMedia
-                        component="img"
-                        height="200"
-                        image="https://i.imgur.com/LeAXVOG.png"
-                        alt="pantry image"
-                      />
-                      <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                          Miami
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                          Ut dictum laoreet libero, eu facilisis erat fringilla rutrum.
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                    <CardActions>
-                      <Grid
-                        container
-                        direction="row"
-                        justifyContent="flex-start"
-                      >
-                        <Button size="small" color="inherit" href="#">
-                          Enter
-                        </Button>
-                      </Grid>
-                      <Button style={{ justifyContent: 'flex-end' }} size="small" color="inherit" href="/miami">
-                        Share
-                      </Button>
-                    </CardActions>
-                  </Card>
-
-                  <Card sx={{ maxWidth: 345 }}>
-                    <CardActionArea>
-                      <CardMedia
-                        component="img"
-                        height="200"
-                        image="https://i.imgur.com/LeAXVOG.png"
-                        alt="pantry image"
-                      />
-                      <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                          Los Angeles
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                          Ut dictum laoreet libero, eu facilisis erat fringilla rutrum.
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                    <CardActions>
-                      <Grid
-                        container
-                        direction="row"
-                        justifyContent="flex-start"
-                      >
-                        <Button size="small" color="inherit" href="#">
-                          Enter
-                        </Button>
-                      </Grid>
-                      <Button style={{ justifyContent: 'flex-end' }} size="small" color="inherit" href="#">
-                        Share
-                      </Button>
-                    </CardActions>
-                  </Card>
-                </div>
-              </div>
-            </div>
-          </Transitions>
-        </>
-      );
-  }
+		return (
+			<>
+				<Drawer></Drawer>
+				<Transitions>
+					<div class='container'>
+						<div class='pantry-result'>
+							<div id='pantry' style={{ paddingLeft: "56px" }}>
+								{renderedOutput}
+							</div>
+						</div>
+					</div>
+				</Transitions>
+			</>
+		);
+	}
 }
+
+export default Dashboard;

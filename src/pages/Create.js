@@ -5,6 +5,7 @@ import Drawer from "../components/Drawer";
 import pantryService from "../services/pantry-service";
 import Transitions from "../components/Transition";
 import authService from "../services/auth-service";
+import { width } from "@material-ui/system";
 
 export default class Create extends Component {
 	constructor(props) {
@@ -60,7 +61,7 @@ export default class Create extends Component {
 							style={{ minHeight: "80vh" }}>
 							<Grid item xs={3}>
 								<div>
-									<Card style={{ marginTop: "20px" }} elevation={5}>
+									<Card style={{ marginTop: "20px", width: "100vh" }} elevation={5}>
 										<p className='pt-4 pl-2 text-medium'>Create your pantry</p>
 										<CardContent>
 											{this.state.message && (
@@ -84,7 +85,7 @@ export default class Create extends Component {
 													error={this.state.nameError}
 												/>
 
-												<TextField
+												{/* <TextField
 													onChange={this.onChangeDescription}
 													label={"Description"}
 													style={{ marginTop: "10px" }}
@@ -94,7 +95,7 @@ export default class Create extends Component {
 													color='secondary'
 													rows={4}
 													error={this.state.descriptionError}
-												/>
+												/> */}
 
 												<Button
 													style={{ marginTop: "24px", color: "white" }}

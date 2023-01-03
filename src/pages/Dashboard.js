@@ -7,11 +7,13 @@ import pantryService from "../services/pantry-service";
 import Transitions from "../components/Transition";
 import Share from "../components/Share";
 import "../sass/css/dashboard.css";
-import {Grid, CardActionArea, CardMedia, Typography, CardActions, Button, Card, CardContent} from "@mui/material";
-
+import { Grid, CardActionArea, CardMedia, Typography, CardActions, Button, Card, CardContent } from "@mui/material";
 
 function Dashboard() {
+
 	const [pantries, setPantries] = useState([]);
+
+	const url = "?url=http%3A%2F%2Flocalhost%3A3000%2Fpantry%2F1";
 
 	const handleClick = () => {
 		// e.preventDefault();
@@ -26,6 +28,10 @@ function Dashboard() {
 		});
 	});
 
+	document.addEventListener("DOMContentLoaded", () => {
+		pantryService.getQR(url)
+	});
+
 	if (pantries.length === 0) {
 		return (
 			<>
@@ -37,7 +43,7 @@ function Dashboard() {
 								You don't own any pantries, click the button below to create one.
 							</p>
 							<div className='button-box'>
-							<WButtonCustom link="/create" name="Create" icon={<SendOutlinedIcon />} />
+								<WButtonCustom link="/create" name="Create" icon={<SendOutlinedIcon />} />
 							</div>
 						</div>
 					</section>
@@ -61,13 +67,13 @@ function Dashboard() {
 									{card.name}
 								</Typography>
 								<Typography variant='body2' color='text.secondary'>
-								  
+
 								</Typography>
 							</CardContent>
 						</CardActionArea>
 						<CardActions>
 							<Grid container direction='row' justifyContent='flex-start'>
-								<Button
+								<Button 
 									size='small'
 									color='inherit'
 									href={`/pantry/${card.id}`}>

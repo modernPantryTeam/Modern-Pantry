@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import Transitions from '../components/Transition';
 import authService from '../services/auth-service';
 import userService from '../services/user-service';
+import pantryService from '../services/pantry-service';
 
 export default class User extends Component {
 
@@ -24,6 +25,7 @@ export default class User extends Component {
         this.state = {
             open: false,
             currentUser: authService.getCurrentUser(),
+            QR: "",
             username: "",
             email: "",
             password: "",

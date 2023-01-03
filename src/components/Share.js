@@ -3,11 +3,12 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import ShareMenu from './ShareMenu';
 import Paper from '@mui/material/Paper';
+import QR from './QR';
 
-const QR = [
+const QR1 = [
     {
         id: 0,
-        label: ''
+        label: <QR></QR>
     },
 ];
 
@@ -44,7 +45,7 @@ const Share = ({}) => {
                 open={open}
                 anchorEl={anchorEl}
                 handleClose={handleClose}
-                menuItems={QR}
+                menuItems={QR1}
             />
             </Paper>
         </div>

@@ -40,6 +40,7 @@ class pantryService {
 	}
 
 	async getPantries() {
+		
 		return await axios
 			.get(apiUrl + "/api/Pantry/GetUserPantries", {
 				withCredentials: true,
@@ -50,6 +51,29 @@ class pantryService {
 			.then(response => {
 				return response.data;
 			});
+	}
+
+	async getQR(url) {
+
+		return await axios
+			.get(apiUrl + "/api/QR" + url,{
+				url,
+				withCredentials: true,
+				headers: {
+					Authorization: "Bearer " + authService.getToken(),
+				},
+			})
+			.then(response => {
+				if (response.data.successStatus === true) {
+					localStorage.setItem("QR", JSON.stringify(response.data));
+				}
+				return response.data;
+			});
+	}
+
+	getCurrentPantryQR() {
+		while (localStorage.getItem("QR") == null);
+		return JSON.parse(localStorage.getItem("QR"));
 	}
 }
 

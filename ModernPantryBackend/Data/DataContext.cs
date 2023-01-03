@@ -28,24 +28,24 @@ namespace ModernPantryBackend.Data
         {
             base.OnModelCreating(modelBuilder);
             //Database Seed
-            modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, Email = "test@test.com", PasswordHash = "123", UserName = "TestUser1" },
-                new User { Id = 2, Email = "test@test.com", PasswordHash = "123", UserName = "TestUser2" },
-                new User { Id = 3, Email = "test@test.com", PasswordHash = "123", UserName = "TestUser3" }
-            );
+            //modelBuilder.Entity<User>().HasData(
+            //    new User { Id = 1, Email = "test@test.com", PasswordHash = "123", UserName = "TestUser1" },
+            //    new User { Id = 2, Email = "test@test.com", PasswordHash = "123", UserName = "TestUser2" },
+            //    new User { Id = 3, Email = "test@test.com", PasswordHash = "123", UserName = "TestUser3" }
+            //);
             modelBuilder.Entity<Pantry>().HasData(
                 new Pantry { Id = 1, Name = "My Pantry 1" },
                 new Pantry { Id = 2, Name = "My Pantry 2" },
                 new Pantry { Id = 3, Name = "Our Pantry" },
                 new Pantry { Id = 4, Name = "Very Nice Storehouse" }
                 );
-            modelBuilder.Entity<PantryUser>().HasData(
-                new PantryUser { PantryId = 1, UserId = 1},
-                new PantryUser { PantryId = 2, UserId = 1 },
-                new PantryUser { PantryId = 3, UserId = 1 },
-                new PantryUser { PantryId = 3, UserId = 2 },
-                new PantryUser { PantryId = 4, UserId = 2 }
-                );
+            //modelBuilder.Entity<PantryUser>().HasData(
+            //    new PantryUser { PantryId = 1, UserId = 1},
+            //    new PantryUser { PantryId = 2, UserId = 1 },
+            //    new PantryUser { PantryId = 3, UserId = 1 },
+            //    new PantryUser { PantryId = 3, UserId = 2 },
+            //    new PantryUser { PantryId = 4, UserId = 2 }
+            //    );
             modelBuilder.Entity<Product>().HasData(
                 new Product { Id = 1, Name = "Goat Milk", PantryId = 1, AddDate = DateTime.Now },
                 new Product { Id = 2, Name = "Mocny Full", PantryId = 1, AddDate = DateTime.Now, Amount = 6 }

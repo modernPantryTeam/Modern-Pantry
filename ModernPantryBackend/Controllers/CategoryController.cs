@@ -1,6 +1,7 @@
-﻿namespace ModernPantryBackend.Controllers
+﻿using Microsoft.AspNetCore.Authorization;
+
+namespace ModernPantryBackend.Controllers
 {
-    [CustomAuthorization]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoryController : ControllerBase
@@ -12,6 +13,7 @@
             _categoryService = categoryService;
         }
 
+        [Authorize]
         [HttpGet("GetAllCategories")]
         public async Task<ServiceResponse> GetAllCategories()
         {

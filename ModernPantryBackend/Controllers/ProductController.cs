@@ -1,6 +1,6 @@
 ﻿namespace ModernPantryBackend.Controllers
 {
-    [CustomAuthorization]
+    //[CustomAuthorization]
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase

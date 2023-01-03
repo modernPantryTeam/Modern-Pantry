@@ -20,30 +20,41 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.OpenApi.Models;
+using Microsoft.Net.Http.Headers;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Serilog;
+using Serilog.Events;
+using SameSiteMode = Microsoft.AspNetCore.Http.SameSiteMode;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var authenticationSettings = new AuthenticationSettings();
 builder.Configuration.GetSection("Authentication").Bind(authenticationSettings);
 builder.Services.AddSingleton(authenticationSettings);
-builder.Services.AddAuthentication(options =>
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+.AddCookie(options =>
 {
-    options.DefaultAuthenticateScheme = "Bearer";
-    options.DefaultScheme = "Bearer";
-    options.DefaultChallengeScheme = "Bearer";
-}).AddJwtBearer(cfg =>
-{
-    cfg.RequireHttpsMetadata = false;
-    cfg.SaveToken = true;
-    cfg.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = false,
-        ValidateAudience = false,
-        //ValidIssuer = authenticationSettings.JwtIssuer,
-        //ValidAudience = authenticationSettings.JwtIssuer,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey)),
-    };
+    options.LoginPath = "/Home/Login";
 });
+//builder.Services.AddAuthentication(options => {
+//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+//    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+//}).AddJwtBearer(options => {
+//    options.RequireHttpsMetadata = false;
+//                    options.TokenValidationParameters = new TokenValidationParameters
+//                    {
+//                        ValidateIssuer = true,
+//                        ValidateAudience = true,
+//                        ValidateLifetime = false,
+//                        ValidateIssuerSigningKey = false,
+//                        ValidIssuer = authenticationSettings.JwtIssuer,
+//                        ValidAudience = authenticationSettings.JwtAudience,
+//                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey))
+//                    };
+//                });
 
 builder.Services.AddCors(options =>
 {
@@ -51,7 +62,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("corspolicy",
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000")
+            policy.WithOrigins("http://localhost:3000").WithOrigins("https://localhost:3000")
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials();
@@ -60,7 +71,7 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddControllers().AddFluentValidation();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     var securitySchema = new OpenApiSecurityScheme
@@ -82,6 +93,16 @@ builder.Services.AddSwaggerGen(c =>
     securityRequirement.Add(securitySchema, new[] { "Bearer" });
     c.AddSecurityRequirement(securityRequirement);
 });
+
+builder.Host.UseSerilog((ctx, lc) => lc
+    .WriteTo.Console().MinimumLevel.Override("System", LogEventLevel.Warning)
+.MinimumLevel.Override("IdentityServer4", LogEventLevel.Information)
+.MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+.MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Information)
+.MinimumLevel.Override("Microsoft.AspNetCore.DataProtection", LogEventLevel.Debug)
+.MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Information)
+.MinimumLevel.Override("Microsoft.AspNetCore.Authorization", LogEventLevel.Information));
+//.WriteTo.Seq("http://localhost:5341"));
 
 builder.Services.AddScoped(sp => new HttpClient());
 builder.Services.AddHttpContextAccessor();
@@ -127,7 +148,47 @@ builder.Services.AddSingleton<IEmailSender, SmtpEmailSender>();
 builder.Services.AddScoped(typeof(ICategoryService), typeof(CategoryService));
 builder.Services.AddScoped(typeof(IHelperService), typeof(HelperService));
 
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.MinimumSameSitePolicy = SameSiteMode.Unspecified;
+    options.OnAppendCookie = cookieContext =>
+        CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
+    options.OnDeleteCookie = cookieContext =>
+        CheckSameSite(cookieContext.Context, cookieContext.CookieOptions);
+});
+
+void CheckSameSite(HttpContext httpContext, CookieOptions options)
+{
+    if (options.SameSite == SameSiteMode.None)
+    {
+        var userAgent = httpContext.Request.Headers["User-Agent"].ToString();
+        //if (MyUserAgentDetectionLib.DisallowsSameSiteNone(userAgent))
+        //{
+        //    options.SameSite = SameSiteMode.Unspecified;
+        //}
+    }
+}
+
+static Func<RedirectContext<CookieAuthenticationOptions>, Task> ReplaceRedirector(HttpStatusCode statusCode, Func<RedirectContext<CookieAuthenticationOptions>, Task> existingRedirector) =>
+    context => {
+        if (context.Request.Path.StartsWithSegments("/api"))
+        {
+            context.Response.StatusCode = (int)statusCode;
+            return Task.CompletedTask;
+        }
+        return existingRedirector(context);
+    };
+
+builder.Services.ConfigureApplicationCookie(options => {
+    options.Events.OnRedirectToAccessDenied = ReplaceRedirector(HttpStatusCode.Forbidden, options.Events.OnRedirectToAccessDenied);
+    options.Events.OnRedirectToLogin = ReplaceRedirector(HttpStatusCode.Unauthorized, options.Events.OnRedirectToLogin);
+});
+
 var app = builder.Build();
+
+app.UseAuthentication();
+app.UseCookiePolicy();
+app.UseAuthorization();
 
 if (app.Environment.IsDevelopment())
 {
@@ -143,10 +204,12 @@ app.UseExceptionHandler(c => c.Run(async context =>
 }));
 app.UseCors("corspolicy");
 app.UseHttpsRedirection();
-app.UseAuthorization();
-app.UseAuthentication();
+
+
+
+
 app.MapControllers();
 
 app.Run();
-app.UseCors();
+//app.UseCors();
 

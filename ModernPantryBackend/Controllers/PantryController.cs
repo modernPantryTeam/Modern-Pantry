@@ -1,6 +1,9 @@
-﻿namespace ModernPantryBackend.Controllers
+﻿using Microsoft.AspNetCore.Authorization;
+
+namespace ModernPantryBackend.Controllers
 {
-    [CustomAuthorization]
+    //[CustomAuthorization]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PantryController : ControllerBase

@@ -61,8 +61,7 @@ function Dashboard() {
 									{card.name}
 								</Typography>
 								<Typography variant='body2' color='text.secondary'>
-									Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
-									dictum laoreet libero, eu facilisis erat fringilla rutrum.
+								  
 								</Typography>
 							</CardContent>
 						</CardActionArea>

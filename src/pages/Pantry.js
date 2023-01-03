@@ -25,6 +25,8 @@ import Drawer from "../components/Drawer";
 import { AppBar, Grid } from "@mui/material";
 import Transitions from "../components/Transition";
 import { useParams } from "react-router-dom";
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
+import WButtonCustom from '../components/WButtonCustom.js'
 
 function createData(products, category, amount, unit, expiry) {
 	return {
@@ -170,7 +172,7 @@ function EnhancedTableToolbar(props) {
 	const { numSelected } = props;
 
 	return (
-		<Toolbar
+		<><Toolbar
 			sx={{
 				pl: { sm: 2 },
 				pr: { xs: 1, sm: 1 },
@@ -196,10 +198,9 @@ function EnhancedTableToolbar(props) {
 					variant='h6'
 					id='tableTitle'
 					component='div'>
-					Beach House
+					Pantry Name
 				</Typography>
 			)}
-
 			{numSelected > 0 ? (
 				<Tooltip title='Delete'>
 					<IconButton>
@@ -207,13 +208,13 @@ function EnhancedTableToolbar(props) {
 					</IconButton>
 				</Tooltip>
 			) : (
-				<Tooltip title='Filter list'>
 					<IconButton>
-						<FilterListIcon />
+						<WButtonCustom link="/add-product" name="Add product" icon={<ProductionQuantityLimitsIcon />} />
 					</IconButton>
-				</Tooltip>
+
 			)}
 		</Toolbar>
+		</>
 	);
 }
 

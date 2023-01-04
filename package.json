@@ -1,7 +1,6 @@
 {
 	"name": "modernpantry",
 	"version": "0.1.0",
-	"homepage": "https://zayooo00.github.io/Modern-Pantry/",
 	"private": true,
 	"dependencies": {
 		"@emotion/react": "^11.8.2",
@@ -42,8 +41,6 @@
 		"web-vitals": "^2.1.4"
 	},
 	"scripts": {
-		"predeploy": "npm run build",
-		"deploy": "gh-pages -d build",
 		"start": "set HTTPS=true&&react-scripts start",
 		"build": "CI=false && react-scripts build",
 		"test": "react-scripts test",

@@ -78,6 +78,7 @@ function Dashboard() {
 									style={{justifyContent: 'flex-end' }}
 									color="inherit"
 									size="small"
+									onClick={pantryService.deletePantry(card.id)}
 								>
 									Delete
 								</Button>

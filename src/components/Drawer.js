@@ -24,6 +24,7 @@ import { Grid } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutButton from "./LogoutButton";
 import NotificationBell from "./NotificationBell";
+import IosShareIcon from '@mui/icons-material/IosShare';
 
 const drawerWidth = 240;
 
@@ -131,6 +132,11 @@ export default function MiniDrawer() {
 					</div>
 					<Grid container direction='row' justifyContent='flex-end'>
 						<NotificationBell />
+						<WButtonCustom
+							link='/invite'
+							name={"Invite"}
+							icon={<IosShareIcon />}
+						/>
 						<WButtonCustom
 							link='/profile'
 							name={"Profile"}

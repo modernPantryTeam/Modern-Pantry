@@ -40,7 +40,7 @@ class pantryService {
 	}
 
 	async getPantries() {
-		
+
 		return await axios
 			.get(apiUrl + "/api/Pantry/GetUserPantries", {
 				withCredentials: true,
@@ -56,7 +56,7 @@ class pantryService {
 	async getQR(url) {
 
 		return await axios
-			.get(apiUrl + "/api/QR" + url,{
+			.get(apiUrl + "/api/QR" + url, {
 				url,
 				withCredentials: true,
 				headers: {
@@ -74,6 +74,22 @@ class pantryService {
 	getCurrentPantryQR() {
 		while (localStorage.getItem("QR") == null);
 		return JSON.parse(localStorage.getItem("QR"));
+	}
+
+	async invite(email, pantryID) {
+		return await axios.post(apiUrl + "/api/PantryInvites/SendInvite?inviteRecieverEmail=" + email + "&pantryId=" + pantryID, {
+			email,
+			pantryID,
+			withCredentials: true,
+			headers: {
+				Authorization: `Bearer ${authService.getToken()}`,
+				"Content-Type": "application/json",
+			},
+		}).then(response => {
+			return response.data;
+		});
+
+
 	}
 }
 

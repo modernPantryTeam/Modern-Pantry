@@ -65,7 +65,7 @@ export default class Invite extends Component {
                         error.message ||
                         error.toString();
                     this.setState({
-                        successful: true,
+                        successful: false,
                         loading: false,
                         message: resMessage
                     });

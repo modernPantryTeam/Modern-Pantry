@@ -19,31 +19,22 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Transitions from "../components/Transition";
+import productsService from "../services/products-service";
 
 export default class Create extends Component {
 	constructor(props) {
 		super(props);
-		this.handleCreatePost = this.handleCreatePost.bind(this);
-		// this.onChangeSaveFile = this.onChangeSaveFile.bind(this);
-		// this.onChangeDescription = this.onChangeDescription.bind(this);
+		this.handleAddProduct = this.handleAddProduct.bind(this);
 		this.onChangeTitle = this.onChangeTitle.bind(this);
 		this.onChangeCategory = this.onChangeCategory.bind(this);
 		this.onChangeQuantity = this.onChangeQuantity.bind(this);
 		this.onChangeUnit = this.onChangeUnit.bind(this);
 		this.onChangePantryId = this.onChangePantryId.bind(this);
 		this.onChangeDate = this.onChangeDate.bind(this);
-		// this.onClickSelectFile = this.onClickSelectFile.bind(this);
 
 		this.state = {
-			// file: {},
-			// fileName: "",
 			title: "",
-			// description: "",
-			// titleError: false,
-			// descriptionError: false,
-			// fileError: false,
 			uploadError: true,
-			// fileSubmitError: true,
 			message: "",
 			category: [],
 			quantity: 0,
@@ -51,8 +42,6 @@ export default class Create extends Component {
 			pantryId: 0,
 			date: "",
 		};
-
-		// this.fileInputRef = React.createRef();
 	}
 
 	onChangeDate(e) {
@@ -85,97 +74,35 @@ export default class Create extends Component {
 		});
 	}
 
-	// onClickSelectFile(e) {
-	//     e.preventDefault();
-	//     this.fileInputRef.current.click();
-	// }
-
 	onChangeTitle(e) {
 		this.setState({
 			title: e.target.value,
 		});
 	}
 
-	// onChangeDescription(e) {
-	//     this.setState({
-	//         description: e.target.value
-	//     });
-	// }
-
-	// onChangeSaveFile(e) {
-	//     this.setState({
-	//         file: e.target.files[0],
-	//         fileName: e.target.files[0].name,
-	//         fileSubmitError: false
-	//     });
-	// }
-
-	handleCreatePost(e) {
+	handleAddProduct(e) {
 		e.preventDefault();
-		// this.setState({
-		// 	titleError: false,
-		// 	descriptionError: false,
-		// 	message: "",
-		// });
-
-		// if (this.state.title === "") {
-		// 	this.setState({
-		// 		titleError: true,
-		// 	});
-		// }
-		// if (this.state.description === "") {
-		// 	this.setState({
-		// 		descriptionError: true,
-		// 	});
-		// }
-		// if (this.state.fileName === "") {
-		// 	this.setState({
-		// 		fileError: true,
-		// 	});
-		// }
-
-		// if (this.state.title && this.state.description && this.state.fileName) {
-		// 	logger.log("Add.js");
-		// 	logger.log(this.state.title);
-		// 	logger.log(this.state.description);
-		// 	logger.log(this.state.file);
-		// 	logger.log(this.state.fileName);
-
-		// 	postService
-		// 		.createPost(
-		// 			this.state.title,
-		// 			this.state.description,
-		// 			this.state.file,
-		// 			this.state.fileName
-		// 		)
-		// 		.then(
-		// 			() => {
-		// 				this.setState({
-		// 					uploadError: false,
-		// 				});
-		// 			},
-		// 			error => {
-		// 				logger.log("Create.js");
-		// 				logger.error(error);
-		// 				const resMessage =
-		// 					(error.response &&
-		// 						error.response.data &&
-		// 						error.response.data.message) ||
-		// 					error.message ||
-		// 					error.toString();
-		// 				this.setState({
-		// 					uploadError: true,
-		// 					message: resMessage,
-		// 				});
-		// 			}
-		// 		);
-		// }
-		console.log(this.state.category);
-		console.log(this.state.title);
-		console.log(this.state.quantity);
-		console.log(this.state.unit);
-		console.log(this.state.pantryId);
-		console.log(this.state.date);
+        console.log(this.state.category);
+		productsService
+			.addProduct(
+				this.state.title,
+				this.state.pantryId,
+				this.state.unit,
+				this.state.quantity,
+				this.state.date,
+				this.state.category
+			)
+			.then(response => {
+				this.setState({
+					message: response.message,
+				});
+			});
+		// console.log(this.state.category);
+		// console.log(this.state.title);
+		// console.log(this.state.quantity);
+		// console.log(this.state.unit);
+		// console.log(this.state.pantryId);
+		// console.log(this.state.date);
 	}
 
 	render() {
@@ -206,16 +133,7 @@ export default class Create extends Component {
 											<form
 												noValidate
 												autoComplete='off'
-												onSubmit={this.handleCreatePost}>
-												{/* <input
-												hidden
-												type='file'
-												style={{ display: "none" }}
-												ref={this.fileInputRef}
-												accept='image/*'
-												onChange={this.onChangeSaveFile}
-											/> */}
-
+												onSubmit={this.handleAddProduct}>
 												<TextField
 													onChange={this.onChangeTitle}
 													style={{ marginTop: "10px" }}
@@ -224,7 +142,6 @@ export default class Create extends Component {
 													fullWidth
 													required
 													color='secondary'
-													error={this.state.titleError}
 												/>
 
 												<TextField
@@ -235,7 +152,6 @@ export default class Create extends Component {
 													fullWidth
 													required
 													color='secondary'
-													error={this.state.titleError}
 												/>
 
 												<FormControl
@@ -288,7 +204,6 @@ export default class Create extends Component {
 													fullWidth
 													required
 													color='secondary'
-													error={this.state.titleError}
 												/>
 
 												<TextField
@@ -299,7 +214,6 @@ export default class Create extends Component {
 													fullWidth
 													required
 													color='secondary'
-													error={this.state.titleError}
 												/>
 
 												<Button

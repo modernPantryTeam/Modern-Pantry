@@ -47,5 +47,48 @@
             
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<Product>> FindByConditions(Expression<Func<Product, bool>> expresion, bool includeDeleted)
+        {
+            if(!includeDeleted)
+            {
+                return await _context.Set<Product>()
+                .Where(expresion)
+                .Where(p => !p.IsDeleted)
+                .Include(p => p.CategoryProduct)
+                .ToListAsync();
+            }
+            else
+            {
+                return await _context.Set<Product>()
+                .Where(expresion)
+                .Include(p => p.CategoryProduct)
+                .ToListAsync();
+            }
+        }
+
+        public async Task<IEnumerable<Product>> FindAll(bool includeDeleted)
+        {
+            if (!includeDeleted)
+            {
+                return await _context.Set<Product>()
+                .Where(p => !p.IsDeleted)
+                .Include(p => p.CategoryProduct)
+                .ToListAsync();
+            }
+            else
+            {
+                return await _context.Set<Product>()
+                .Include(p => p.CategoryProduct)
+                .ToListAsync();
+            }
+        }
+
+        public async override Task Delete(Product model)
+        {
+            model.IsDeleted = true;
+            _context.Update(model);
+            await _context.SaveChangesAsync();
+        }
     }
 }

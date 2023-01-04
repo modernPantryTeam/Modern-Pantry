@@ -163,7 +163,7 @@
                 return ServiceResponse.Error(pantryUserPairQuery.Message);
             }
 
-            var pantryProducts = await _productRepository.FindByConditions(p => p.PantryId == pantryId);
+            var pantryProducts = await _productRepository.FindByConditions(p => p.PantryId == pantryId, false);
             List<GetProductDTO> pantryProductsDtos = new();
             foreach(Product product in pantryProducts)
             {

@@ -14,7 +14,7 @@
         {
             return await _context.Pantries
                 .Where(p => p.PantryUser.Any(pu => pu.UserId == userId))
-                .Include(p => p.Products)
+                .Include(p => p.Products.Where(pr => !pr.IsDeleted))
                 .Include(p => p.PantryUser)
                 .ToListAsync();
         }
@@ -39,7 +39,7 @@
         {
             return await _context.Set<Pantry>()
                 .Where(expresion)
-                .Include(p => p.Products)
+                .Include(p => p.Products.Where(pr => !pr.IsDeleted))
                 .Include(p => p.PantryUser)
                 .ToListAsync();
         }

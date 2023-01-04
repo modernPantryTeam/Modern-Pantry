@@ -66,8 +66,7 @@ export default class Create extends Component {
 
 	render() {
 		return (
-			<>
-				<Drawer></Drawer>
+			<><Drawer></Drawer>
 				<Transitions>
 					<div className='px-4 pb-2 pt-4 lg:mx-auto md:mx-auto ml-14 sm:max-w-xl lg:max-w-screen-xl md:px-24 lg:px-8'>
 						<Grid

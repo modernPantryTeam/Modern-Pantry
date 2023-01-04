@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { Button, Card, CardContent, TextField, Grid } from "@mui/material";
+import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import authService from '../services/auth-service';
 import userService from '../services/user-service';
-import Headbar from '../components/Headbar';
+import Drawer from '../components/Drawer';
 import Transitions from '../components/Transition'
 import Spinner from 'react-bootstrap/Spinner';
 import { Redirect } from "react-router-dom";
@@ -75,58 +77,78 @@ export default class Invite extends Component {
 
     render() {
         return (
-            <><><Headbar></Headbar>
-            </>
+            <><Drawer></Drawer>
                 <Transitions>
-                    <div className="container flex mx-auto items-center h-screen">
-                        <div className="sm:w-20 md:w-full lg:w-full">
-                        </div>
-                        <div className="flex flex-col w-4\/5">
-                            <div className="flex flex-col items-center bg-white p-4 border border-gray-primary mb-4 rounded">
-                                <h1 className="flex justify-center w-full">
-                                    <img src="https://i.imgur.com/YtiHDru.png" alt="Pantry" className="mt-2" />
-                                </h1>
-                                {this.state.message && (
-                                    <p className='mb-4 text-xs text-red-primary'>
-                                        {this.state.message}
-                                    </p>
-                                )}
-                                <form
-                                    onSubmit={this.handleInvite}
-                                >
+                    <div className='px-4 pb-2 pt-4 lg:mx-auto md:mx-auto ml-14 sm:max-w-xl lg:max-w-screen-xl md:px-24 lg:px-8'>
+                        <Grid
+                            container
+                            spacing={0}
+                            direction='column'
+                            alignItems='center'
+                            justify='center'
+                        >
+                            <Grid item xs={3}>
+                                <div>
+                                    <Card style={{ marginTop: "20px"}} elevation={5}>
+                                        <p className='pt-4 pl-2 text-medium'>Invite your friends</p>
+                                        <CardContent>
+                                            {this.state.message && (
+                                                <p className='mb-4 text-xs text-red-primary'>
+                                                    {this.state.message}
+                                                </p>
+                                            )}
+                                            <form
+                                                Validate
+                                                autoComplete='off'
+                                                onSubmit={this.handleInvite}
+                                            >
 
-                                    <input
-                                        type="text"
-                                        placeholder="Email address"
-                                        className="text-sm text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
-                                        onChange={this.onChangeEmail}
-                                        value={this.state.email}
-                                        disabled={this.state.successful}
-                                    />
+                                                <TextField
+                                                    style={{ marginTop: "10px" }}
+                                                    label={"Email adress"}
+                                                    type="text"
+                                                    required
+													color='secondary'
+                                                    variant='outlined'
+													fullWidth
+                                                    placeholder="Email address"
+                                                    onChange={this.onChangeEmail}
+                                                    value={this.state.email}
+                                                    disabled={this.state.successful}
+                                                />
 
-                                    <input
-                                        type="text"
-                                        placeholder="Pantry ID"
-                                        className="text-sm text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
-                                        onChange={this.onChangePantryID}
-                                        value={this.state.pantryID}
-                                        disabled={this.state.successful}
-                                    />
+                                                <TextField
+                                                    style={{ marginTop: "10px" }}
+                                                    type="text"
+                                                    label={"Pantry ID"}
+                                                    variant='outlined'
+													fullWidth
+                                                    required
+													color='secondary'
+                                                    placeholder="Pantry ID"
+                                                    onChange={this.onChangePantryID}
+                                                    value={this.state.pantryID}
+                                                    disabled={this.state.successful}
+                                                />
 
-                                    <button
-                                        disabled={this.state.loading || this.state.successful}
-                                        type="submit"
-                                        className={`bg-black-medium text-white w-full rounded h-8 font-bold`}
-                                    >
-                                        Invite
-                                        {this.state.loading && <Spinner size="sm" animation="border" role="status">
-                                            <span className="visually-hidden">Signing up...</span>
-                                        </Spinner>}
-                                        {this.state.successful && <Redirect replace to="/dashboard" />}
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
+                                                <Button
+                                                    disabled={this.state.loading || this.state.successful}
+                                                    type="submit"
+                                                    style={{ marginTop: "24px", color: "white" }}
+                                                    endIcon={<SendOutlinedIcon />}
+                                                >
+                                                    Invite
+                                                    {this.state.loading && <Spinner size="sm" animation="border" role="status">
+                                                        <span className="visually-hidden">Signing up...</span>
+                                                    </Spinner>}
+                                                    {this.state.successful && <Redirect replace to="/dashboard" />}
+                                                </Button>
+                                            </form>
+                                        </CardContent>
+                                    </Card>
+                                </div>
+                            </Grid>
+                        </Grid>
                     </div>
                 </Transitions>
             </>

@@ -82,14 +82,11 @@ class pantryService {
 			pantryID,
 			withCredentials: true,
 			headers: {
-				Authorization: `Bearer ${authService.getToken()}`,
-				"Content-Type": "application/json",
+				Authorization: "Bearer " + authService.getToken(),
 			},
 		}).then(response => {
 			return response.data;
 		});
-
-
 	}
 }
 

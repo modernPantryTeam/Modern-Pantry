@@ -30,17 +30,26 @@ namespace ModernPantryBackend.Services
                 return ServiceResponse.Error("User is not a member of this pantry.");
             }
 
-            var products = await _productRepository.FindByConditions(p => p.PantryId == pantryId, false);
             Summary summary = new();
+            summary.TotalItemCount = pantry.Products.Count();
+            summary.PantryAge = DateTime.Now - pantry.CreationDate;
+
+            var products = await _productRepository.FindByConditions(p => p.PantryId == pantryId, false);
+            var deletedProducts = (await _productRepository.FindByConditions(p => p.PantryId == pantryId, true)).Where(p => p.IsDeleted);
             var categories = await _categoryRepository.FindAll();
 
             foreach(Category category in categories)
             {
                 Dictionary<Unit, float> AmountPerUnit = new();
+                Dictionary<Unit, float> AverageMonthlyConsumption = new();
                 var productsInCategory = products.Where(p => p.CategoryProduct.Any(cp => cp.Category == category));
+                var deletedProductsInCategory = deletedProducts.Where(p => p.CategoryProduct.Any(cp => cp.Category == category));
                 for (int i = 0; i < Enum.GetValues(typeof(Unit)).Length; i++)
                 {
+                    //int month = (int)Math.Ceiling(summary.PantryAge.Days / 30.0);
                     AmountPerUnit.Add((Unit)i, productsInCategory.Where(p => p.Unit == (Unit)i).Select(p => p.Amount).Sum());
+                    AverageMonthlyConsumption.Add((Unit)i, 
+                        (float)deletedProductsInCategory.Where(p => p.Unit == (Unit)i).Select(p => p.Amount).Sum()/ (int)Math.Ceiling(summary.PantryAge.Days / 30.0));
                 }
 
                 int CurrentItemCount = products.Where(p => p.CategoryProduct.Any(c => c.Category == category)).Count();
@@ -48,13 +57,12 @@ namespace ModernPantryBackend.Services
                 {
                     CategoryName = category.Name,
                     CurrentItemCount = CurrentItemCount,
-                    AmountPerUnit = AmountPerUnit
+                    AmountPerUnit = AmountPerUnit,
+                    AverageMonthlyConsumption = AverageMonthlyConsumption
                 });
             }
-            var deletedProducts = await _productRepository.FindByConditions(p => p.PantryId == pantryId, true);
-
-            summary.TotalItemCount = pantry.Products.Count();
-            summary.PantryAge = DateTime.Now - pantry.CreationDate;
+            
+            
             return ServiceResponse<Summary>.Success(summary, "Summary retrieved.");
         }
     }

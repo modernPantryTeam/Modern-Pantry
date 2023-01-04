@@ -133,11 +133,6 @@ export default function MiniDrawer() {
 					<Grid container direction='row' justifyContent='flex-end'>
 						<NotificationBell />
 						<WButtonCustom
-							link='/invite'
-							name={"Invite"}
-							icon={<IosShareIcon />}
-						/>
-						<WButtonCustom
 							link='/profile'
 							name={"Profile"}
 							icon={<AccountCircleIcon />}
@@ -157,7 +152,7 @@ export default function MiniDrawer() {
 				</DrawerHeader>
 				<Divider />
 				<List>
-					{["My Pantries", "Statistics", "Create", "Profile", "Logout"].map(
+					{["My Pantries", "Statistics", "Create","Invite", "Profile", "Logout"].map(
 						(text, index) => (
 							<ListItem key={text} disablePadding sx={{ display: "block" }}>
 								<ListItemButton
@@ -182,11 +177,14 @@ export default function MiniDrawer() {
 										<Link style={{ color: "white" }} href='/create'>
 											{index === 2 && <AddCircleOutlineIcon />}
 										</Link>
+										<Link style={{ color: "white" }} href='/invite'>
+											{index === 3 && <IosShareIcon />}
+										</Link>
 										<Link style={{ color: "white" }} href='/profile'>
-											{index === 3 && <AccountCircleIcon />}
+											{index === 4 && <AccountCircleIcon />}
 										</Link>
 										<Link style={{ color: "white" }} href='/'>
-											{index === 4 && <LogoutButton />}
+											{index === 5 && <LogoutButton />}
 										</Link>
 									</ListItemIcon>
 									<ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />

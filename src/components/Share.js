@@ -4,6 +4,7 @@ import Tooltip from '@mui/material/Tooltip';
 import ShareMenu from './ShareMenu';
 import Paper from '@mui/material/Paper';
 import QR from './QR';
+import ShareIcon from '@mui/icons-material/Share';
 
 const QR1 = [
     {
@@ -35,6 +36,7 @@ const Share = ({}) => {
                     size="small"
                     onClick={handleOpen}
                     anchorEl={anchorEl}
+                    startIcon={<ShareIcon />}
                 >
                     Share
                 </Button>

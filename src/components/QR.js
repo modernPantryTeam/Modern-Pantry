@@ -22,9 +22,8 @@ export default class QR extends Component {
 
     render() {
         return (
-            <Typography component="div" variant="h5">
-                {this.state.username}
-                <img src={this.state.QR} alt="QR Code" />
+            <Typography  component="div" variant="h6">
+                <img class="qr" src={this.state.QR} alt="QR Code" />
             </Typography>
         );
     }

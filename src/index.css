@@ -1246,3 +1246,8 @@ body {
     from { opacity: 0; }
     to { opacity: 1; }
 }
+
+.qr {
+  width: 25vh;
+  height: 50%;
+}

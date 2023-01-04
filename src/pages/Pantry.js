@@ -1,4 +1,5 @@
 import * as React from "react";
+import Button from '@mui/material/Button';
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -27,6 +28,8 @@ import Transitions from "../components/Transition";
 import { useParams } from "react-router-dom";
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import WButtonCustom from '../components/WButtonCustom.js'
+import Share from "../components/Share";
+import pantryService from "../services/pantry-service";
 
 function createData(products, category, amount, unit, expiry) {
 	return {
@@ -208,9 +211,19 @@ function EnhancedTableToolbar(props) {
 					</IconButton>
 				</Tooltip>
 			) : (
+				<>
+					<Share></Share>
 					<IconButton>
-						<WButtonCustom link="/add-product" name="Add product" icon={<ProductionQuantityLimitsIcon />} />
+						<Button
+							style={{ color: 'white', justifyContent: 'flex-end' }}
+							color="inherit"
+							size="small"
+							startIcon={<ProductionQuantityLimitsIcon />}
+						>
+							Add Product
+						</Button>
 					</IconButton>
+				</>
 
 			)}
 		</Toolbar>
@@ -232,6 +245,11 @@ export default function EnhancedTable() {
 
 	let { id } = useParams(); //id of user pantry
 	console.log(id);
+
+	const url = "?url=https%3A%2F%2Flocalhost%3A3000%2Fpantry%2F" + id;
+	document.addEventListener("DOMContentLoaded", () => {
+		pantryService.getQR(url)
+	});
 
 	const handleRequestSort = (event, property) => {
 		const isAsc = orderBy === property && order === "asc";

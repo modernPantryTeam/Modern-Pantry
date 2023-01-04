@@ -5,15 +5,13 @@ import WButtonCustom from '../components/WButtonCustom.js'
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import pantryService from "../services/pantry-service";
 import Transitions from "../components/Transition";
-import Share from "../components/Share";
+import DeleteIcon from '@mui/icons-material/Delete';
 import "../sass/css/dashboard.css";
 import { Grid, CardActionArea, CardMedia, Typography, CardActions, Button, Card, CardContent } from "@mui/material";
 
 function Dashboard() {
 
 	const [pantries, setPantries] = useState([]);
-
-	const url = "?url=http%3A%2F%2Flocalhost%3A3000%2Fpantry%2F1";
 
 	const handleClick = () => {
 		// e.preventDefault();
@@ -27,11 +25,7 @@ function Dashboard() {
 			setPantries(response.content);
 		});
 	});
-
-	document.addEventListener("DOMContentLoaded", () => {
-		pantryService.getQR(url)
-	});
-
+	
 	if (pantries.length === 0) {
 		return (
 			<>
@@ -73,14 +67,20 @@ function Dashboard() {
 						</CardActionArea>
 						<CardActions>
 							<Grid container direction='row' justifyContent='flex-start'>
-								<Button 
+								<Button
 									size='small'
 									color='inherit'
 									href={`/pantry/${card.id}`}>
 									Enter
 								</Button>
 							</Grid>
-							<Share></Share>
+							<Button
+									style={{justifyContent: 'flex-end' }}
+									color="inherit"
+									size="small"
+								>
+									Delete
+								</Button>
 						</CardActions>
 					</Card>
 				}
@@ -91,8 +91,8 @@ function Dashboard() {
 			<>
 				<Drawer></Drawer>
 				<Transitions>
-					<div class='container'>
-						<div class='pantry-result'>
+					<div className='container'>
+						<div className='pantry-result'>
 							<div id='pantry' style={{ paddingLeft: "56px" }}>
 								{renderedOutput}
 							</div>

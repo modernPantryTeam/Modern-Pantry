@@ -78,8 +78,6 @@ class pantryService {
 
 	async invite(email, pantryID) {
 		return await axios.post(apiUrl + "/api/PantryInvites/SendInvite?inviteRecieverEmail=" + email + "&pantryId=" + pantryID, {
-			email,
-			pantryID,
 			withCredentials: true,
 			headers: {
 				Authorization: "Bearer " + authService.getToken(),

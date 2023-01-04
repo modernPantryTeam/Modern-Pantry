@@ -51,6 +51,7 @@ namespace ModernPantryBackend.Services
                     AmountPerUnit = AmountPerUnit
                 });
             }
+            var deletedProducts = await _productRepository.FindByConditions(p => p.PantryId == pantryId, true);
 
             summary.TotalItemCount = pantry.Products.Count();
             summary.PantryAge = DateTime.Now - pantry.CreationDate;

@@ -10,8 +10,8 @@ class productsService {
 			pantryId: pantryId,
 			unit: unit,
 			amount: amount,
-			date: date,
-			category: category,
+			expieryDate: date,
+			categoryIds: category,
 		});
 
 		return await axios
@@ -23,7 +23,6 @@ class productsService {
 				},
 			})
 			.then(response => {
-                console.log(response.data)
 				return response.data;
 			});
 	}

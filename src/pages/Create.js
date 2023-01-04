@@ -78,7 +78,7 @@ export default class Create extends Component {
 							style={{ minHeight: "80vh" }}>
 							<Grid item xs={3}>
 								<div>
-									<Card style={{ marginTop: "20px", width: "100vh" }} elevation={5}>
+									<Card style={{ marginTop: "20px", width: "70vmin"}} elevation={5}>
 										<p className='pt-4 pl-2 text-medium'>Create your pantry</p>
 										<CardContent>
 											{this.state.message && (

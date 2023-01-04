@@ -34,22 +34,20 @@ namespace ModernPantryBackend.Services
             summary.TotalItemCount = pantry.Products.Count();
             summary.PantryAge = DateTime.Now - pantry.CreationDate;
 
-            var products = await _productRepository.FindByConditions(p => p.PantryId == pantryId, false);
-            var deletedProducts = (await _productRepository.FindByConditions(p => p.PantryId == pantryId, true)).Where(p => p.IsDeleted);
+            var products = await _productRepository.FindByConditions(p => p.PantryId == pantryId, true);
             var categories = await _categoryRepository.FindAll();
 
             foreach(Category category in categories)
             {
                 Dictionary<Unit, float> AmountPerUnit = new();
                 Dictionary<Unit, float> AverageMonthlyConsumption = new();
-                var productsInCategory = products.Where(p => p.CategoryProduct.Any(cp => cp.Category == category));
-                var deletedProductsInCategory = deletedProducts.Where(p => p.CategoryProduct.Any(cp => cp.Category == category));
+                var productsInCategory = products.Where(p => p.CategoryProduct.Any(cp => cp.Category == category) && !p.IsDeleted);
+                var deletedProductsInCategory = products.Where(p => p.CategoryProduct.Any(cp => cp.Category == category) && p.IsDeleted);
                 for (int i = 0; i < Enum.GetValues(typeof(Unit)).Length; i++)
                 {
-                    //int month = (int)Math.Ceiling(summary.PantryAge.Days / 30.0);
                     AmountPerUnit.Add((Unit)i, productsInCategory.Where(p => p.Unit == (Unit)i).Select(p => p.Amount).Sum());
-                    AverageMonthlyConsumption.Add((Unit)i, 
-                        (float)deletedProductsInCategory.Where(p => p.Unit == (Unit)i).Select(p => p.Amount).Sum()/ (int)Math.Ceiling(summary.PantryAge.Days / 30.0));
+                    AverageMonthlyConsumption.Add((Unit)i, (float)deletedProductsInCategory
+                        .Where(p => p.Unit == (Unit)i).Select(p => p.Amount).Sum()/ (int)Math.Ceiling(summary.PantryAge.Days / 30.0));
                 }
 
                 int CurrentItemCount = products.Where(p => p.CategoryProduct.Any(c => c.Category == category)).Count();
@@ -61,8 +59,7 @@ namespace ModernPantryBackend.Services
                     AverageMonthlyConsumption = AverageMonthlyConsumption
                 });
             }
-            
-            
+                        
             return ServiceResponse<Summary>.Success(summary, "Summary retrieved.");
         }
     }

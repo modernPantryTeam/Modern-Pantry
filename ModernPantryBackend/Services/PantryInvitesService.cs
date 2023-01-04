@@ -7,15 +7,17 @@
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly IPantryRepository _pantryRepository;
+        private readonly IPantryService _pantryService;
 
         public PantryInvitesService(IPantryInvitesRepository pantryInvitesRepository, IHelperService helperService,
-            IMapper mapper, UserManager<User> userManager, IPantryRepository pantryRepository)
+            IMapper mapper, UserManager<User> userManager, IPantryRepository pantryRepository, IPantryService pantryService)
         {
             _pantryInvitesRepository = pantryInvitesRepository;
             _helperService = helperService;
             _mapper = mapper;
             _userManager = userManager;
             _pantryRepository = pantryRepository;
+            _pantryService = pantryService;
         }
 
         public async Task<ServiceResponse> GetCurrentInvites()
@@ -70,6 +72,9 @@
             {
                 return ServiceResponse.Error("Invited user not found.");
             }
+
+            //Temporary workaround, invites users instantly
+            return await _pantryService.AddUserToPantry(invitedUser.Id, pantryId);
 
             var pantry = (await _pantryRepository.FindByConditions(p => p.Id == pantryId)).FirstOrDefault();
             if (pantry == null)

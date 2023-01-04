@@ -77,10 +77,15 @@ class pantryService {
 	}
 
 	async invite(email, pantryID) {
-		return await axios.post(apiUrl + "/api/PantryInvites/SendInvite?inviteRecieverEmail=" + email + "&pantryId=" + pantryID, {
+		var data = JSON.stringify({
+			email: email,
+			pantryID: pantryID
+		});
+		return await axios.post(apiUrl + "/api/PantryInvites/SendInvite?inviteRecieverEmail=" + email + "&pantryId=" + pantryID, data, {
 			withCredentials: true,
 			headers: {
 				Authorization: "Bearer " + authService.getToken(),
+				"Content-Type": "application/json",
 			},
 		}).then(response => {
 			return response.data;

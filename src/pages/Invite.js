@@ -53,11 +53,19 @@ export default class Invite extends Component {
             this.state.email,
             this.state.pantryID).then(
                 response => {
-                    this.setState({
-                        message: response.data.message,
-                        successful: true,
-                        loading: false
-                    });
+                    if(response.successStatus === false){
+                        this.setState({
+                            message: response.message,
+                            successful: false,
+                            loading: false
+                        });
+                    } else {
+                        this.setState({
+                            message: response.message,
+                            successful: true,
+                            loading: true
+                        });
+                    }
                 },
                 error => {
                     const resMessage = (

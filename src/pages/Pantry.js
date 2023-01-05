@@ -173,6 +173,13 @@ EnhancedTableHead.propTypes = {
 
 function EnhancedTableToolbar(props) {
 	const { numSelected } = props;
+	const currentPantry = pantryService.getCurrentPantryByID();
+	let { id } = useParams();
+	
+	document.addEventListener("DOMContentLoaded", () => {
+		pantryService.getPantryByID(id)
+	});
+	const pantryName = currentPantry.content.name
 
 	return (
 		<><Toolbar
@@ -201,7 +208,7 @@ function EnhancedTableToolbar(props) {
 					variant='h6'
 					id='tableTitle'
 					component='div'>
-					Pantry Name
+					{pantryName}
 				</Typography>
 			)}
 			{numSelected > 0 ? (

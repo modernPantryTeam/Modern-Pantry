@@ -13,13 +13,30 @@ function Dashboard() {
 
 	const [pantries, setPantries] = useState([]);
 
-	const handleClick = () => {
-		// e.preventDefault();
-		// this.setState({
-		// 	send: true,
-		// });
-		console.log("clicked");
-	};
+	// const deletePantry = (id) => {
+	// 	id.preventDefault();
+	// 	this.setState({
+	// 		message: "",
+	// 		loading: true,
+	// 	});
+
+	// 	pantryService.deletePantry(this.state.username).then(
+
+	// 		response => {
+	// 			if (response.successStatus === false) {
+	// 				this.setState({
+	// 					message: response.message,
+	// 					successful: false,
+	// 					loading: false,
+	// 				});
+	// 				console.log(response.message);
+	// 			} else {
+	// 				window.location.reload();
+	// 			}
+	// 		}
+	// 	);
+	// }
+
 	document.addEventListener("DOMContentLoaded", () => {
 		pantryService.getPantries().then(response => {
 			setPantries(response.content);
@@ -74,14 +91,16 @@ function Dashboard() {
 									Enter
 								</Button>
 							</Grid>
+							<form>
 							<Button
+									type="submit"
 									style={{justifyContent: 'flex-end' }}
 									color="inherit"
 									size="small"
-									onClick={pantryService.deletePantry(card.id)}
 								>
 									Delete
 								</Button>
+								</form>
 						</CardActions>
 					</Card>
 				}

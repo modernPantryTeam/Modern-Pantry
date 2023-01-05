@@ -45,7 +45,7 @@ class pantryService {
 		var data = JSON.stringify({
 			id: id,
 		});
-		return await axios.delete(apiUrl + "/api/Pantry/DeletePantry/" + id, data, {
+		return await axios.delete(apiUrl + "/api/Pantry/DeletePantry/" + id, {
 			withCredentials: true,
 			headers: {
 				Authorization: "Bearer " + authService.getToken(),
@@ -68,6 +68,28 @@ class pantryService {
 				.then(response => {
 					return response.data;
 				});
+		}
+
+		async getPantryByID(id) {
+
+			return await axios
+				.get(apiUrl + "/api/Pantry/GetPantryById/" + id, {
+					withCredentials: true,
+					headers: {
+						Authorization: "Bearer " + authService.getToken(),
+					},
+				})
+				.then(response => {
+					if (response.data.successStatus === true) {
+						localStorage.setItem("CurrentPantry", JSON.stringify(response.data));
+					}
+					return response.data;
+				});
+		}
+
+		getCurrentPantryByID() {
+			while (localStorage.getItem("CurrentPantry") == null);
+			return JSON.parse(localStorage.getItem("CurrentPantry"));
 		}
 
 	async getQR(url) {

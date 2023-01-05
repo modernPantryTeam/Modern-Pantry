@@ -1,27 +1,24 @@
 import {
     Button,
     Card,
-    CardHeader,
     CardContent,
     TextField,
     Grid,
     Select,
 } from "@mui/material";
+import { useParams } from "react-router-dom";
 import React, { Component } from "react";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
-import ButtonCustom from "../components/ButtonCustom";
-import AccountBoxOutlinedIcon from "@mui/icons-material/AccountBoxOutlined";
 import Drawer from "../components/Drawer";
-import postService from "../services/post-service";
-import logger from "../logger/logger";
-import lang from "i18next";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Transitions from "../components/Transition";
 import productsService from "../services/products-service";
+import pantryService from "../services/pantry-service";
 
 export default class Create extends Component {
+    
     constructor(props) {
         super(props);
         this.handleAddProduct = this.handleAddProduct.bind(this);
@@ -33,6 +30,8 @@ export default class Create extends Component {
         this.onChangeDate = this.onChangeDate.bind(this);
 
         this.state = {
+            currentPantry: pantryService.getCurrentPantryByID(),
+            pantryID: "",
             title: "",
             message: "",
             category: [],
@@ -41,6 +40,13 @@ export default class Create extends Component {
             pantryId: 0,
             date: "",
         };
+    }
+
+    componentDidMount() {
+
+        this.setState({
+            pantryID: this.state.currentPantry.content.id,
+        });
     }
 
     onChangeDate(e) {
@@ -142,6 +148,7 @@ export default class Create extends Component {
                                                 label={"Pantry ID"}
                                                 variant='outlined'
                                                 fullWidth
+                                                value={this.state.pantryID}
                                                 required
                                                 color='secondary'
                                             />

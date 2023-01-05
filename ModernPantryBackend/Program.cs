@@ -20,6 +20,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.Google;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,11 +44,14 @@ builder.Services.AddAuthentication(options =>
         //ValidAudience = authenticationSettings.JwtIssuer,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey)),
     };
+}).AddGoogle(googleOptions =>
+{
+    googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+    googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
 });
 
 builder.Services.AddCors(options =>
 {
-
     options.AddPolicy("corspolicy",
         policy =>
         {

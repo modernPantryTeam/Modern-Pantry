@@ -4,13 +4,27 @@ import "../sass/css/login.css";
 // import { refreshTokenSetup } from "../utils/refreshTokenSetup";
 // import { gapi } from "gapi-script";
 import { useEffect } from "react";
+import axios from "axios";
 
+const apiUrl = "https://localhost:7183";
 const clientId =
 	"224755618921-u8fkf9m7ov2m8a2p6dinnmp549u2gl8a.apps.googleusercontent.com";
 
 function LoginButton() {
-	function handleCallbackResponse(response) {
+	async function handleCallbackResponse(response) {
 		console.log("jwt: ", response.credential);
+		var data = JSON.stringify({
+			token: response.credential,
+		});
+		return await axios
+			.post(apiUrl + "/api/Account/GoogleExternalLogin", data)
+			.then(response => {
+				if (response.data.successStatus === true) {
+					//localStorage.setItem("user", JSON.stringify(response.data));
+				}
+				// console.log(response.data);
+				return response.data;
+			});
 	}
 
 	/* global google */

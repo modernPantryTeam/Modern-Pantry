@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Security.Claims;
 using System.Text;
 
@@ -89,6 +90,11 @@ namespace ModernPantryBackend.Services
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
+
+            var jsonToken = tokenHandler.ReadToken(authToken);
+            var tokenS = jsonToken as JwtSecurityToken;
+
+
             SecurityToken validatedToken = null;
             try
             {
@@ -98,14 +104,12 @@ namespace ModernPantryBackend.Services
             {
                 return false;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
-            //... manual validations return false if anything untoward is discovered
+
             return validatedToken != null;
         }
     }
-
-
 }

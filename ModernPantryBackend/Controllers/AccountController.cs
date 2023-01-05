@@ -105,5 +105,22 @@ namespace ModernPantryBackend.Controllers
 
             return ServiceResponse<LoginUserResponse>.Success(loginUserResponse, "Login successful.");
         }
+
+        public class TokenRequest
+        {
+            public string Token { get; set; }
+        }
+
+        [HttpPost("GoogleExternalLogin")]
+        public async Task<ServiceResponse> GoogleExternalLogin(TokenRequest token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var jsonToken = tokenHandler.ReadToken(token.Token);
+            var tokenS = jsonToken as JwtSecurityToken;
+
+
+
+            return ServiceResponse.Success("Logged in.");
+        }
     }
 }

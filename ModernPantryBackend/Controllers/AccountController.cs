@@ -96,9 +96,7 @@ namespace ModernPantryBackend.Controllers
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddDays(_authenticationSettings.JwtExpireDays);
             var token = new JwtSecurityToken(_authenticationSettings.JwtIssuer, _authenticationSettings.JwtIssuer, claims, expires: expires, signingCredentials: cred);
-
             var tokenHandler = new JwtSecurityTokenHandler();
-            //string Token = tokenHandler.WriteToken(token);
 
             var loginUserResponse = new LoginUserResponse{
                 Token = tokenHandler.WriteToken(token),

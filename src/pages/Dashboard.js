@@ -13,29 +13,10 @@ function Dashboard() {
 
 	const [pantries, setPantries] = useState([]);
 
-	// const deletePantry = (id) => {
-	// 	id.preventDefault();
-	// 	this.setState({
-	// 		message: "",
-	// 		loading: true,
-	// 	});
-
-	// 	pantryService.deletePantry(this.state.username).then(
-
-	// 		response => {
-	// 			if (response.successStatus === false) {
-	// 				this.setState({
-	// 					message: response.message,
-	// 					successful: false,
-	// 					loading: false,
-	// 				});
-	// 				console.log(response.message);
-	// 			} else {
-	// 				window.location.reload();
-	// 			}
-	// 		}
-	// 	);
-	// }
+	function handleClick(id) {
+		console.log(id);
+		pantryService.deletePantry(id);
+	  }
 
 	document.addEventListener("DOMContentLoaded", () => {
 		pantryService.getPantries().then(response => {
@@ -93,10 +74,10 @@ function Dashboard() {
 							</Grid>
 							<form>
 							<Button
-									type="submit"
 									style={{justifyContent: 'flex-end' }}
 									color="inherit"
 									size="small"
+									onClick={() => handleClick(card.id)}
 								>
 									Delete
 								</Button>

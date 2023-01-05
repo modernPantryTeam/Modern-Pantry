@@ -123,7 +123,7 @@ export default class Create extends Component {
 													color='secondary'
 													endIcon={<SendOutlinedIcon />}>
 													{"Create"}
-													{this.state.successful && <Redirect replace to="/dashboard" />}
+													{this.state.successful && <Redirect replace to="/dashboard"/>}
 												</Button>
 											</form>
 										</CardContent>

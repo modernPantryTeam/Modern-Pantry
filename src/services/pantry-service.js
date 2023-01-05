@@ -1,5 +1,6 @@
 import axios from "axios";
 import authService from "./auth-service";
+import { Redirect } from "react-router-dom";
 
 const apiUrl = "https://localhost:7183";
 
@@ -42,9 +43,6 @@ class pantryService {
 	}
 
 	async deletePantry(id) {
-		var data = JSON.stringify({
-			id: id,
-		});
 		return await axios.delete(apiUrl + "/api/Pantry/DeletePantry/" + id, {
 			withCredentials: true,
 			headers: {
@@ -52,6 +50,7 @@ class pantryService {
 				"Content-Type": "application/json",
 			},
 		}).then(response => {
+			window.location.reload()
 			return response.data;
 		});
 	}

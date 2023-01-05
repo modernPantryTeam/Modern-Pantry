@@ -1,6 +1,5 @@
 import axios from "axios";
 import authService from "./auth-service";
-import { Redirect } from "react-router-dom";
 
 const apiUrl = "https://localhost:7183";
 
@@ -20,26 +19,6 @@ class pantryService {
 			.then(response => {
 				return response.data;
 			});
-
-
-
-		// var data = JSON.stringify({
-		// 	name: name,
-		// });
-
-		// var config = {
-		// 	method: "post",
-		// 	url: "https://localhost:7183/api/Pantry/CreatePantry",
-		// 	headers: {
-		// 		Authorization: "Bearer " + authService.getToken(),
-		// 		"Content-Type": "application/json",
-		// 	},
-		// 	data: data,
-		// };
-
-		// await axios(config).then(response => {
-		// 	return response.data;
-		// });
 	}
 
 	async deletePantry(id) {

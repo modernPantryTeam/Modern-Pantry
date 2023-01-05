@@ -20,14 +20,12 @@ import Tooltip from "@mui/material/Tooltip";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Switch from "@mui/material/Switch";
 import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import Drawer from "../components/Drawer";
-import { AppBar, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import Transitions from "../components/Transition";
 import { useParams } from "react-router-dom";
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
-import WButtonCustom from '../components/WButtonCustom.js'
 import Share from "../components/Share";
 import pantryService from "../services/pantry-service";
 

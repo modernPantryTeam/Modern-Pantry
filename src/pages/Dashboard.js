@@ -13,13 +13,11 @@ function Dashboard() {
 
 	const [pantries, setPantries] = useState([]);
 
-	const handleClick = () => {
-		// e.preventDefault();
-		// this.setState({
-		// 	send: true,
-		// });
-		console.log("clicked");
-	};
+	function handleClick(id) {
+		console.log(id);
+		pantryService.deletePantry(id);
+	  }
+
 	document.addEventListener("DOMContentLoaded", () => {
 		pantryService.getPantries().then(response => {
 			setPantries(response.content);
@@ -74,13 +72,16 @@ function Dashboard() {
 									Enter
 								</Button>
 							</Grid>
+							<form>
 							<Button
 									style={{justifyContent: 'flex-end' }}
 									color="inherit"
 									size="small"
+									onClick={() => handleClick(card.id)}
 								>
 									Delete
 								</Button>
+								</form>
 						</CardActions>
 					</Card>
 				}

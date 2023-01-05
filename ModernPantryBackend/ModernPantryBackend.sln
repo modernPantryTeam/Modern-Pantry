@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernPantryBackend", "ModernPantryBackend\ModernPantryBackend.csproj", "{97F23FD2-2D42-4BE9-9F4C-586B66467849}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernPantryBackend", "ModernPantryBackend.csproj", "{97F23FD2-2D42-4BE9-9F4C-586B66467849}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

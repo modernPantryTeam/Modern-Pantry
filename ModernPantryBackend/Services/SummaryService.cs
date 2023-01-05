@@ -45,9 +45,11 @@ namespace ModernPantryBackend.Services
                 var deletedProductsInCategory = products.Where(p => p.CategoryProduct.Any(cp => cp.Category == category) && p.IsDeleted);
                 for (int i = 0; i < Enum.GetValues(typeof(Unit)).Length; i++)
                 {
+                    var pantryAgeMonths = (int)Math.Ceiling(summary.PantryAge.Days / 30.0);
+                    pantryAgeMonths = pantryAgeMonths < 1 ? 1 : pantryAgeMonths;
                     AmountPerUnit.Add((Unit)i, productsInCategory.Where(p => p.Unit == (Unit)i).Select(p => p.Amount).Sum());
                     AverageMonthlyConsumption.Add((Unit)i, (float)deletedProductsInCategory
-                        .Where(p => p.Unit == (Unit)i).Select(p => p.Amount).Sum()/ (int)Math.Ceiling(summary.PantryAge.Days / 30.0));
+                        .Where(p => p.Unit == (Unit)i).Select(p => p.Amount).Sum() / pantryAgeMonths);
                 }
 
                 int CurrentItemCount = products.Where(p => p.CategoryProduct.Any(c => c.Category == category)).Count();

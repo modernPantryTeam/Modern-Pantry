@@ -1,6 +1,5 @@
 import axios from "axios";
 import authService from "./auth-service";
-import { Redirect } from "react-router-dom";
 
 const apiUrl = "https://localhost:7183";
 
@@ -20,26 +19,6 @@ class pantryService {
 			.then(response => {
 				return response.data;
 			});
-
-
-
-		// var data = JSON.stringify({
-		// 	name: name,
-		// });
-
-		// var config = {
-		// 	method: "post",
-		// 	url: "https://localhost:7183/api/Pantry/CreatePantry",
-		// 	headers: {
-		// 		Authorization: "Bearer " + authService.getToken(),
-		// 		"Content-Type": "application/json",
-		// 	},
-		// 	data: data,
-		// };
-
-		// await axios(config).then(response => {
-		// 	return response.data;
-		// });
 	}
 
 	async deletePantry(id) {
@@ -57,78 +36,97 @@ class pantryService {
 
 	async getPantries() {
 
-			return await axios
-				.get(apiUrl + "/api/Pantry/GetUserPantries", {
-					withCredentials: true,
-					headers: {
-						Authorization: "Bearer " + authService.getToken(),
-					},
-				})
-				.then(response => {
-					return response.data;
-				});
-		}
-
-		async getPantryByID(id) {
-
-			return await axios
-				.get(apiUrl + "/api/Pantry/GetPantryById/" + id, {
-					withCredentials: true,
-					headers: {
-						Authorization: "Bearer " + authService.getToken(),
-					},
-				})
-				.then(response => {
-					if (response.data.successStatus === true) {
-						localStorage.setItem("CurrentPantry", JSON.stringify(response.data));
-					}
-					return response.data;
-				});
-		}
-
-		getCurrentPantryByID() {
-			while (localStorage.getItem("CurrentPantry") == null);
-			return JSON.parse(localStorage.getItem("CurrentPantry"));
-		}
-
-	async getQR(url) {
-
-			return await axios
-				.get(apiUrl + "/api/QR" + url, {
-					url,
-					withCredentials: true,
-					headers: {
-						Authorization: "Bearer " + authService.getToken(),
-					},
-				})
-				.then(response => {
-					if (response.data.successStatus === true) {
-						localStorage.setItem("QR", JSON.stringify(response.data));
-					}
-					return response.data;
-				});
-		}
-
-		getCurrentPantryQR() {
-			while (localStorage.getItem("QR") == null);
-			return JSON.parse(localStorage.getItem("QR"));
-		}
-
-	async invite(email, pantryID) {
-			var data = JSON.stringify({
-				email: email,
-				pantryID: pantryID
-			});
-			return await axios.post(apiUrl + "/api/PantryInvites/SendInvite?inviteRecieverEmail=" + email + "&pantryId=" + pantryID, data, {
+		return await axios
+			.get(apiUrl + "/api/Pantry/GetUserPantries", {
 				withCredentials: true,
 				headers: {
 					Authorization: "Bearer " + authService.getToken(),
-					"Content-Type": "application/json",
 				},
-			}).then(response => {
+			})
+			.then(response => {
 				return response.data;
 			});
-		}
 	}
+
+	async getPantryByID(id) {
+
+		return await axios
+			.get(apiUrl + "/api/Pantry/GetPantryById/" + id, {
+				withCredentials: true,
+				headers: {
+					Authorization: "Bearer " + authService.getToken(),
+				},
+			})
+			.then(response => {
+				if (response.data.successStatus === true) {
+					localStorage.setItem("CurrentPantry", JSON.stringify(response.data));
+				}
+				return response.data;
+			});
+	}
+
+	getCurrentPantryByID() {
+		while (localStorage.getItem("CurrentPantry") == null);
+		return JSON.parse(localStorage.getItem("CurrentPantry"));
+	}
+
+	async getQR(url) {
+
+		return await axios
+			.get(apiUrl + "/api/QR" + url, {
+				url,
+				withCredentials: true,
+				headers: {
+					Authorization: "Bearer " + authService.getToken(),
+				},
+			})
+			.then(response => {
+				if (response.data.successStatus === true) {
+					localStorage.setItem("QR", JSON.stringify(response.data));
+				}
+				return response.data;
+			});
+	}
+
+	getCurrentPantryQR() {
+		while (localStorage.getItem("QR") == null);
+		return JSON.parse(localStorage.getItem("QR"));
+	}
+
+	async getNotifications() {
+
+		return await axios
+			.get(apiUrl + "/api/Notifications/GetUsersNotifications", {
+				withCredentials: true,
+				headers: {
+					Authorization: "Bearer " + authService.getToken(),
+				},
+			})
+			.then(response => {
+				return response.data;
+			});
+	}
+
+	getCurrentNotifications() {
+		while (localStorage.getItem("CurrentNotifications") == null);
+		return JSON.parse(localStorage.getItem("CurrentNotifications"));
+	}
+
+	async invite(email, pantryID) {
+		var data = JSON.stringify({
+			email: email,
+			pantryID: pantryID
+		});
+		return await axios.post(apiUrl + "/api/PantryInvites/SendInvite?inviteRecieverEmail=" + email + "&pantryId=" + pantryID, data, {
+			withCredentials: true,
+			headers: {
+				Authorization: "Bearer " + authService.getToken(),
+				"Content-Type": "application/json",
+			},
+		}).then(response => {
+			return response.data;
+		});
+	}
+}
 
 export default new pantryService();

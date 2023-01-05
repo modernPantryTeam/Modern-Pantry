@@ -16,18 +16,17 @@ function Dashboard() {
 	function handleClick(id) {
 		console.log(id);
 		pantryService.deletePantry(id);
-	  }
+	}
 
 	document.addEventListener("DOMContentLoaded", () => {
 		pantryService.getPantries().then(response => {
 			setPantries(response.content);
 		});
 	});
-	
+
 	if (pantries.length === 0) {
 		return (
-			<>
-				<Drawer></Drawer>
+			<><Drawer></Drawer>
 				<Transitions>
 					<section>
 						<div className='pantry-info'>
@@ -73,15 +72,15 @@ function Dashboard() {
 								</Button>
 							</Grid>
 							<form>
-							<Button
-									style={{justifyContent: 'flex-end' }}
+								<Button
+									style={{ justifyContent: 'flex-end' }}
 									color="inherit"
 									size="small"
 									onClick={() => handleClick(card.id)}
 								>
 									Delete
 								</Button>
-								</form>
+							</form>
 						</CardActions>
 					</Card>
 				}

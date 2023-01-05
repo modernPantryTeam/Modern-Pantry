@@ -103,18 +103,6 @@ export default class Create extends Component {
 													error={this.state.nameError}
 												/>
 
-												{/* <TextField
-													onChange={this.onChangeDescription}
-													label={"Description"}
-													style={{ marginTop: "10px" }}
-													variant='outlined'
-													fullWidth
-													multiline
-													color='secondary'
-													rows={4}
-													error={this.state.descriptionError}
-												/> */}
-
 												<Button
 													disabled={this.state.successful}
 													style={{ marginTop: "24px", color: "white" }}

@@ -1255,3 +1255,8 @@ body {
   width: 25vh;
   height: 50%;
 }
+
+.max-w-screen-3xl
+{
+  max-width: 2000px;
+}	

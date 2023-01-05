@@ -316,7 +316,7 @@ export default function EnhancedTable() {
 		<>
 			<Drawer></Drawer>
 			<Transitions>
-				<div class='ml-20 mr-6 pb-2 pt-4 lg:ml-20 md:ml-20 sm:max-w-4xl lg:max-w-screen-2xl md:px-24'>
+				<div class='ml-20 mr-6 pb-2 pt-4 lg:ml-20 md:ml-20 sm:max-w-4xl lg:max-w-screen-3xl md:px-24'>
 					<div class=''>
 						<Box sx={{ width: "100%" }}>
 							<Paper sx={{ width: "100%", mb: 2 }}>

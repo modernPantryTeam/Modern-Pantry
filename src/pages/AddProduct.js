@@ -1,11 +1,11 @@
 import {
-	Button,
-	Card,
-	CardHeader,
-	CardContent,
-	TextField,
-	Grid,
-	Select,
+    Button,
+    Card,
+    CardHeader,
+    CardContent,
+    TextField,
+    Grid,
+    Select,
 } from "@mui/material";
 import React, { Component } from "react";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
@@ -22,84 +22,84 @@ import Transitions from "../components/Transition";
 import productsService from "../services/products-service";
 
 export default class Create extends Component {
-	constructor(props) {
-		super(props);
-		this.handleAddProduct = this.handleAddProduct.bind(this);
-		this.onChangeTitle = this.onChangeTitle.bind(this);
-		this.onChangeCategory = this.onChangeCategory.bind(this);
-		this.onChangeQuantity = this.onChangeQuantity.bind(this);
-		this.onChangeUnit = this.onChangeUnit.bind(this);
-		this.onChangePantryId = this.onChangePantryId.bind(this);
-		this.onChangeDate = this.onChangeDate.bind(this);
+    constructor(props) {
+        super(props);
+        this.handleAddProduct = this.handleAddProduct.bind(this);
+        this.onChangeTitle = this.onChangeTitle.bind(this);
+        this.onChangeCategory = this.onChangeCategory.bind(this);
+        this.onChangeQuantity = this.onChangeQuantity.bind(this);
+        this.onChangeUnit = this.onChangeUnit.bind(this);
+        this.onChangePantryId = this.onChangePantryId.bind(this);
+        this.onChangeDate = this.onChangeDate.bind(this);
 
-		this.state = {
-			title: "",
-			message: "",
-			category: [],
-			quantity: 0,
-			unit: 0,
-			pantryId: 0,
-			date: "",
-		};
-	}
+        this.state = {
+            title: "",
+            message: "",
+            category: [],
+            quantity: 0,
+            unit: 0,
+            pantryId: 0,
+            date: "",
+        };
+    }
 
-	onChangeDate(e) {
-		this.setState({
-			date: e.target.value,
-		});
-	}
+    onChangeDate(e) {
+        this.setState({
+            date: e.target.value,
+        });
+    }
 
-	onChangePantryId(e) {
-		this.setState({
-			pantryId: e.target.value,
-		});
-	}
+    onChangePantryId(e) {
+        this.setState({
+            pantryId: e.target.value,
+        });
+    }
 
-	onChangeUnit(e) {
-		this.setState({
-			unit: e.target.value,
-		});
-	}
+    onChangeUnit(e) {
+        this.setState({
+            unit: e.target.value,
+        });
+    }
 
-	onChangeQuantity(e) {
-		this.setState({
-			quantity: e.target.value,
-		});
-	}
+    onChangeQuantity(e) {
+        this.setState({
+            quantity: e.target.value,
+        });
+    }
 
-	onChangeCategory(e) {
-		this.setState({
-			category: e.target.value,
-		});
-	}
+    onChangeCategory(e) {
+        this.setState({
+            category: e.target.value,
+        });
+    }
 
-	onChangeTitle(e) {
-		this.setState({
-			title: e.target.value,
-		});
-	}
+    onChangeTitle(e) {
+        this.setState({
+            title: e.target.value,
+        });
+    }
 
-	handleAddProduct(e) {
-		e.preventDefault();
+    handleAddProduct(e) {
+        e.preventDefault();
 
-		productsService
-			.addProduct(
-				this.state.title,
-				this.state.pantryId,
-				this.state.unit,
-				this.state.quantity,
-				this.state.date,
-				this.state.category
-			)
-			.then(response => {
-				this.setState({
-					message: response.message,
-				});
-			});
-	}
+        productsService
+            .addProduct(
+                this.state.title,
+                this.state.pantryId,
+                this.state.unit,
+                this.state.quantity,
+                this.state.date,
+                this.state.category
+            )
+            .then(response => {
+                this.setState({
+                    message: response.message,
+                });
+            });
+    }
 
-	render() {
-		return (
+    render() {
+        return (
             <>
                 <Drawer></Drawer>
                 <Transitions>
@@ -203,7 +203,7 @@ export default class Create extends Component {
                                                 style={{ marginTop: "10px" }}
                                                 type='date'
                                                 value={"2023-01-01"}
-                                                label={"Quantity"}
+                                                label={"Expiry date"}
                                                 variant='outlined'
                                                 fullWidth
                                                 required
@@ -227,5 +227,5 @@ export default class Create extends Component {
                 </Transitions>
             </>
         );
-	}
+    }
 }

@@ -51,7 +51,7 @@ class authService {
 
 	getToken() {
 		const user = this.getCurrentUser();
-		return user.message;
+		return user.content.token;
 	}
 }
 

@@ -220,6 +220,7 @@ function EnhancedTableToolbar(props) {
 					<Share></Share>
 					<IconButton>
 						<Button
+							href="/add-product"
 							style={{ color: 'white', justifyContent: 'flex-end' }}
 							color="inherit"
 							size="small"

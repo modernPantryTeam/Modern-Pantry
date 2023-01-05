@@ -31,21 +31,20 @@ export default class Create extends Component {
 
         this.state = {
             currentPantry: pantryService.getCurrentPantryByID(),
-            pantryID: "",
             title: "",
             message: "",
             category: [],
             quantity: 0,
             unit: 0,
             pantryId: 0,
-            date: "",
+            date: "2023-01-01",
         };
     }
 
     componentDidMount() {
 
         this.setState({
-            pantryID: this.state.currentPantry.content.id,
+            pantryId: this.state.currentPantry.content.id,
         });
     }
 
@@ -148,7 +147,7 @@ export default class Create extends Component {
                                                 label={"Pantry ID"}
                                                 variant='outlined'
                                                 fullWidth
-                                                value={this.state.pantryID}
+                                                value={this.state.pantryId}
                                                 required
                                                 color='secondary'
                                             />
@@ -209,7 +208,7 @@ export default class Create extends Component {
                                                 onChange={this.onChangeDate}
                                                 style={{ marginTop: "10px" }}
                                                 type='date'
-                                                value={"2023-01-01"}
+                                                value={this.state.date}
                                                 label={"Expiry date"}
                                                 variant='outlined'
                                                 fullWidth

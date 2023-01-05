@@ -150,6 +150,7 @@ export default class Create extends Component {
                                                 value={this.state.pantryId}
                                                 required
                                                 color='secondary'
+                                                disabled
                                             />
 
                                             <FormControl

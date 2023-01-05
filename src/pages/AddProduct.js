@@ -202,6 +202,8 @@ export default class Create extends Component {
                                                 onChange={this.onChangeDate}
                                                 style={{ marginTop: "10px" }}
                                                 type='date'
+                                                value={"2023-01-01"}
+                                                label={"Quantity"}
                                                 variant='outlined'
                                                 fullWidth
                                                 required

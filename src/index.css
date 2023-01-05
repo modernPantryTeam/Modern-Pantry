@@ -455,6 +455,10 @@ video {
   margin-right: 1rem;
 }
 
+.mr-6 {
+  margin-right: 1.5rem;
+}
+
 .mb-4 {
   margin-bottom: 1rem;
 }
@@ -1200,7 +1204,7 @@ body {
 }
 
 .centerd1 {
-  margin-left: 3.75rem;
+  margin-left: 3.5rem;
   width: 85%;
 }
 

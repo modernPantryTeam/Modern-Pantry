@@ -8,7 +8,6 @@ import Typography from '@mui/material/Typography';
 import Transitions from '../components/Transition';
 import authService from '../services/auth-service';
 import userService from '../services/user-service';
-import pantryService from '../services/pantry-service';
 
 export default class User extends Component {
 
@@ -25,7 +24,6 @@ export default class User extends Component {
         this.state = {
             open: false,
             currentUser: authService.getCurrentUser(),
-            QR: "",
             username: "",
             email: "",
             password: "",
@@ -49,8 +47,8 @@ export default class User extends Component {
     componentDidMount() {
 
         this.setState({
-            username: this.state.currentUser.username,
-            email: this.state.currentUser.email,
+            username: this.state.currentUser.content.user.username,
+            email: this.state.currentUser.content.user.email,
             password: this.state.currentUser.password
         });
 
@@ -101,26 +99,26 @@ export default class User extends Component {
             return (
                 <><Drawer />
                     <Transitions>
-                        <div className="centerd1 sm:w-3/5 sm:mx-auto md:w-3/5 md:mx-auto lg:w-3/5 lg:mx-auto ds rounded">
+                        <div className="centerd1 sm:w-3/5 sm:mx-auto md:w-3/5 md:mx-auto lg:w-2/5 lg:mx-auto ds rounded">
                             <Card sx={{ display: 'flex' }}>
                                 <CardMedia
                                     component="img"
                                     sx={{ width: '8rem' }}
                                     image="https://i.imgur.com/poFWJfz.png"
                                     alt="avatar"
-                                    style={{ margin: '20px' }}
+                                    style={{ margin: '15px' }}
                                 />
                                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                                     <CardContent sx={{ flex: '1 0 auto' }}>
-                                        <Typography style={{ margin: '20px', paddingLeft: '25px' }} component="div" variant="h5">
+                                        <Typography style={{ margin: '20px', paddingLeft: '5px' }} component="div" variant="h5">
                                         {this.state.username}
                                         </Typography>
                                     </CardContent>
-                                    <Box sx={{ display: 'flex', alignItems: 'center', pl: 5, pb: 5 }}>
-                                        <button
+                                    <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 5 }}>
+                                        <button 
                                             type="button"
                                             disabled={this.state.loading}
-                                            className={`text-white w-40 rounded h-8 font-bold border`}
+                                            className={`mr-6 text-white w-40 rounded h-8 font-bold border`}
                                             onClick={this.handleClick}
                                         >
                                             Edit profile
@@ -153,7 +151,7 @@ export default class User extends Component {
                                                 onChange={this.onChangeUsername}
                                                 value={this.state.username}
                                                 placeholder="Username"
-                                                className="text-sm darkthemebg text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
+                                                className="text-sm darkthemebg text-white w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
                                                 name="username"
                                                 required
                                             />
@@ -163,7 +161,7 @@ export default class User extends Component {
                                                 onChange={this.onChangeEmail}
                                                 value={this.state.email}
                                                 placeholder="Email"
-                                                className="text-sm darkthemebg text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
+                                                className="text-sm darkthemebg text-white w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
                                                 name="email"
                                                 required
                                             />
@@ -173,7 +171,7 @@ export default class User extends Component {
                                                 onChange={this.onChangePassword}
                                                 value={this.state.password}
                                                 placeholder="Password"
-                                                className="text-sm darkthemebg text-gray-base w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
+                                                className="text-sm darkthemebg text-white w-full mr-3 py-3 px-4 h-2 border border-gray-primary rounded mb-2"
                                                 name="password"
                                                 required
                                             />

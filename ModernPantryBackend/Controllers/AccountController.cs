@@ -98,8 +98,14 @@ namespace ModernPantryBackend.Controllers
             var token = new JwtSecurityToken(_authenticationSettings.JwtIssuer, _authenticationSettings.JwtIssuer, claims, expires: expires, signingCredentials: cred);
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            string Token = tokenHandler.WriteToken(token);
-            return ServiceResponse.Success(Token);
+            //string Token = tokenHandler.WriteToken(token);
+
+            var loginUserResponse = new LoginUserResponse{
+                Token = tokenHandler.WriteToken(token),
+                User = _mapper.Map<GetUserDTO>(user)
+            };
+
+            return ServiceResponse<LoginUserResponse>.Success(loginUserResponse, "Login successful.");
         }
     }
 }

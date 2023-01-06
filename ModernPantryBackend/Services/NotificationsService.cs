@@ -36,11 +36,11 @@
                         TimeSpan timeSpan = (TimeSpan)(product.ExpieryDate - product.AddDate);
                         if(timeSpan.Days == 0)
                         {
-                            expieryNotifications.Add(new Notification { Information = $"{pantry.Name}: {product.Name} expires today." });
+                            expieryNotifications.Add(new Notification { label = $"{pantry.Name}: {product.Name} expires today." });
                         }
                         else if(timeSpan.Days <= 3) 
                         {
-                            expieryNotifications.Add(new Notification { Information = $"{pantry.Name}: {product.Name} will expire in {timeSpan.Days} days." });
+                            expieryNotifications.Add(new Notification { label = $"{pantry.Name}: {product.Name} will expire in {timeSpan.Days} days." });
                         }
                     }
                 }
@@ -56,7 +56,7 @@
             {
                 inviteNotifications.Add(new Notification
                 {
-                    Information = $"New invite to '{invitation.Pantry.Name}' " +
+                    label = $"New invite to '{invitation.Pantry.Name}' " +
                     $"from {invitation.Sender.UserName} ({invitation.Sender.Email})"
                 });
             }

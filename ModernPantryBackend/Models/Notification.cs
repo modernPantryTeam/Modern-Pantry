@@ -2,6 +2,6 @@
 {
     public class Notification
     {
-        public string Information { get; set; }
+        public string label { get; set; }
     }
 }

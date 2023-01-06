@@ -46,6 +46,12 @@ class productsService {
 		while (localStorage.getItem("CurrentProducts") == null);
 		return JSON.parse(localStorage.getItem("CurrentProducts"));
 	}
+
+	pobierz(){
+		let obiekt = { products: "Cupcakes", category: "Sweets", amount: 20, unit: "kg", expiry: "10.12.2022"}
+
+		return obiekt;
+	}
 }
 
 export default new productsService();

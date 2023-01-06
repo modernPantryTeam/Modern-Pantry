@@ -11,19 +11,28 @@ const clientId =
 	"224755618921-u8fkf9m7ov2m8a2p6dinnmp549u2gl8a.apps.googleusercontent.com";
 
 function LoginButton() {
-	async function handleCallbackResponse(response) {
+	function handleCallbackResponse(response) {
+		document.cookie.split(";").forEach((c) => {
+			document.cookie = c
+			  .replace(/^ +/, "")
+			  .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+		  });
 		console.log("jwt: ", response.credential);
 		var data = JSON.stringify({
 			token: response.credential,
 		});
-		return await axios
-			.post(apiUrl + "/api/Account/GoogleExternalLogin", data)
+		return axios
+			.post(apiUrl + "/api/Account/GoogleExternalLogin", data, { headers: {
+				"Content-Type": "application/json",
+			}})
 			.then(response => {
 				if (response.data.successStatus === true) {
-					//localStorage.setItem("user", JSON.stringify(response.data));
+					
+
+					localStorage.setItem("user", JSON.stringify(response.data));
+					window.location.reload();
 				}
-				// console.log(response.data);
-				return response.data;
+				//return response.data;
 			});
 	}
 

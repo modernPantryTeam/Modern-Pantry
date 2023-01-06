@@ -1,17 +1,21 @@
-﻿namespace ModernPantryBackend.Services
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace ModernPantryBackend.Services
 {
     public class HelperService : IHelperService
     {
         private readonly IBaseRepository<User> _userRepository;
         private readonly IBaseRepository<PantryUser> _pantryUserRepository;
         private readonly IHttpContextAccessor _contextAccessor;
+        private readonly UserManager<User> _userManager;
 
         public HelperService(IBaseRepository<User> userRepository, IBaseRepository<PantryUser> pantryUserRepository,
-            IHttpContextAccessor contextAccessor)
+            IHttpContextAccessor contextAccessor, UserManager<User> userManager)
         {
             _userRepository = userRepository;
             _pantryUserRepository = pantryUserRepository;
             _contextAccessor = contextAccessor;
+            _userManager = userManager;
         }
 
         public async Task<User> GetCurrentlyLoggedInUser()

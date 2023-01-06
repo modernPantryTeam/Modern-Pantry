@@ -17,17 +17,13 @@ namespace ModernPantryBackend.Controllers
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
         private readonly IEmailSender _emailSender;
-        private readonly SignInManager<User> _signInManager;
-        private readonly AuthenticationSettings _authenticationSettings;
 
-        public AccountController(IAccountService accountService, IMapper mapper, UserManager<User> userManager, IEmailSender emailSender, SignInManager<User> signInManager, AuthenticationSettings authenticationSettings)
+        public AccountController(IAccountService accountService, IMapper mapper, UserManager<User> userManager, IEmailSender emailSender)
         {
             _accountService = accountService;
             _mapper = mapper;
             _userManager = userManager;
             _emailSender = emailSender;
-            _signInManager = signInManager;
-            _authenticationSettings = authenticationSettings;
         }
 
         [HttpPost("Register")]
@@ -47,7 +43,9 @@ namespace ModernPantryBackend.Controllers
                 }
                 return ServiceResponse.Error(errorMessage);
             }
+
             user = await _userManager.FindByEmailAsync(model.Email);
+
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var confirmationLink = Url.ActionLink("ConfirmEmail", "Account", new { userId = user.Id.ToString(), @token = token });
             await _emailSender.SendEmailAsync("pantry.modern@gmail.com", user.Email, "Confirm your email address", confirmationLink);
@@ -58,69 +56,20 @@ namespace ModernPantryBackend.Controllers
         [HttpGet]
         public async Task<ServiceResponse> ConfirmEmail(string userId, string token)
         {
-            var user = await _userManager.FindByIdAsync(userId);
-            if (user == null)
-                return ServiceResponse.Error("User not found.", HttpStatusCode.NotFound);
-            var result = await _userManager.ConfirmEmailAsync(user, token);
-
-            if (!result.Succeeded)
-            {
-                string errorMessage = "";
-                string line = "";
-                foreach (var error in result.Errors)
-                {
-                    line = error.Description + " ";
-                    errorMessage += line;
-                }
-                return ServiceResponse.Error(errorMessage, HttpStatusCode.BadRequest);
-            }
-            return ServiceResponse.Success("Email confirmed.");
+            return await _accountService.ConfirmEmail(userId, token);
         }
 
         [HttpPost("Login")]
         public async Task<ServiceResponse> LoginUser([FromBody] LoginUserDto model)
         {
-            var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
-            if (!result.Succeeded)
-                return ServiceResponse.Error("Ivalid username or password. Maybe you should confirm verifcation e-mail.",
-                     HttpStatusCode.Unauthorized);
-            var user = await _userManager.FindByNameAsync(model.UserName);
-            if (user == null)
-                return ServiceResponse.Error("Ivalid username or password. Maybe you should confirm verifcation e-mai.l",
-                    HttpStatusCode.Unauthorized);
-            var claims = new List<Claim>()
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            };
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authenticationSettings.JwtKey));
-            var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddDays(_authenticationSettings.JwtExpireDays);
-            var token = new JwtSecurityToken(_authenticationSettings.JwtIssuer, _authenticationSettings.JwtIssuer, claims, expires: expires, signingCredentials: cred);
-            var tokenHandler = new JwtSecurityTokenHandler();
-
-            var loginUserResponse = new LoginUserResponse{
-                Token = tokenHandler.WriteToken(token),
-                User = _mapper.Map<GetUserDTO>(user)
-            };
-
-            return ServiceResponse<LoginUserResponse>.Success(loginUserResponse, "Login successful.");
+            return await _accountService.LoginUser(model);
         }
 
-        public class TokenRequest
-        {
-            public string Token { get; set; }
-        }
 
         [HttpPost("GoogleExternalLogin")]
-        public async Task<ServiceResponse> GoogleExternalLogin(TokenRequest token)
+        public async Task<ServiceResponse> GoogleExternalLogin(TokenRequest tokenRequest)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var jsonToken = tokenHandler.ReadToken(token.Token);
-            var tokenS = jsonToken as JwtSecurityToken;
-
-
-
-            return ServiceResponse.Success("Logged in.");
+            return await _accountService.GoogleExternalLogin(tokenRequest);
         }
     }
 }

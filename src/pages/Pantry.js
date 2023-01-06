@@ -28,6 +28,7 @@ import { useParams } from "react-router-dom";
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import Share from "../components/Share";
 import pantryService from "../services/pantry-service";
+import productsService from "../services/products-service";
 
 function createData(products, category, amount, unit, expiry) {
 	return {
@@ -38,13 +39,6 @@ function createData(products, category, amount, unit, expiry) {
 		expiry,
 	};
 }
-
-const rows = [
-	createData("Cupcakes", "Sweets", 20, "kg", "10.12.2022"),
-	createData("Cola", "Drinks", 5, "l", "22.12.2022"),
-	createData("Sugar", "Spices", 8, "kg", "10.12.2025"),
-	createData("Sprite", "Drinks", 20, "l", "10.04.2022"),
-];
 
 function descendingComparator(a, b, orderBy) {
 	if (b[orderBy] < a[orderBy]) {
@@ -62,8 +56,6 @@ function getComparator(order, orderBy) {
 		: (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
 function stableSort(array, comparator) {
 	const stabilizedThis = array.map((el, index) => [el, index]);
 	stabilizedThis.sort((a, b) => {
@@ -173,10 +165,11 @@ function EnhancedTableToolbar(props) {
 	const { numSelected } = props;
 	const currentPantry = pantryService.getCurrentPantryByID();
 	let { id } = useParams();
-	
+
 	document.addEventListener("DOMContentLoaded", () => {
 		pantryService.getPantryByID(id)
 	});
+
 	const pantryName = currentPantry.content.name
 
 	return (
@@ -242,20 +235,33 @@ EnhancedTableToolbar.propTypes = {
 };
 
 export default function EnhancedTable() {
+	
+	let { id } = useParams(); //id of user pantry
+	let pantryProducts;
+
+	const url = "?url=https%3A%2F%2Flocalhost%3A3000%2Fpantry%2F" + id;
+	document.addEventListener("DOMContentLoaded", () => {
+		pantryService.getQR(url)
+	});
+
+	document.addEventListener("DOMContentLoaded", () => {
+		pantryProducts = productsService.getPantryProducts(id);
+		createData(pantryProducts.name)
+	});
+
+	const rows = [
+		createData("Cupcakes", "Sweets", 20, "kg", "10.12.2022"),
+		createData("Cola", "Drinks", 5, "l", "22.12.2022"),
+		createData("Sugar", "Spices", 8, "kg", "10.12.2025"),
+		createData("Sprite", "Drinks", 20, "l", "10.04.2022"),
+	];
+
 	const [order, setOrder] = React.useState("asc");
 	const [orderBy, setOrderBy] = React.useState("category");
 	const [selected, setSelected] = React.useState([]);
 	const [page, setPage] = React.useState(0);
 	const [dense, setDense] = React.useState(false);
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-	let { id } = useParams(); //id of user pantry
-	console.log(id);
-
-	const url = "?url=https%3A%2F%2Flocalhost%3A3000%2Fpantry%2F" + id;
-	document.addEventListener("DOMContentLoaded", () => {
-		pantryService.getQR(url)
-	});
 
 	const handleRequestSort = (event, property) => {
 		const isAsc = orderBy === property && order === "asc";
@@ -334,8 +340,6 @@ export default function EnhancedTable() {
 											rowCount={rows.length}
 										/>
 										<TableBody>
-											{/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                 rows.sort(getComparator(order, orderBy)).slice() */}
 											{stableSort(rows, getComparator(order, orderBy))
 												.slice(
 													page * rowsPerPage,

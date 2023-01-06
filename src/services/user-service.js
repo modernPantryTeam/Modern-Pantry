@@ -5,17 +5,16 @@ const apiUrl = "https://localhost:7183";
 
 class userService {
 
-    async update(username, password, email) {
+    async update(password, email, username) {
         return await axios.put(apiUrl + "/api/Account/Update", {
             username,
-            password,
-            email
+            email,
+            password
         }, {
             headers: {
                 Authorization: 'Bearer ' + authService.getToken()
             }
         });
-
     }
 }
 

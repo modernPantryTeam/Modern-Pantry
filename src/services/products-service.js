@@ -26,6 +26,26 @@ class productsService {
 				return response.data;
 			});
 	}
+
+	async getPantryProducts(id) {
+
+		return await axios
+			.get(apiUrl + "/api/Product/GetPantryProducts/" + id, {
+				withCredentials: true,
+				headers: {
+					Authorization: "Bearer " + authService.getToken(),
+				},
+			})
+			.then(response => {
+				localStorage.setItem("CurrentProducts", JSON.stringify(response.data));
+				return response.data;
+			});
+	}
+
+	getCurrentProducts() {
+		while (localStorage.getItem("CurrentProducts") == null);
+		return JSON.parse(localStorage.getItem("CurrentProducts"));
+	}
 }
 
 export default new productsService();

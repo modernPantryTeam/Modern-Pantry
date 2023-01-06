@@ -75,9 +75,9 @@ export default class User extends Component {
     handleUpdate(e) {
         e.preventDefault();
         userService.update(
-            this.state.username,
-            this.state.email,
             this.state.password,
+            this.state.email,
+            this.state.username,
         ).then(
             response => {
                 this.setState({

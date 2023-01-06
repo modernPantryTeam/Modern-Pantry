@@ -5,7 +5,6 @@ import WButtonCustom from '../components/WButtonCustom.js'
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import pantryService from "../services/pantry-service";
 import Transitions from "../components/Transition";
-import DeleteIcon from '@mui/icons-material/Delete';
 import "../sass/css/dashboard.css";
 import { Grid, CardActionArea, CardMedia, Typography, CardActions, Button, Card, CardContent } from "@mui/material";
 

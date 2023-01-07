@@ -1,5 +1,5 @@
 import * as React from "react";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -25,7 +25,7 @@ import Drawer from "../components/Drawer";
 import { Grid } from "@mui/material";
 import Transitions from "../components/Transition";
 import { useParams } from "react-router-dom";
-import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
+import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
 import Share from "../components/Share";
 import pantryService from "../services/pantry-service";
 import productsService from "../services/products-service";
@@ -167,65 +167,64 @@ function EnhancedTableToolbar(props) {
 	let { id } = useParams();
 
 	document.addEventListener("DOMContentLoaded", () => {
-		pantryService.getPantryByID(id)
+		pantryService.getPantryByID(id);
 	});
 
-	const pantryName = currentPantry.content.name
+	const pantryName = currentPantry.content.name;
 
 	return (
-		<><Toolbar
-			sx={{
-				pl: { sm: 2 },
-				pr: { xs: 1, sm: 1 },
-				...(numSelected > 0 && {
-					bgcolor: theme =>
-						alpha(
-							theme.palette.primary.main,
-							theme.palette.action.activatedOpacity
-						),
-				}),
-			}}>
-			{numSelected > 0 ? (
-				<Typography
-					sx={{ flex: "1 1 100%" }}
-					color='inherit'
-					variant='subtitle1'
-					component='div'>
-					{numSelected} selected
-				</Typography>
-			) : (
-				<Typography
-					sx={{ flex: "1 1 100%" }}
-					variant='h6'
-					id='tableTitle'
-					component='div'>
-					{pantryName}
-				</Typography>
-			)}
-			{numSelected > 0 ? (
-				<Tooltip title='Delete'>
-					<IconButton>
-						<DeleteIcon />
-					</IconButton>
-				</Tooltip>
-			) : (
-				<>
-					<Share></Share>
-					<IconButton>
-						<Button
-							href="/add-product"
-							style={{ color: 'white', justifyContent: 'flex-end' }}
-							color="inherit"
-							size="small"
-							startIcon={<ProductionQuantityLimitsIcon />}
-						>
-							Add Product
-						</Button>
-					</IconButton>
-				</>
-
-			)}
-		</Toolbar>
+		<>
+			<Toolbar
+				sx={{
+					pl: { sm: 2 },
+					pr: { xs: 1, sm: 1 },
+					...(numSelected > 0 && {
+						bgcolor: theme =>
+							alpha(
+								theme.palette.primary.main,
+								theme.palette.action.activatedOpacity
+							),
+					}),
+				}}>
+				{numSelected > 0 ? (
+					<Typography
+						sx={{ flex: "1 1 100%" }}
+						color='inherit'
+						variant='subtitle1'
+						component='div'>
+						{numSelected} selected
+					</Typography>
+				) : (
+					<Typography
+						sx={{ flex: "1 1 100%" }}
+						variant='h6'
+						id='tableTitle'
+						component='div'>
+						{pantryName}
+					</Typography>
+				)}
+				{numSelected > 0 ? (
+					<Tooltip title='Delete'>
+						<IconButton>
+							<DeleteIcon />
+						</IconButton>
+					</Tooltip>
+				) : (
+					<>
+						<Share></Share>
+						<IconButton>
+							<Button
+								href='/add-product'
+								style={{ color: "white", justifyContent: "flex-end" }}
+								color='inherit'
+								size='small'
+								startIcon={<ProductionQuantityLimitsIcon />}>
+								Add Product
+							</Button>
+						</IconButton>
+					</>
+				)}
+			</Toolbar>
 		</>
 	);
 }
@@ -234,27 +233,32 @@ EnhancedTableToolbar.propTypes = {
 	numSelected: PropTypes.number.isRequired,
 };
 
-export default function EnhancedTable() {
-	
+function EnhancedTable() {
 	let { id } = useParams(); //id of user pantry
-	let pantryProducts;
+	const [rows, setRows] = React.useState([])
 
 	const url = "?url=https%3A%2F%2Flocalhost%3A3000%2Fpantry%2F" + id;
 	document.addEventListener("DOMContentLoaded", () => {
-		pantryService.getQR(url)
+		pantryService.getQR(url);
 	});
 
 	document.addEventListener("DOMContentLoaded", () => {
-		pantryProducts = productsService.getPantryProducts(id);
-		createData(pantryProducts.name)
-	});
+		let products = []
+		productsService.getPantryProducts(id).then(response => {
+			for (let element of response.content){
+					products.push({products: element.name, category: element.categories[0].name, amount: element.amount, unit: element.unit, expiry: element.expieryDate})
+					// products.push(createData(element.name, element.categories[0].name), element.amount, element.unit, element.expieryDate)
+				}
+			setRows(products)
+		});
+	})
 
-	const rows = [
-		createData("Cupcakes", "Sweets", 20, "kg", "10.12.2022"),
-		createData("Cola", "Drinks", 5, "l", "22.12.2022"),
-		createData("Sugar", "Spices", 8, "kg", "10.12.2025"),
-		createData("Sprite", "Drinks", 20, "l", "10.04.2022"),
-	];
+	// const rows = [
+	// 	createData("Cupcakes", "Sweets", 20, "kg", "10.12.2022"),
+	// 	createData("Cola", "Drinks", 5, "l", "22.12.2022"),
+	// 	createData("Sugar", "Spices", 8, "kg", "10.12.2025"),
+	// 	createData("Sprite", "Drinks", 20, "l", "10.04.2022"),
+	// ];
 
 	const [order, setOrder] = React.useState("asc");
 	const [orderBy, setOrderBy] = React.useState("category");
@@ -423,3 +427,5 @@ export default function EnhancedTable() {
 		</>
 	);
 }
+
+export default EnhancedTable;

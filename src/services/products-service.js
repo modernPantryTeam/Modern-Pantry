@@ -55,10 +55,10 @@ class productsService {
 			});
 	}
 
-	async editProduct(name, pantryId, unit, amount, date, category) {
+	async editProduct(name, id, unit, amount, date, category) {
 		var data = JSON.stringify({
 			name: name,
-			pantryId: pantryId,
+			id: id,
 			unit: unit,
 			amount: amount,
 			expieryDate: date,

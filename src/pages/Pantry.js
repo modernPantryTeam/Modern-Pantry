@@ -212,6 +212,16 @@ function EnhancedTableToolbar(props) {
 								Add Product
 							</Button>
 						</IconButton>
+						<IconButton>
+							<Button
+								href='/edit-product'
+								style={{ color: "white", justifyContent: "flex-end" }}
+								color='inherit'
+								size='small'
+								startIcon={<ProductionQuantityLimitsIcon />}>
+								Edit Product
+							</Button>
+						</IconButton>
 					</>
 				)}
 			</Toolbar>

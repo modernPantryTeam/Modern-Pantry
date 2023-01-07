@@ -5,7 +5,6 @@ import {
     TextField,
     Grid,
     Select,
-    Typography,
     CardActions,
 } from "@mui/material";
 import React, { Component } from "react";
@@ -16,39 +15,43 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Transitions from "../components/Transition";
 import productsService from "../services/products-service";
-import pantryService from "../services/pantry-service";
 import DeleteIcon from '@mui/icons-material/Delete';
 
 export default class Create extends Component {
 
     constructor(props) {
         super(props);
-        this.handleAddProduct = this.handleAddProduct.bind(this);
+        this.handleEditProduct = this.handleEditProduct.bind(this);
         this.onChangeTitle = this.onChangeTitle.bind(this);
         this.onChangeCategory = this.onChangeCategory.bind(this);
         this.onChangeQuantity = this.onChangeQuantity.bind(this);
         this.onChangeUnit = this.onChangeUnit.bind(this);
-        this.onChangePantryId = this.onChangePantryId.bind(this);
+        this.onChangeProductId = this.onChangeProductId.bind(this);
         this.onChangeDate = this.onChangeDate.bind(this);
 
         this.state = {
-            currentPantry: pantryService.getCurrentPantryByID(),
+            //currentProduct: productsService.getCurrentProductByID(),
             title: "",
             message: "",
             category: [],
             quantity: 0,
             unit: 0,
-            pantryId: 0,
+            productID: 0,
             date: "2023-01-01",
         };
     }
 
-    componentDidMount() {
+	 handleClick(id) {
+		console.log(id);
+		productsService.deleteProduct(id);
+	}
 
-        this.setState({
-            pantryId: this.state.currentPantry.content.id,
-        });
-    }
+    // componentDidMount() {
+
+    //     this.setState({
+    //         productID: this.state.currentProduct.content.id,
+    //     });
+    // }
 
     onChangeDate(e) {
         this.setState({
@@ -56,9 +59,9 @@ export default class Create extends Component {
         });
     }
 
-    onChangePantryId(e) {
+    onChangeProductId(e) {
         this.setState({
-            pantryId: e.target.value,
+            productID: e.target.value,
         });
     }
 
@@ -86,13 +89,13 @@ export default class Create extends Component {
         });
     }
 
-    handleAddProduct(e) {
+    handleEditProduct(e) {
         e.preventDefault();
 
         productsService
-            .addProduct(
+            .editProduct(
                 this.state.title,
-                this.state.pantryId,
+                this.state.productID,
                 this.state.unit,
                 this.state.quantity,
                 this.state.date,
@@ -132,6 +135,7 @@ export default class Create extends Component {
                                                 color="inherit"
                                                 size="small"
                                                 startIcon={<DeleteIcon />}
+                                                //onClick={() => handleClick(id)}
                                             >
                                                 Delete
                                             </Button>
@@ -146,7 +150,7 @@ export default class Create extends Component {
                                         <form
                                             noValidate
                                             autoComplete='off'
-                                            onSubmit={this.handleAddProduct}>
+                                            onSubmit={this.handleEditProduct}>
                                             <TextField
                                                 onChange={this.onChangeTitle}
                                                 style={{ marginTop: "10px" }}
@@ -158,15 +162,13 @@ export default class Create extends Component {
                                             />
 
                                             <TextField
-                                                onChange={this.onChangePantryId}
+                                                onChange={this.onChangeProductId}
                                                 style={{ marginTop: "10px" }}
                                                 label={"Product ID"}
                                                 variant='outlined'
                                                 fullWidth
-                                                value={this.state.pantryId}
                                                 required
                                                 color='secondary'
-                                                disabled
                                             />
 
                                             <FormControl

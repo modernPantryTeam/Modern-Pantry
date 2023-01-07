@@ -15,6 +15,7 @@ import Statistics from "./pages/Statistics";
 import Profile from "./pages/Profile";
 import Pantry from "./pages/Pantry";
 import AddProduct from "./pages/AddProduct";
+import EditProduct from "./pages/EditProduct";
 import Invite from "./pages/Invite";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -103,6 +104,13 @@ export default class App extends Component {
 										<Redirect to='/login' />
 									) : (
 										<Invite />
+									)}
+								</Route>
+								<Route path='/edit-product'>
+									{!this.state.loggedIn ? (
+										<Redirect to='/EditProduct' />
+									) : (
+										<EditProduct />
 									)}
 								</Route>
 								<Route component={NotFound} />

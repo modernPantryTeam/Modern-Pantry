@@ -233,41 +233,25 @@ EnhancedTableToolbar.propTypes = {
 	numSelected: PropTypes.number.isRequired,
 };
 
-function Test(array) {
-	let { id } = useParams();
-
-	
-	productsService.getPantryProducts(id).then(response => {
-		response.content.forEach(element => {
-			array.push({products: element.name, category: element.categories[0].name, amount: element.amount, unit: element.unit, expiry: element.expieryDate})
-		});
-	});
-	array.push(productsService.pobierz());
-	array.push({products: "Cupcakes", category: "Sweets", amount: 20, unit: "kg", expiry: "10.12.2022"})
-	array.push({products: "Cola", category: "Sweets", amount: 20, unit: "kg", expiry: "10.12.2022"})
-}
-
-export default function EnhancedTable() {
+function EnhancedTable() {
 	let { id } = useParams(); //id of user pantry
-	// let pantryProducts;
-	let rows = [];
-
-	Test(rows);
-	console.log(rows);
+	const [rows, setRows] = React.useState([])
 
 	const url = "?url=https%3A%2F%2Flocalhost%3A3000%2Fpantry%2F" + id;
 	document.addEventListener("DOMContentLoaded", () => {
 		pantryService.getQR(url);
 	});
 
-	// document.addEventListener("DOMContentLoaded", () => {
-	// 	productsService.getPantryProducts(id).then(response => {
-	// 		response.content.forEach(element => {
-	// 			rows.push(createData(element.name, element.categories[0].name, element.amount, element.unit, element.expieryDate))
-	// 		});
-	// 	});
-	// })
-	// console.log(rows)
+	document.addEventListener("DOMContentLoaded", () => {
+		let products = []
+		productsService.getPantryProducts(id).then(response => {
+			for (let element of response.content){
+					products.push({products: element.name, category: element.categories[0].name, amount: element.amount, unit: element.unit, expiry: element.expieryDate})
+					// products.push(createData(element.name, element.categories[0].name), element.amount, element.unit, element.expieryDate)
+				}
+			setRows(products)
+		});
+	})
 
 	// const rows = [
 	// 	createData("Cupcakes", "Sweets", 20, "kg", "10.12.2022"),
@@ -275,11 +259,6 @@ export default function EnhancedTable() {
 	// 	createData("Sugar", "Spices", 8, "kg", "10.12.2025"),
 	// 	createData("Sprite", "Drinks", 20, "l", "10.04.2022"),
 	// ];
-
-	// let rows = [
-	// 	{products: "Cupcakes", category: "Sweets", amount: 20, unit: "kg", expiry: "10.12.2022"}
-	// ]
-	// console.log(rows)
 
 	const [order, setOrder] = React.useState("asc");
 	const [orderBy, setOrderBy] = React.useState("category");
@@ -448,3 +427,5 @@ export default function EnhancedTable() {
 		</>
 	);
 }
+
+export default EnhancedTable;

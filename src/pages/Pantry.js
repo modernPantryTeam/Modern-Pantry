@@ -223,9 +223,23 @@ EnhancedTableToolbar.propTypes = {
 	numSelected: PropTypes.number.isRequired,
 };
 
-function EnhancedTable() {
+function getUnits(){
+	let units = [
+		{id: 0, value: "L"},
+		{id: 1, value: "ML"},
+		{id: 2, value: "kg"},
+		{id: 3, value: "g"},
+		{id: 4, value: "Piece"},
+		{id: 5, value: "Bottle"},
+		{id: 6, value: "Can"},
+	]
+	return units;
+}
+
+export default function EnhancedTable() {
 	let { id } = useParams(); //id of user pantry
 	const [rows, setRows] = React.useState([])
+	let units = getUnits();
 
 	const url = "?url=https%3A%2F%2Flocalhost%3A3000%2Fpantry%2F" + id;
 	document.addEventListener("DOMContentLoaded", () => {
@@ -234,9 +248,16 @@ function EnhancedTable() {
 
 	document.addEventListener("DOMContentLoaded", () => {
 		let products = []
+
 		productsService.getPantryProducts(id).then(response => {
 			for (let element of response.content) {
-				products.push({ products: element.name, category: element.categories[0].name, amount: element.amount, unit: element.unit, expiry: element.expieryDate })
+				for (let i=0; i<units.length; i++){
+					if(element.unit === units[i].id){
+						products.push({ products: element.name, category: element.categories[0].name, amount: element.amount, unit: units[i].value, expiry: element.expieryDate })
+					} else {
+						continue;
+					}
+				}
 			}
 			setRows(products)
 		});
@@ -408,5 +429,3 @@ function EnhancedTable() {
 		</>
 	);
 }
-
-export default EnhancedTable;

@@ -117,7 +117,7 @@ export default class Create extends Component {
                             style={{ minHeight: "80vh" }}>
                             <Grid item xs={3}>
                                 <Card
-                                    style={{ width: "900px", marginTop: "20px" }}
+                                    style={{maxWidth: "600px", marginTop: "20px" }}
                                     elevation={5}>
                                     <p className='pt-4 pl-2 text-medium'>Add product</p>
                                     <CardContent>

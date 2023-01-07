@@ -37,14 +37,8 @@ class productsService {
 				},
 			})
 			.then(response => {
-				localStorage.setItem("CurrentProducts", JSON.stringify(response.data));
 				return response.data;
 			});
-	}
-
-	getCurrentProducts() {
-		while (localStorage.getItem("CurrentProducts") == null);
-		return JSON.parse(localStorage.getItem("CurrentProducts"));
 	}
 }
 

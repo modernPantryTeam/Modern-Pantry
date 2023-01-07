@@ -30,16 +30,6 @@ import Share from "../components/Share";
 import pantryService from "../services/pantry-service";
 import productsService from "../services/products-service";
 
-function createData(products, category, amount, unit, expiry) {
-	return {
-		products,
-		category,
-		amount,
-		unit,
-		expiry,
-	};
-}
-
 function descendingComparator(a, b, orderBy) {
 	if (b[orderBy] < a[orderBy]) {
 		return -1;
@@ -245,20 +235,12 @@ function EnhancedTable() {
 	document.addEventListener("DOMContentLoaded", () => {
 		let products = []
 		productsService.getPantryProducts(id).then(response => {
-			for (let element of response.content){
-					products.push({products: element.name, category: element.categories[0].name, amount: element.amount, unit: element.unit, expiry: element.expieryDate})
-					// products.push(createData(element.name, element.categories[0].name), element.amount, element.unit, element.expieryDate)
-				}
+			for (let element of response.content) {
+				products.push({ products: element.name, category: element.categories[0].name, amount: element.amount, unit: element.unit, expiry: element.expieryDate })
+			}
 			setRows(products)
 		});
 	})
-
-	// const rows = [
-	// 	createData("Cupcakes", "Sweets", 20, "kg", "10.12.2022"),
-	// 	createData("Cola", "Drinks", 5, "l", "22.12.2022"),
-	// 	createData("Sugar", "Spices", 8, "kg", "10.12.2025"),
-	// 	createData("Sprite", "Drinks", 20, "l", "10.04.2022"),
-	// ];
 
 	const [order, setOrder] = React.useState("asc");
 	const [orderBy, setOrderBy] = React.useState("category");
@@ -317,7 +299,6 @@ function EnhancedTable() {
 
 	const isSelected = products => selected.indexOf(products) !== -1;
 
-	// Avoid a layout jump when reaching the last page with empty rows.
 	const emptyRows =
 		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 

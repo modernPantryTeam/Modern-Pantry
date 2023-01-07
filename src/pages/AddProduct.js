@@ -6,7 +6,6 @@ import {
     Grid,
     Select,
 } from "@mui/material";
-import { useParams } from "react-router-dom";
 import React, { Component } from "react";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import Drawer from "../components/Drawer";

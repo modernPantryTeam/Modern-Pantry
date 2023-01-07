@@ -1,18 +1,11 @@
 import React, { Component } from 'react';
 import { Button, Card, CardContent, TextField, Grid } from "@mui/material";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
-import authService from '../services/auth-service';
-import userService from '../services/user-service';
 import Drawer from '../components/Drawer';
 import Transitions from '../components/Transition'
 import Spinner from 'react-bootstrap/Spinner';
 import { Redirect } from "react-router-dom";
-import { useEffect } from 'react';
 import pantryService from '../services/pantry-service';
-
-const delay = ms => new Promise(
-    resolve => setTimeout(resolve, ms)
-);
 
 export default class Invite extends Component {
     constructor(props) {

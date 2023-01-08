@@ -10,10 +10,16 @@ import { Grid, CardActionArea, CardMedia, Typography, CardActions, Button, Card,
 
 function Dashboard() {
 
+	const delay = ms => new Promise(
+		resolve => setTimeout(resolve, ms)
+	);
+
 	const [pantries, setPantries] = useState([]);
 
-	function handleEnter(id) {
+	async function handleEnter(id) {
 		pantryService.getPantryByID(id)
+		await delay(100);
+		window.location.href = `/pantry/${id}`
 	}
 
 	function handleClick(id) {
@@ -69,8 +75,7 @@ function Dashboard() {
 								<Button
 									size='small'
 									color='inherit'
-									onClick={handleEnter(card.id)}
-									href={`/pantry/${card.id}`}
+									onClick={() => handleEnter(card.id)}
 								>
 									Enter
 								</Button>

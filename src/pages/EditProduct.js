@@ -23,7 +23,7 @@ class EditProduct extends Component {
     constructor(props) {
         super(props);
         this.handleEditProduct = this.handleEditProduct.bind(this);
-        this.onChangeTitle = this.onChangeTitle.bind(this);
+        this.onChangeName = this.onChangeName.bind(this);
         this.onChangeCategory = this.onChangeCategory.bind(this);
         this.onChangeQuantity = this.onChangeQuantity.bind(this);
         this.onChangeUnit = this.onChangeUnit.bind(this);
@@ -32,13 +32,14 @@ class EditProduct extends Component {
 
 
         this.state = {
-            title: "",
+            currentProduct: productsService.getCurrentProduct(),
+            name: "",
             message: "",
             category: [],
             quantity: 0,
             unit: 0,
             productId: 0,
-            date: "2023-01-01",
+            date: "",
         };
     }
 
@@ -46,6 +47,11 @@ class EditProduct extends Component {
 
         this.setState({
             productId: this.props.params.product,
+            name: this.state.currentProduct.content.name,
+            //category: this.state.currentProduct.content.categories[0].name,
+            unit: this.state.currentProduct.content.unit,
+            quantity: this.state.currentProduct.content.amount,
+            date: this.state.currentProduct.content.expieryDate,
         });
     }
 
@@ -84,9 +90,9 @@ class EditProduct extends Component {
         });
     }
 
-    onChangeTitle(e) {
+    onChangeName(e) {
         this.setState({
-            title: e.target.value,
+            name: e.target.value,
         });
     }
 
@@ -95,7 +101,7 @@ class EditProduct extends Component {
 
         productsService
             .editProduct(
-                this.state.title,
+                this.state.name,
                 this.state.productId,
                 this.state.unit,
                 this.state.quantity,
@@ -153,13 +159,14 @@ class EditProduct extends Component {
                                             autoComplete='off'
                                             onSubmit={this.handleEditProduct}>
                                             <TextField
-                                                onChange={this.onChangeTitle}
+                                                onChange={this.onChangeName}
                                                 style={{ marginTop: "10px" }}
                                                 label={"Product name"}
                                                 variant='outlined'
                                                 fullWidth
                                                 required
                                                 color='secondary'
+                                                value={this.state.name}
                                             />
 
                                             <TextField
@@ -203,6 +210,7 @@ class EditProduct extends Component {
                                                 required>
                                                 <InputLabel>Units</InputLabel>
                                                 <Select
+                                                    value={this.state.unit}
                                                     fullWidth
                                                     label={"Units"}
                                                     onChange={this.onChangeUnit}>
@@ -224,18 +232,18 @@ class EditProduct extends Component {
                                                 fullWidth
                                                 required
                                                 color='secondary'
+                                                value={this.state.quantity}
                                             />
 
                                             <TextField
                                                 onChange={this.onChangeDate}
                                                 style={{ marginTop: "10px" }}
-                                                type='date'
-                                                value={this.state.date}
                                                 label={"Expiry date"}
                                                 variant='outlined'
                                                 fullWidth
                                                 required
                                                 color='secondary'
+                                                value={this.state.date}
                                             />
 
                                             <Button

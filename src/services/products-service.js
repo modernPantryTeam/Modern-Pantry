@@ -44,7 +44,7 @@ class productsService {
 	async getProductByID(id) {
 
 		return await axios
-			.get(apiUrl + "​/api​/Product​/GetProductById​/" + id, {
+			.get(apiUrl + "/api/Product/GetProductById/" + id, {
 				withCredentials: true,
 				headers: {
 					Authorization: "Bearer " + authService.getToken(),

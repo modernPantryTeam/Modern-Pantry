@@ -232,8 +232,15 @@ function handleDelete(id) {
 	productsService.deleteProduct(id);
 }
 
-function handleCatchProduct(id) {
+const delay = ms => new Promise(
+	resolve => setTimeout(resolve, ms)
+  );
+  
+
+async function handleCatchProduct(id) {
 	productsService.getProductByID(id);
+	await delay(200);
+	window.location.href = `/edit-product/${id}`
 }
 
 export default function EnhancedTable() {
@@ -365,7 +372,7 @@ export default function EnhancedTable() {
 																			style={{ color: 'white' }}
 																			startIcon={<EditIcon />}
 																			onClick={() => handleCatchProduct(row.id)}
-																			href={`/edit-product/${row.id}`}>
+																			>
 																		</Button>
 																	</Grid>
 																	<Button sx={{ minWidth: 0, paddingLeft: '4px', paddingRight: '4px' }}

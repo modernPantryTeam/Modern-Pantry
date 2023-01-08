@@ -21,7 +21,7 @@ export default class AddProduct extends Component {
     constructor(props) {
         super(props);
         this.handleAddProduct = this.handleAddProduct.bind(this);
-        this.onChangeTitle = this.onChangeTitle.bind(this);
+        this.onChangeName = this.onChangeName.bind(this);
         this.onChangeCategory = this.onChangeCategory.bind(this);
         this.onChangeQuantity = this.onChangeQuantity.bind(this);
         this.onChangeUnit = this.onChangeUnit.bind(this);
@@ -30,7 +30,7 @@ export default class AddProduct extends Component {
 
         this.state = {
             currentPantry: pantryService.getCurrentPantryByID(),
-            title: "",
+            name: "",
             message: "",
             category: [],
             quantity: 0,
@@ -77,9 +77,9 @@ export default class AddProduct extends Component {
         });
     }
 
-    onChangeTitle(e) {
+    onChangeName(e) {
         this.setState({
-            title: e.target.value,
+            name: e.target.value,
         });
     }
 
@@ -88,7 +88,7 @@ export default class AddProduct extends Component {
 
         productsService
             .addProduct(
-                this.state.title,
+                this.state.name,
                 this.state.pantryId,
                 this.state.unit,
                 this.state.quantity,
@@ -131,7 +131,7 @@ export default class AddProduct extends Component {
                                             autoComplete='off'
                                             onSubmit={this.handleAddProduct}>
                                             <TextField
-                                                onChange={this.onChangeTitle}
+                                                onChange={this.onChangeName}
                                                 style={{ marginTop: "10px" }}
                                                 label={"Product name"}
                                                 variant='outlined'

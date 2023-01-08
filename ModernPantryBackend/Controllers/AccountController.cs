@@ -71,5 +71,17 @@ namespace ModernPantryBackend.Controllers
         {
             return await _accountService.GoogleExternalLogin(tokenRequest);
         }
+
+        [HttpPost("FacebookExternalLogin")]
+        public async Task<ServiceResponse> FacebookExternalLogin(FacebookLoginResponse facebookLoginResponse)
+        {
+            return await _accountService.FacebookExternalLogin(facebookLoginResponse);
+        }
+
+        public class FacebookLoginResponse
+        {
+            public string Id { get; set; }
+            public string Name { get; set; }
+        }
     }
 }

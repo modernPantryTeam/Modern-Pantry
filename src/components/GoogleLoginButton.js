@@ -12,11 +12,11 @@ const clientId =
 
 function LoginButton() {
 	function handleCallbackResponse(response) {
-		document.cookie.split(";").forEach((c) => {
-			document.cookie = c
-			  .replace(/^ +/, "")
-			  .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
-		  });
+		// document.cookie.split(";").forEach((c) => {
+		// 	document.cookie = c
+		// 	  .replace(/^ +/, "")
+		// 	  .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+		//   });
 		console.log("jwt: ", response.credential);
 		var data = JSON.stringify({
 			token: response.credential,

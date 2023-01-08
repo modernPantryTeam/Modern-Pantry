@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using ModernPantryBackend.Authentication;
+using ModernPantryBackend.Controllers;
+using ModernPantryBackend.Models;
+using Slugify;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
@@ -40,6 +43,46 @@ namespace ModernPantryBackend.Services
                 return ServiceResponse.Error(errorMessage, HttpStatusCode.BadRequest);
             }
             return ServiceResponse.Success("Email confirmed.");
+        }
+
+        public async Task<ServiceResponse> FacebookExternalLogin(AccountController.FacebookLoginResponse facebookLoginResponse)
+        {
+            //string emailAppend = "@facebookExternalAuthorization.com";
+            var userEmailFromId = facebookLoginResponse.Id + "@" + facebookLoginResponse.Id + ".com";//emailAppend;
+            var user = await _userManager.FindByEmailAsync(userEmailFromId);
+            if (user == null)
+            {
+                SlugHelper helper = new SlugHelper();
+                var userName = helper.GenerateSlug(facebookLoginResponse.Name);
+                CreateUserDto newUserDto = new CreateUserDto { Email = userEmailFromId, UserName = userName, Password = null };
+                var newUser = _mapper.Map<User>(newUserDto);
+                newUser.EmailConfirmed = true;
+                var result = await _userManager.CreateAsync(newUser, "@Aa1234" + Guid.NewGuid().ToString().ToUpper());
+                user = await _userManager.FindByEmailAsync(userEmailFromId);
+            }
+
+            //await _signInManager.SignInAsync(user, true);
+            var securityStamp = _userManager.GetSecurityStampAsync(user);
+            var claims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim("AspNet.Identity.SecurityStamp", user.SecurityStamp),
+            };
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Program.configuration["JwtKey"]));
+            var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var expires = DateTime.Now.AddDays(_authenticationSettings.JwtExpireDays);
+            var token = new JwtSecurityToken(_authenticationSettings.JwtIssuer, _authenticationSettings.JwtIssuer, claims, expires: expires, signingCredentials: cred);
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var loginUserResponse = new LoginUserResponse
+            {
+                Token = tokenHandler.WriteToken(token),
+                User = _mapper.Map<GetUserDTO>(user)
+            };
+
+            return ServiceResponse<LoginUserResponse>.Success(loginUserResponse, "Login with facebook successful.");
         }
 
         public async Task<ServiceResponse> GoogleExternalLogin(TokenRequest tokenRequest)

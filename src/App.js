@@ -106,12 +106,8 @@ export default class App extends Component {
 										<Invite />
 									)}
 								</Route>
-								<Route path='/edit-product'>
-									{!this.state.loggedIn ? (
-										<Redirect to='/EditProduct' />
-									) : (
-										<EditProduct />
-									)}
+								<Route path='/edit-product/:product' component={EditProduct}>
+									{!this.state.loggedIn ? <Redirect to='/login' /> : <EditProduct />}
 								</Route>
 								<Route component={NotFound} />
 							</Switch>

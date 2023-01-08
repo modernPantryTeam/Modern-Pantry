@@ -51,8 +51,14 @@ class productsService {
 				},
 			})
 			.then(response => {
+				localStorage.setItem("CurrentProduct", JSON.stringify(response.data));
 				return response.data;
 			});
+	}
+
+	getCurrentProduct() {
+		while (localStorage.getItem("CurrentProduct") == null);
+		return JSON.parse(localStorage.getItem("CurrentProduct"));
 	}
 
 	async editProduct(name, id, unit, amount, date, category) {

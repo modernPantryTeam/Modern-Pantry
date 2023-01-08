@@ -15,6 +15,8 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Checkbox from "@mui/material/Checkbox";
+import EditIcon from '@mui/icons-material/Edit';
+import { CardActions } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -89,6 +91,12 @@ const headCells = [
 		disablePadding: false,
 		label: "Expiry date",
 	},
+	{
+		id: "options",
+		numeric: true,
+		disablePadding: false,
+		label: "Options",
+	},
 ];
 
 function EnhancedTableHead(props) {
@@ -107,8 +115,8 @@ function EnhancedTableHead(props) {
 	return (
 		<TableHead>
 			<TableRow>
-				<TableCell padding='checkbox'>
-					<Checkbox
+				{<TableCell>
+					{/* <Checkbox
 						color='primary'
 						indeterminate={numSelected > 0 && numSelected < rowCount}
 						checked={rowCount > 0 && numSelected === rowCount}
@@ -116,8 +124,8 @@ function EnhancedTableHead(props) {
 						inputProps={{
 							"aria-label": "select all",
 						}}
-					/>
-				</TableCell>
+					/> */}
+				</TableCell>}
 				{headCells.map(headCell => (
 					<TableCell
 						key={headCell.id}
@@ -230,17 +238,25 @@ EnhancedTableToolbar.propTypes = {
 	numSelected: PropTypes.number.isRequired,
 };
 
-function getUnits(){
+function getUnits() {
 	let units = [
-		{id: 0, value: "L"},
-		{id: 1, value: "ML"},
-		{id: 2, value: "kg"},
-		{id: 3, value: "g"},
-		{id: 4, value: "Piece"},
-		{id: 5, value: "Bottle"},
-		{id: 6, value: "Can"},
+		{ id: 0, value: "L" },
+		{ id: 1, value: "ML" },
+		{ id: 2, value: "kg" },
+		{ id: 3, value: "g" },
+		{ id: 4, value: "Piece" },
+		{ id: 5, value: "Bottle" },
+		{ id: 6, value: "Can" },
 	]
 	return units;
+}
+
+function handleDelete(id) {
+	productsService.deleteProduct(id);
+}
+
+function handleCatchProduct(id) {
+	productsService.getProductByID(id);
 }
 
 export default function EnhancedTable() {
@@ -258,9 +274,9 @@ export default function EnhancedTable() {
 
 		productsService.getPantryProducts(id).then(response => {
 			for (let element of response.content) {
-				for (let i=0; i<units.length; i++){
-					if(element.unit === units[i].id){
-						products.push({ products: element.name, category: element.categories[0].name, amount: element.amount, unit: units[i].value, expiry: element.expieryDate })
+				for (let i = 0; i < units.length; i++) {
+					if (element.unit === units[i].id) {
+						products.push({ id: element.id, products: element.name, category: element.categories[0].name, amount: element.amount, unit: units[i].value, expiry: element.expieryDate })
 					} else {
 						continue;
 					}
@@ -366,22 +382,22 @@ export default function EnhancedTable() {
 													return (
 														<TableRow
 															hover
-															onClick={event =>
-																handleClick(event, row.products)
-															}
-															role='checkbox'
+															// onClick={event =>
+															// 	handleClick(event, row.products)
+															// }
+															// role='checkbox'
 															aria-checked={isItemSelected}
 															tabIndex={-1}
 															key={row.products}
 															selected={isItemSelected}>
 															<TableCell padding='checkbox'>
-																<Checkbox
+																{/* <Checkbox
 																	color='primary'
 																	checked={isItemSelected}
 																	inputProps={{
 																		"aria-labelledby": labelId,
 																	}}
-																/>
+																/> */}
 															</TableCell>
 															<TableCell
 																component='th'
@@ -396,6 +412,23 @@ export default function EnhancedTable() {
 															<TableCell align='right'>{row.amount}</TableCell>
 															<TableCell align='right'>{row.unit}</TableCell>
 															<TableCell align='right'>{row.expiry}</TableCell>
+															<TableCell padding='checkbox'>
+																<CardActions>
+																	<Grid container direction='row' justifyContent='flex-end'>
+																		<Button sx={{ minWidth: 0, paddingLeft: '4px', paddingRight: '4px' }}
+																			style={{ color: 'white' }}
+																			startIcon={<EditIcon />}
+																			onClick={() => handleCatchProduct(row.id)}
+																			href={`/edit-product/${row.id}`}>
+																		</Button>
+																	</Grid>
+																	<Button sx={{ minWidth: 0, paddingLeft: '4px', paddingRight: '4px' }}
+																		style={{ color: 'white' }}
+																		startIcon={<DeleteIcon />}
+																		onClick={() => handleDelete(row.id)}>
+																	</Button>
+																</CardActions>
+															</TableCell>
 														</TableRow>
 													);
 												})}

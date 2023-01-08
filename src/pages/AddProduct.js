@@ -16,7 +16,7 @@ import Transitions from "../components/Transition";
 import productsService from "../services/products-service";
 import pantryService from "../services/pantry-service";
 
-export default class Create extends Component {
+export default class AddProduct extends Component {
     
     constructor(props) {
         super(props);

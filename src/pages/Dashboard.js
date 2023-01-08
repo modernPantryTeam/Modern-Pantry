@@ -17,7 +17,6 @@ function Dashboard() {
 	}
 
 	function handleClick(id) {
-		console.log(id);
 		pantryService.deletePantry(id);
 	}
 

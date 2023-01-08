@@ -16,8 +16,9 @@ import FormControl from "@mui/material/FormControl";
 import Transitions from "../components/Transition";
 import productsService from "../services/products-service";
 import DeleteIcon from '@mui/icons-material/Delete';
+import withRouter from "../components/withRouter";
 
-export default class Create extends Component {
+class EditProduct extends Component {
 
     constructor(props) {
         super(props);
@@ -29,29 +30,29 @@ export default class Create extends Component {
         this.onChangeProductId = this.onChangeProductId.bind(this);
         this.onChangeDate = this.onChangeDate.bind(this);
 
+
         this.state = {
-            //currentProduct: productsService.getCurrentProductByID(),
             title: "",
             message: "",
             category: [],
             quantity: 0,
             unit: 0,
-            productID: 0,
+            productId: 0,
             date: "2023-01-01",
         };
     }
 
-	 handleClick(id) {
-		console.log(id);
-		productsService.deleteProduct(id);
-	}
+    componentDidMount() {
 
-    // componentDidMount() {
+        this.setState({
+            productId: this.props.params.product,
+        });
+    }
 
-    //     this.setState({
-    //         productID: this.state.currentProduct.content.id,
-    //     });
-    // }
+    handleClick(id) {
+        console.log(id);
+        productsService.deleteProduct(id);
+    }
 
     onChangeDate(e) {
         this.setState({
@@ -61,7 +62,7 @@ export default class Create extends Component {
 
     onChangeProductId(e) {
         this.setState({
-            productID: e.target.value,
+            productId: e.target.value,
         });
     }
 
@@ -95,7 +96,7 @@ export default class Create extends Component {
         productsService
             .editProduct(
                 this.state.title,
-                this.state.productID,
+                this.state.productId,
                 this.state.unit,
                 this.state.quantity,
                 this.state.date,
@@ -127,7 +128,7 @@ export default class Create extends Component {
                                     elevation={5}>
                                     <CardActions>
                                         <Grid container direction='row' justifyContent='flex-start'>
-                                        <p className='pt-4 pl-2 text-medium'>Manage product</p>
+                                            <p className='pt-4 pl-2 text-medium'>Manage product</p>
                                         </Grid>
                                         <form>
                                             <Button
@@ -135,7 +136,7 @@ export default class Create extends Component {
                                                 color="inherit"
                                                 size="small"
                                                 startIcon={<DeleteIcon />}
-                                                //onClick={() => handleClick(id)}
+                                                onClick={() => this.handleClick(this.props.params.product)}
                                             >
                                                 Delete
                                             </Button>
@@ -168,6 +169,8 @@ export default class Create extends Component {
                                                 variant='outlined'
                                                 fullWidth
                                                 required
+                                                disabled
+                                                value={this.state.productId}
                                                 color='secondary'
                                             />
 
@@ -254,3 +257,4 @@ export default class Create extends Component {
         );
     }
 }
+export default withRouter(EditProduct);

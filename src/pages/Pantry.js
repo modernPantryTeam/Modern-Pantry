@@ -14,7 +14,6 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
 import EditIcon from '@mui/icons-material/Edit';
 import { CardActions } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
@@ -101,11 +100,8 @@ const headCells = [
 
 function EnhancedTableHead(props) {
 	const {
-		onSelectAllClick,
 		order,
 		orderBy,
-		numSelected,
-		rowCount,
 		onRequestSort,
 	} = props;
 	const createSortHandler = property => event => {
@@ -116,15 +112,6 @@ function EnhancedTableHead(props) {
 		<TableHead>
 			<TableRow>
 				{<TableCell>
-					{/* <Checkbox
-						color='primary'
-						indeterminate={numSelected > 0 && numSelected < rowCount}
-						checked={rowCount > 0 && numSelected === rowCount}
-						onChange={onSelectAllClick}
-						inputProps={{
-							"aria-label": "select all",
-						}}
-					/> */}
 				</TableCell>}
 				{headCells.map(headCell => (
 					<TableCell
@@ -217,16 +204,6 @@ function EnhancedTableToolbar(props) {
 								Add Product
 							</Button>
 						</IconButton>
-						<IconButton>
-							<Button
-								href='/edit-product'
-								style={{ color: "white", justifyContent: "flex-end" }}
-								color='inherit'
-								size='small'
-								startIcon={<ProductionQuantityLimitsIcon />}>
-								Edit Product
-							</Button>
-						</IconButton>
 					</>
 				)}
 			</Toolbar>
@@ -308,27 +285,6 @@ export default function EnhancedTable() {
 		setSelected([]);
 	};
 
-	const handleClick = (event, products) => {
-		const selectedIndex = selected.indexOf(products);
-		let newSelected = [];
-
-		if (selectedIndex === -1) {
-			newSelected = newSelected.concat(selected, products);
-		} else if (selectedIndex === 0) {
-			newSelected = newSelected.concat(selected.slice(1));
-		} else if (selectedIndex === selected.length - 1) {
-			newSelected = newSelected.concat(selected.slice(0, -1));
-		} else if (selectedIndex > 0) {
-			newSelected = newSelected.concat(
-				selected.slice(0, selectedIndex),
-				selected.slice(selectedIndex + 1)
-			);
-		}
-
-		setSelected(newSelected);
-		console.log(newSelected);
-	};
-
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
 	};
@@ -382,22 +338,12 @@ export default function EnhancedTable() {
 													return (
 														<TableRow
 															hover
-															// onClick={event =>
-															// 	handleClick(event, row.products)
-															// }
-															// role='checkbox'
+															role='checkbox'
 															aria-checked={isItemSelected}
 															tabIndex={-1}
 															key={row.products}
 															selected={isItemSelected}>
 															<TableCell padding='checkbox'>
-																{/* <Checkbox
-																	color='primary'
-																	checked={isItemSelected}
-																	inputProps={{
-																		"aria-labelledby": labelId,
-																	}}
-																/> */}
 															</TableCell>
 															<TableCell
 																component='th'

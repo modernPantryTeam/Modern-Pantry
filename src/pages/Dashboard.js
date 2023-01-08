@@ -12,6 +12,10 @@ function Dashboard() {
 
 	const [pantries, setPantries] = useState([]);
 
+	function handleEnter(id) {
+		pantryService.getPantryByID(id)
+	}
+
 	function handleClick(id) {
 		console.log(id);
 		pantryService.deletePantry(id);
@@ -66,7 +70,9 @@ function Dashboard() {
 								<Button
 									size='small'
 									color='inherit'
-									href={`/pantry/${card.id}`}>
+									onClick={handleEnter(card.id)}
+									href={`/pantry/${card.id}`}
+								>
 									Enter
 								</Button>
 							</Grid>

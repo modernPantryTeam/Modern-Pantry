@@ -156,10 +156,7 @@ function EnhancedTableToolbar(props) {
 	const currentPantry = pantryService.getCurrentPantryByID();
 	let { id } = useParams();
 
-	document.addEventListener("DOMContentLoaded", () => {
-		pantryService.getPantryByID(id);
-	});
-
+	pantryService.getPantryByID(id);
 	const pantryName = currentPantry.content.name;
 
 	return (
@@ -313,6 +310,7 @@ export default function EnhancedTable() {
 		}
 
 		setSelected(newSelected);
+		console.log(newSelected);
 	};
 
 	const handleChangePage = (event, newPage) => {

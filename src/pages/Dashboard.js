@@ -5,16 +5,24 @@ import WButtonCustom from '../components/WButtonCustom.js'
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import pantryService from "../services/pantry-service";
 import Transitions from "../components/Transition";
-import DeleteIcon from '@mui/icons-material/Delete';
 import "../sass/css/dashboard.css";
 import { Grid, CardActionArea, CardMedia, Typography, CardActions, Button, Card, CardContent } from "@mui/material";
 
 function Dashboard() {
 
+	const delay = ms => new Promise(
+		resolve => setTimeout(resolve, ms)
+	);
+
 	const [pantries, setPantries] = useState([]);
 
+	async function handleEnter(id) {
+		pantryService.getPantryByID(id)
+		await delay(100);
+		window.location.href = `/pantry/${id}`
+	}
+
 	function handleClick(id) {
-		console.log(id);
 		pantryService.deletePantry(id);
 	}
 
@@ -67,7 +75,8 @@ function Dashboard() {
 								<Button
 									size='small'
 									color='inherit'
-									href={`/pantry/${card.id}`}>
+									onClick={() => handleEnter(card.id)}
+								>
 									Enter
 								</Button>
 							</Grid>

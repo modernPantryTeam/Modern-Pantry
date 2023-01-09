@@ -5,6 +5,7 @@ import {
     TextField,
     Grid,
     Select,
+    CardActions,
 } from "@mui/material";
 import React, { Component } from "react";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
@@ -14,37 +15,49 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Transitions from "../components/Transition";
 import productsService from "../services/products-service";
-import pantryService from "../services/pantry-service";
+import DeleteIcon from '@mui/icons-material/Delete';
+import withRouter from "../components/withRouter";
 
-export default class AddProduct extends Component {
-    
+class EditProduct extends Component {
+
     constructor(props) {
         super(props);
-        this.handleAddProduct = this.handleAddProduct.bind(this);
+        this.handleEditProduct = this.handleEditProduct.bind(this);
         this.onChangeName = this.onChangeName.bind(this);
         this.onChangeCategory = this.onChangeCategory.bind(this);
         this.onChangeQuantity = this.onChangeQuantity.bind(this);
         this.onChangeUnit = this.onChangeUnit.bind(this);
-        this.onChangePantryId = this.onChangePantryId.bind(this);
+        this.onChangeProductId = this.onChangeProductId.bind(this);
         this.onChangeDate = this.onChangeDate.bind(this);
 
+
         this.state = {
-            currentPantry: pantryService.getCurrentPantryByID(),
+            currentProduct: productsService.getCurrentProduct(),
             name: "",
             message: "",
-            category: [],
+            category: 0,
             quantity: 0,
             unit: 0,
-            pantryId: 0,
-            date: "2023-01-01",
+            productId: 0,
+            date: "",
         };
     }
 
     componentDidMount() {
 
         this.setState({
-            pantryId: this.state.currentPantry.content.id,
+            productId: this.props.params.product,
+            name: this.state.currentProduct.content.name,
+            category: this.state.currentProduct.content.categories[0].id,
+            unit: this.state.currentProduct.content.unit,
+            quantity: this.state.currentProduct.content.amount,
+            date: this.state.currentProduct.content.expieryDate,
         });
+    }
+
+    handleClick(id) {
+        console.log(id);
+        productsService.deleteProduct(id);
     }
 
     onChangeDate(e) {
@@ -53,9 +66,9 @@ export default class AddProduct extends Component {
         });
     }
 
-    onChangePantryId(e) {
+    onChangeProductId(e) {
         this.setState({
-            pantryId: e.target.value,
+            productId: e.target.value,
         });
     }
 
@@ -83,13 +96,13 @@ export default class AddProduct extends Component {
         });
     }
 
-    handleAddProduct(e) {
+    handleEditProduct(e) {
         e.preventDefault();
 
         productsService
-            .addProduct(
+            .editProduct(
                 this.state.name,
-                this.state.pantryId,
+                this.state.productId,
                 this.state.unit,
                 this.state.quantity,
                 this.state.date,
@@ -117,9 +130,24 @@ export default class AddProduct extends Component {
                             style={{ minHeight: "80vh" }}>
                             <Grid item xs={3}>
                                 <Card
-                                    style={{maxWidth: "600px", marginTop: "20px" }}
+                                    style={{ maxWidth: "600px", marginTop: "20px" }}
                                     elevation={5}>
-                                    <p className='pt-4 pl-2 text-medium'>Add product</p>
+                                    <CardActions>
+                                        <Grid container direction='row' justifyContent='flex-start'>
+                                            <p className='pt-4 pl-2 text-medium'>Manage product</p>
+                                        </Grid>
+                                        <form>
+                                            <Button
+                                                style={{ justifyContent: 'flex-end' }}
+                                                color="inherit"
+                                                size="small"
+                                                startIcon={<DeleteIcon />}
+                                                onClick={() => this.handleClick(this.props.params.product)}
+                                            >
+                                                Delete
+                                            </Button>
+                                        </form>
+                                    </CardActions>
                                     <CardContent>
                                         {this.state.message && (
                                             <p className='mb-4 text-xs text-red-primary'>
@@ -129,7 +157,7 @@ export default class AddProduct extends Component {
                                         <form
                                             noValidate
                                             autoComplete='off'
-                                            onSubmit={this.handleAddProduct}>
+                                            onSubmit={this.handleEditProduct}>
                                             <TextField
                                                 onChange={this.onChangeName}
                                                 style={{ marginTop: "10px" }}
@@ -138,18 +166,19 @@ export default class AddProduct extends Component {
                                                 fullWidth
                                                 required
                                                 color='secondary'
+                                                value={this.state.name}
                                             />
 
                                             <TextField
-                                                onChange={this.onChangePantryId}
+                                                onChange={this.onChangeProductId}
                                                 style={{ marginTop: "10px" }}
-                                                label={"Pantry ID"}
+                                                label={"Product ID"}
                                                 variant='outlined'
                                                 fullWidth
-                                                value={this.state.pantryId}
                                                 required
-                                                color='secondary'
                                                 disabled
+                                                value={this.state.productId}
+                                                color='secondary'
                                             />
 
                                             <FormControl
@@ -162,7 +191,6 @@ export default class AddProduct extends Component {
                                                     value={this.state.category}
                                                     fullWidth
                                                     label={"Category"}
-                                                    multiple
                                                     onChange={this.onChangeCategory}>
                                                     <MenuItem value={1}>Dairy</MenuItem>
                                                     <MenuItem value={2}>Alcohol</MenuItem>
@@ -181,6 +209,7 @@ export default class AddProduct extends Component {
                                                 required>
                                                 <InputLabel>Units</InputLabel>
                                                 <Select
+                                                    value={this.state.unit}
                                                     fullWidth
                                                     label={"Units"}
                                                     onChange={this.onChangeUnit}>
@@ -202,18 +231,18 @@ export default class AddProduct extends Component {
                                                 fullWidth
                                                 required
                                                 color='secondary'
+                                                value={this.state.quantity}
                                             />
 
                                             <TextField
                                                 onChange={this.onChangeDate}
                                                 style={{ marginTop: "10px" }}
-                                                type='date'
-                                                value={this.state.date}
                                                 label={"Expiry date"}
                                                 variant='outlined'
                                                 fullWidth
                                                 required
                                                 color='secondary'
+                                                value={this.state.date}
                                             />
 
                                             <Button
@@ -222,7 +251,7 @@ export default class AddProduct extends Component {
                                                 variant='text'
                                                 color='secondary'
                                                 endIcon={<SendOutlinedIcon />}>
-                                                {"Add product"}
+                                                {"Edit product"}
                                             </Button>
                                         </form>
                                     </CardContent>
@@ -235,3 +264,4 @@ export default class AddProduct extends Component {
         );
     }
 }
+export default withRouter(EditProduct);

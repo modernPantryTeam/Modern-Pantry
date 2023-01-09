@@ -113,6 +113,7 @@ class pantryService {
 	}
 
 	async invite(inviteRecieverUserName, pantryID) {
+
 		var data = JSON.stringify({
 			inviteRecieverUserName: inviteRecieverUserName,
 			pantryID: pantryID

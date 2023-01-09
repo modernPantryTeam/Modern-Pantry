@@ -1,5 +1,5 @@
 import * as React from "react";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 import PropTypes from "prop-types";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
@@ -14,7 +14,8 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import Checkbox from "@mui/material/Checkbox";
+import EditIcon from '@mui/icons-material/Edit';
+import { CardActions } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -25,26 +26,10 @@ import Drawer from "../components/Drawer";
 import { Grid } from "@mui/material";
 import Transitions from "../components/Transition";
 import { useParams } from "react-router-dom";
-import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
+import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
 import Share from "../components/Share";
 import pantryService from "../services/pantry-service";
-
-function createData(products, category, amount, unit, expiry) {
-	return {
-		products,
-		category,
-		amount,
-		unit,
-		expiry,
-	};
-}
-
-const rows = [
-	createData("Cupcakes", "Sweets", 20, "kg", "10.12.2022"),
-	createData("Cola", "Drinks", 5, "l", "22.12.2022"),
-	createData("Sugar", "Spices", 8, "kg", "10.12.2025"),
-	createData("Sprite", "Drinks", 20, "l", "10.04.2022"),
-];
+import productsService from "../services/products-service";
 
 function descendingComparator(a, b, orderBy) {
 	if (b[orderBy] < a[orderBy]) {
@@ -62,8 +47,6 @@ function getComparator(order, orderBy) {
 		: (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-// This method is created for cross-browser compatibility, if you don't
-// need to support IE11, you can use Array.prototype.sort() directly
 function stableSort(array, comparator) {
 	const stabilizedThis = array.map((el, index) => [el, index]);
 	stabilizedThis.sort((a, b) => {
@@ -107,15 +90,18 @@ const headCells = [
 		disablePadding: false,
 		label: "Expiry date",
 	},
+	{
+		id: "options",
+		numeric: true,
+		disablePadding: false,
+		label: "Options",
+	},
 ];
 
 function EnhancedTableHead(props) {
 	const {
-		onSelectAllClick,
 		order,
 		orderBy,
-		numSelected,
-		rowCount,
 		onRequestSort,
 	} = props;
 	const createSortHandler = property => event => {
@@ -125,17 +111,8 @@ function EnhancedTableHead(props) {
 	return (
 		<TableHead>
 			<TableRow>
-				<TableCell padding='checkbox'>
-					<Checkbox
-						color='primary'
-						indeterminate={numSelected > 0 && numSelected < rowCount}
-						checked={rowCount > 0 && numSelected === rowCount}
-						onChange={onSelectAllClick}
-						inputProps={{
-							"aria-label": "select all",
-						}}
-					/>
-				</TableCell>
+				{<TableCell>
+				</TableCell>}
 				{headCells.map(headCell => (
 					<TableCell
 						key={headCell.id}
@@ -173,66 +150,63 @@ function EnhancedTableToolbar(props) {
 	const { numSelected } = props;
 	const currentPantry = pantryService.getCurrentPantryByID();
 	let { id } = useParams();
-	
-	document.addEventListener("DOMContentLoaded", () => {
-		pantryService.getPantryByID(id)
-	});
-	const pantryName = currentPantry.content.name
+
+	pantryService.getPantryByID(id);
+	const pantryName = currentPantry.content.name;
 
 	return (
-		<><Toolbar
-			sx={{
-				pl: { sm: 2 },
-				pr: { xs: 1, sm: 1 },
-				...(numSelected > 0 && {
-					bgcolor: theme =>
-						alpha(
-							theme.palette.primary.main,
-							theme.palette.action.activatedOpacity
-						),
-				}),
-			}}>
-			{numSelected > 0 ? (
-				<Typography
-					sx={{ flex: "1 1 100%" }}
-					color='inherit'
-					variant='subtitle1'
-					component='div'>
-					{numSelected} selected
-				</Typography>
-			) : (
-				<Typography
-					sx={{ flex: "1 1 100%" }}
-					variant='h6'
-					id='tableTitle'
-					component='div'>
-					{pantryName}
-				</Typography>
-			)}
-			{numSelected > 0 ? (
-				<Tooltip title='Delete'>
-					<IconButton>
-						<DeleteIcon />
-					</IconButton>
-				</Tooltip>
-			) : (
-				<>
-					<Share></Share>
-					<IconButton>
-						<Button
-							href="/add-product"
-							style={{ color: 'white', justifyContent: 'flex-end' }}
-							color="inherit"
-							size="small"
-							startIcon={<ProductionQuantityLimitsIcon />}
-						>
-							Add Product
-						</Button>
-					</IconButton>
-				</>
-
-			)}
-		</Toolbar>
+		<>
+			<Toolbar
+				sx={{
+					pl: { sm: 2 },
+					pr: { xs: 1, sm: 1 },
+					...(numSelected > 0 && {
+						bgcolor: theme =>
+							alpha(
+								theme.palette.primary.main,
+								theme.palette.action.activatedOpacity
+							),
+					}),
+				}}>
+				{numSelected > 0 ? (
+					<Typography
+						sx={{ flex: "1 1 100%" }}
+						color='inherit'
+						variant='subtitle1'
+						component='div'>
+						{numSelected} selected
+					</Typography>
+				) : (
+					<Typography
+						sx={{ flex: "1 1 100%" }}
+						variant='h6'
+						id='tableTitle'
+						component='div'>
+						{pantryName}
+					</Typography>
+				)}
+				{numSelected > 0 ? (
+					<Tooltip title='Delete'>
+						<IconButton>
+							<DeleteIcon />
+						</IconButton>
+					</Tooltip>
+				) : (
+					<>
+						<Share></Share>
+						<IconButton>
+							<Button
+								href='/add-product'
+								style={{ color: "white", justifyContent: "flex-end" }}
+								color='inherit'
+								size='small'
+								startIcon={<ProductionQuantityLimitsIcon />}>
+								Add Product
+							</Button>
+						</IconButton>
+					</>
+				)}
+			</Toolbar>
 		</>
 	);
 }
@@ -241,21 +215,67 @@ EnhancedTableToolbar.propTypes = {
 	numSelected: PropTypes.number.isRequired,
 };
 
+function getUnits() {
+	let units = [
+		{ id: 0, value: "L" },
+		{ id: 1, value: "ML" },
+		{ id: 2, value: "kg" },
+		{ id: 3, value: "g" },
+		{ id: 4, value: "Piece" },
+		{ id: 5, value: "Bottle" },
+		{ id: 6, value: "Can" },
+	]
+	return units;
+}
+
+function handleDelete(id) {
+	productsService.deleteProduct(id);
+}
+
+const delay = ms => new Promise(
+	resolve => setTimeout(resolve, ms)
+  );
+  
+
+async function handleCatchProduct(id) {
+	productsService.getProductByID(id);
+	await delay(200);
+	window.location.href = `/edit-product/${id}`
+}
+
 export default function EnhancedTable() {
+	let { id } = useParams(); //id of user pantry
+	const [rows, setRows] = React.useState([])
+	let units = getUnits();
+
+	const url = "?url=https%3A%2F%2Flocalhost%3A3000%2Fpantry%2F" + id;
+	document.addEventListener("DOMContentLoaded", () => {
+		pantryService.getQR(url);
+	});
+
+	document.addEventListener("DOMContentLoaded", () => {
+		let products = []
+
+		productsService.getPantryProducts(id).then(response => {
+			for (let element of response.content) {
+				for (let i = 0; i < units.length; i++) {
+					if (element.unit === units[i].id) {
+						products.push({ id: element.id, products: element.name, category: element.categories[0].name, amount: element.amount, unit: units[i].value, expiry: element.expieryDate })
+					} else {
+						continue;
+					}
+				}
+			}
+			setRows(products)
+		});
+	})
+
 	const [order, setOrder] = React.useState("asc");
 	const [orderBy, setOrderBy] = React.useState("category");
 	const [selected, setSelected] = React.useState([]);
 	const [page, setPage] = React.useState(0);
 	const [dense, setDense] = React.useState(false);
 	const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
-	let { id } = useParams(); //id of user pantry
-	console.log(id);
-
-	const url = "?url=https%3A%2F%2Flocalhost%3A3000%2Fpantry%2F" + id;
-	document.addEventListener("DOMContentLoaded", () => {
-		pantryService.getQR(url)
-	});
 
 	const handleRequestSort = (event, property) => {
 		const isAsc = orderBy === property && order === "asc";
@@ -270,26 +290,6 @@ export default function EnhancedTable() {
 			return;
 		}
 		setSelected([]);
-	};
-
-	const handleClick = (event, products) => {
-		const selectedIndex = selected.indexOf(products);
-		let newSelected = [];
-
-		if (selectedIndex === -1) {
-			newSelected = newSelected.concat(selected, products);
-		} else if (selectedIndex === 0) {
-			newSelected = newSelected.concat(selected.slice(1));
-		} else if (selectedIndex === selected.length - 1) {
-			newSelected = newSelected.concat(selected.slice(0, -1));
-		} else if (selectedIndex > 0) {
-			newSelected = newSelected.concat(
-				selected.slice(0, selectedIndex),
-				selected.slice(selectedIndex + 1)
-			);
-		}
-
-		setSelected(newSelected);
 	};
 
 	const handleChangePage = (event, newPage) => {
@@ -307,7 +307,6 @@ export default function EnhancedTable() {
 
 	const isSelected = products => selected.indexOf(products) !== -1;
 
-	// Avoid a layout jump when reaching the last page with empty rows.
 	const emptyRows =
 		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
@@ -334,8 +333,6 @@ export default function EnhancedTable() {
 											rowCount={rows.length}
 										/>
 										<TableBody>
-											{/* if you don't need to support IE11, you can replace the `stableSort` call with:
-                 rows.sort(getComparator(order, orderBy)).slice() */}
 											{stableSort(rows, getComparator(order, orderBy))
 												.slice(
 													page * rowsPerPage,
@@ -348,22 +345,12 @@ export default function EnhancedTable() {
 													return (
 														<TableRow
 															hover
-															onClick={event =>
-																handleClick(event, row.products)
-															}
 															role='checkbox'
 															aria-checked={isItemSelected}
 															tabIndex={-1}
 															key={row.products}
 															selected={isItemSelected}>
 															<TableCell padding='checkbox'>
-																<Checkbox
-																	color='primary'
-																	checked={isItemSelected}
-																	inputProps={{
-																		"aria-labelledby": labelId,
-																	}}
-																/>
 															</TableCell>
 															<TableCell
 																component='th'
@@ -378,6 +365,23 @@ export default function EnhancedTable() {
 															<TableCell align='right'>{row.amount}</TableCell>
 															<TableCell align='right'>{row.unit}</TableCell>
 															<TableCell align='right'>{row.expiry}</TableCell>
+															<TableCell padding='checkbox'>
+																<CardActions>
+																	<Grid container direction='row' justifyContent='flex-end'>
+																		<Button sx={{ minWidth: 0, paddingLeft: '4px', paddingRight: '4px' }}
+																			style={{ color: 'white' }}
+																			startIcon={<EditIcon />}
+																			onClick={() => handleCatchProduct(row.id)}
+																			>
+																		</Button>
+																	</Grid>
+																	<Button sx={{ minWidth: 0, paddingLeft: '4px', paddingRight: '4px' }}
+																		style={{ color: 'white' }}
+																		startIcon={<DeleteIcon />}
+																		onClick={() => handleDelete(row.id)}>
+																	</Button>
+																</CardActions>
+															</TableCell>
 														</TableRow>
 													);
 												})}

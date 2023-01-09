@@ -17,7 +17,11 @@
                     dest.Unit = src.Unit;
                 });
 
-            CreateMap<Product, GetProductDTO>();
+            CreateMap<Product, GetProductDTO>()
+                .AfterMap((src, dest) =>
+                {
+                    dest.ExpieryDate = src.ExpieryDate?.ToString(@"yyyy\/MM\/dd");
+                });
         }
     }
 }

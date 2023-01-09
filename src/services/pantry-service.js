@@ -112,12 +112,12 @@ class pantryService {
 		return JSON.parse(localStorage.getItem("CurrentNotifications"));
 	}
 
-	async invite(email, pantryID) {
+	async invite(inviteRecieverUserName, pantryID) {
 		var data = JSON.stringify({
-			email: email,
+			inviteRecieverUserName: inviteRecieverUserName,
 			pantryID: pantryID
 		});
-		return await axios.post(apiUrl + "/api/PantryInvites/SendInvite?inviteRecieverEmail=" + email + "&pantryId=" + pantryID, data, {
+		return await axios.post(apiUrl + "/api/PantryInvites/SendInvite?inviteRecieverUserName=" + inviteRecieverUserName + "&pantryId=" + pantryID, data, {
 			withCredentials: true,
 			headers: {
 				Authorization: "Bearer " + authService.getToken(),

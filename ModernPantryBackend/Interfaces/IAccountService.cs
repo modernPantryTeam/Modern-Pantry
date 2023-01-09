@@ -1,7 +1,4 @@
-﻿
-using static ModernPantryBackend.Controllers.AccountController;
-
-namespace ModernPantryBackend.Services
+﻿namespace ModernPantryBackend.Services
 {
     public interface IAccountService
     {

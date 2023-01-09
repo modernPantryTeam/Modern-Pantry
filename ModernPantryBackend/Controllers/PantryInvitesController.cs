@@ -19,9 +19,9 @@
         }
 
         [HttpPost("SendInvite")]
-        public async Task<ServiceResponse> SendInvite(string inviteRecieverEmail, int pantryId)
+        public async Task<ServiceResponse> SendInvite(string inviteRecieverUserName, int pantryId)
         {
-            return await _pantryInvitesService.SendInvite(inviteRecieverEmail, pantryId);
+            return await _pantryInvitesService.SendInvite(inviteRecieverUserName, pantryId);
         }
 
         [HttpPost("ProcessInvite")]

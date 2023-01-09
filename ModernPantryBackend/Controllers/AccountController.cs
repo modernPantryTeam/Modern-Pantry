@@ -1,13 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using ModernPantryBackend.Authentication;
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-
-namespace ModernPantryBackend.Controllers
+﻿namespace ModernPantryBackend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -76,12 +67,6 @@ namespace ModernPantryBackend.Controllers
         public async Task<ServiceResponse> FacebookExternalLogin(FacebookLoginResponse facebookLoginResponse)
         {
             return await _accountService.FacebookExternalLogin(facebookLoginResponse);
-        }
-
-        public class FacebookLoginResponse
-        {
-            public string Id { get; set; }
-            public string Name { get; set; }
         }
     }
 }

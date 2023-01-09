@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
 using ModernPantryBackend.Authentication;
-using ModernPantryBackend.Controllers;
-using ModernPantryBackend.Models;
 using Slugify;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
@@ -45,10 +42,9 @@ namespace ModernPantryBackend.Services
             return ServiceResponse.Success("Email confirmed.");
         }
 
-        public async Task<ServiceResponse> FacebookExternalLogin(AccountController.FacebookLoginResponse facebookLoginResponse)
+        public async Task<ServiceResponse> FacebookExternalLogin(FacebookLoginResponse facebookLoginResponse)
         {
-            //string emailAppend = "@facebookExternalAuthorization.com";
-            var userEmailFromId = facebookLoginResponse.Id + "@" + facebookLoginResponse.Id + ".com";//emailAppend;
+            var userEmailFromId = facebookLoginResponse.Id + "@" + facebookLoginResponse.Id + ".com";
             var user = await _userManager.FindByEmailAsync(userEmailFromId);
             if (user == null)
             {
@@ -61,7 +57,6 @@ namespace ModernPantryBackend.Services
                 user = await _userManager.FindByEmailAsync(userEmailFromId);
             }
 
-            //await _signInManager.SignInAsync(user, true);
             var securityStamp = _userManager.GetSecurityStampAsync(user);
             var claims = new List<Claim>()
             {
@@ -102,7 +97,6 @@ namespace ModernPantryBackend.Services
                 user = await _userManager.FindByEmailAsync(userEmail);
             }
 
-            //await _signInManager.SignInAsync(user, true);
             var securityStamp = _userManager.GetSecurityStampAsync(user);
             var claims = new List<Claim>()
             {
@@ -127,22 +121,19 @@ namespace ModernPantryBackend.Services
 
         public async Task<ServiceResponse> LoginUser([FromBody] LoginUserDto model)
         {
-            //var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, false, false);
-            //if (!result.Succeeded)
-            //    return ServiceResponse.Error("Ivalid username or password. Maybe you should confirm verifcation e-mail.",
-            //         HttpStatusCode.Unauthorized);
             var user = await _userManager.FindByNameAsync(model.UserName);
             if (user == null)
-                return ServiceResponse.Error("Ivalid username or password. Maybe you should confirm verifcation e-mai.l",
-                    HttpStatusCode.Unauthorized);
+            {
+                return ServiceResponse.Error("User not found.", HttpStatusCode.Unauthorized);
+            }
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
             if (!result.Succeeded)
-                return ServiceResponse.Error("Ivalid username or password. Maybe you should confirm verifcation e-mail.",
-                     HttpStatusCode.Unauthorized);
+            {
+                return ServiceResponse.Error("Ivalid password or unverified e-mail.", HttpStatusCode.Unauthorized);
+            }
 
             var config = Program.configuration;
-
             var securityStamp = _userManager.GetSecurityStampAsync(user);
             var claims = new List<Claim>()
             {

@@ -12,11 +12,6 @@ const clientId =
 
 function LoginButton() {
 	function handleCallbackResponse(response) {
-		// document.cookie.split(";").forEach((c) => {
-		// 	document.cookie = c
-		// 	  .replace(/^ +/, "")
-		// 	  .replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
-		//   });
 		console.log("jwt: ", response.credential);
 		var data = JSON.stringify({
 			token: response.credential,
@@ -27,12 +22,9 @@ function LoginButton() {
 			}})
 			.then(response => {
 				if (response.data.successStatus === true) {
-					
-
 					localStorage.setItem("user", JSON.stringify(response.data));
 					window.location.reload();
 				}
-				//return response.data;
 			});
 	}
 

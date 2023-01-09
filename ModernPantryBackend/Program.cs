@@ -20,7 +20,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Authentication.Google;
 
 internal class Program
 {
@@ -118,7 +117,7 @@ internal class Program
             opt.Password.RequireUppercase = true;
             opt.Password.RequireNonAlphanumeric = false;
             opt.User.RequireUniqueEmail = true;
-            opt.SignIn.RequireConfirmedEmail = false;
+            opt.SignIn.RequireConfirmedEmail = true;
         })
         .AddEntityFrameworkStores<DataContext>()
         .AddDefaultTokenProviders();

@@ -30,7 +30,7 @@ function FacebookLoginButton() {
 //
 	return (
 		<FacebookLogin
-			appId={"834590674314518"}
+			appId={"1531642483930337"}
 			autoLoad={false}
 			callback={responseFacebook}
 			// fields='name,email,picture'

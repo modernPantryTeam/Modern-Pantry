@@ -33,14 +33,23 @@
                 {
                     if(product.ExpieryDate != null)
                     {
-                        TimeSpan timeSpan = (TimeSpan)(product.ExpieryDate - product.AddDate);
-                        if(timeSpan.Days == 0)
+                        TimeSpan timeDelta = (TimeSpan)(product.ExpieryDate - product.AddDate) - (TimeSpan)(DateTime.Now - product.AddDate);
+
+                        if (timeDelta.Days == 0)
                         {
                             expieryNotifications.Add(new Notification { label = $"{pantry.Name}: {product.Name} expires today." });
                         }
-                        else if(timeSpan.Days <= 3) 
+                        else if(timeDelta.Days < 0)
                         {
-                            expieryNotifications.Add(new Notification { label = $"{pantry.Name}: {product.Name} will expire in {timeSpan.Days} days." });
+                            expieryNotifications.Add(new Notification { label = $"{pantry.Name}: {product.Name} has expired." });
+                        }
+                        else if (timeDelta.Days == 1)
+                        {
+                            expieryNotifications.Add(new Notification { label = $"{pantry.Name}: {product.Name} will expire tomorrow." });
+                        }
+                        else if(timeDelta.Days <= 3) 
+                        {
+                            expieryNotifications.Add(new Notification { label = $"{pantry.Name}: {product.Name} will expire in {timeDelta.Days} days." });
                         }
                     }
                 }

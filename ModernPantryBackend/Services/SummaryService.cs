@@ -37,7 +37,13 @@ namespace ModernPantryBackend.Services
             var products = await _productRepository.FindByConditions(p => p.PantryId == pantryId, true);
             var categories = await _categoryRepository.FindAll();
 
-            foreach(Category category in categories)
+            Dictionary<Unit, float> totalQuantityByUnit = new();
+            for (int i = 0; i < Enum.GetValues(typeof(Unit)).Length; i++)
+            {
+                totalQuantityByUnit.Add((Unit)i, products.Where(p => !p.IsDeleted && p.Unit == (Unit)i).Sum(p => p.Amount));
+            }
+
+            foreach (Category category in categories)
             {
                 Dictionary<Unit, float> AmountPerUnit = new();
                 Dictionary<Unit, float> AverageMonthlyConsumption = new();
@@ -58,10 +64,10 @@ namespace ModernPantryBackend.Services
                     CategoryName = category.Name,
                     CurrentItemCount = CurrentItemCount,
                     AmountPerUnit = AmountPerUnit,
-                    AverageMonthlyConsumption = AverageMonthlyConsumption
+                    AverageMonthlyConsumption = AverageMonthlyConsumption,
                 });
             }
-                        
+            summary.TotalQuantityByUnit = totalQuantityByUnit;
             return ServiceResponse<Summary>.Success(summary, "Summary retrieved.");
         }
     }

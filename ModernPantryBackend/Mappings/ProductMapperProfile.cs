@@ -20,7 +20,7 @@
             CreateMap<Product, GetProductDTO>()
                 .AfterMap((src, dest) =>
                 {
-                    dest.ExpieryDate = src.ExpieryDate?.ToString(@"yyyy\/MM\/dd");
+                    dest.ExpieryDate = src.ExpieryDate?.ToString(@"yyyy-MM-dd");
                 });
         }
     }

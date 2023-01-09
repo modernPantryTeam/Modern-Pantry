@@ -130,6 +130,12 @@ builder.Services.AddScoped(typeof(IHelperService), typeof(HelperService));
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var applicationDbContex = scope.ServiceProvider.GetRequiredService<DataContext>();
+    applicationDbContex.Database.Migrate();
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

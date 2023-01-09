@@ -35,7 +35,7 @@ class EditProduct extends Component {
             currentProduct: productsService.getCurrentProduct(),
             name: "",
             message: "",
-            category: 0,
+            category: [],
             quantity: 0,
             unit: 0,
             productId: 0,
@@ -48,7 +48,7 @@ class EditProduct extends Component {
         this.setState({
             productId: this.props.params.product,
             name: this.state.currentProduct.content.name,
-            category: this.state.currentProduct.content.categories[0].id,
+            //category: this.state.currentProduct.content.categories[0].id,
             unit: this.state.currentProduct.content.unit,
             quantity: this.state.currentProduct.content.amount,
             date: this.state.currentProduct.content.expieryDate,
@@ -191,6 +191,7 @@ class EditProduct extends Component {
                                                     value={this.state.category}
                                                     fullWidth
                                                     label={"Category"}
+                                                    multiple
                                                     onChange={this.onChangeCategory}>
                                                     <MenuItem value={1}>Dairy</MenuItem>
                                                     <MenuItem value={2}>Alcohol</MenuItem>

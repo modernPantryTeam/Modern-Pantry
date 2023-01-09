@@ -239,7 +239,7 @@ const delay = ms => new Promise(
 
 async function handleCatchProduct(id) {
 	productsService.getProductByID(id);
-	await delay(200);
+	await delay(500);
 	window.location.href = `/edit-product/${id}`
 }
 

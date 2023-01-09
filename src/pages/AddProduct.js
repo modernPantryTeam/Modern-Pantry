@@ -93,7 +93,7 @@ export default class AddProduct extends Component {
                 this.state.unit,
                 this.state.quantity,
                 this.state.date,
-                this.state.category
+                this.setState.category = [this.state.category]
             )
             .then(response => {
                 this.setState({
@@ -162,7 +162,6 @@ export default class AddProduct extends Component {
                                                     value={this.state.category}
                                                     fullWidth
                                                     label={"Category"}
-                                                    multiple
                                                     onChange={this.onChangeCategory}>
                                                     <MenuItem value={1}>Dairy</MenuItem>
                                                     <MenuItem value={2}>Alcohol</MenuItem>

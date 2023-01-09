@@ -93,12 +93,32 @@ class pantryService {
 		return JSON.parse(localStorage.getItem("QR"));
 	}
 
-	async invite(email, pantryID) {
+	async getNotifications() {
+
+		return await axios
+			.get(apiUrl + "/api/Notifications/GetUsersNotifications", {
+				withCredentials: true,
+				headers: {
+					Authorization: "Bearer " + authService.getToken(),
+				},
+			})
+			.then(response => {
+				return response.data;
+			});
+	}
+
+	getCurrentNotifications() {
+		while (localStorage.getItem("CurrentNotifications") == null);
+		return JSON.parse(localStorage.getItem("CurrentNotifications"));
+	}
+
+	async invite(inviteRecieverUserName, pantryID) {
+
 		var data = JSON.stringify({
-			email: email,
+			inviteRecieverUserName: inviteRecieverUserName,
 			pantryID: pantryID
 		});
-		return await axios.post(apiUrl + "/api/PantryInvites/SendInvite?inviteRecieverEmail=" + email + "&pantryId=" + pantryID, data, {
+		return await axios.post(apiUrl + "/api/PantryInvites/SendInvite?inviteRecieverUserName=" + inviteRecieverUserName + "&pantryId=" + pantryID, data, {
 			withCredentials: true,
 			headers: {
 				Authorization: "Bearer " + authService.getToken(),

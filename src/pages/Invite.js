@@ -11,7 +11,7 @@ export default class Invite extends Component {
     constructor(props) {
         super(props);
         this.handleInvite = this.handleInvite.bind(this);
-        this.onChangeEmail = this.onChangeEmail.bind(this);
+        this.onChangeinviteRecieverUserName = this.onChangeinviteRecieverUserName.bind(this);
         this.onChangePantryID = this.onChangePantryID.bind(this);
         this.state = {
             pantryID: "",
@@ -22,9 +22,9 @@ export default class Invite extends Component {
         };
     }
 
-    onChangeEmail(e) {
+    onChangeinviteRecieverUserName(e) {
         this.setState({
-            email: e.target.value
+            inviteRecieverUserName: e.target.value
         });
     }
 
@@ -43,7 +43,7 @@ export default class Invite extends Component {
         });
 
         pantryService.invite(
-            this.state.email,
+            this.state.inviteRecieverUserName,
             this.state.pantryID).then(
                 response => {
                     if(response.successStatus === false){
@@ -106,15 +106,15 @@ export default class Invite extends Component {
 
                                                 <TextField
                                                     style={{ marginTop: "10px" }}
-                                                    label={"Email adress"}
+                                                    label={"Username"}
                                                     type="text"
                                                     required
 													color='secondary'
                                                     variant='outlined'
 													fullWidth
-                                                    placeholder="Email address"
-                                                    onChange={this.onChangeEmail}
-                                                    value={this.state.email}
+                                                    placeholder="User Name"
+                                                    onChange={this.onChangeinviteRecieverUserName}
+                                                    value={this.state.inviteRecieverUserName}
                                                     disabled={this.state.successful}
                                                 />
 

@@ -65,9 +65,9 @@
             return ServiceResponse.Success(message);
         }
 
-        public async Task<ServiceResponse> SendInvite(string inviteRecieverEmail, int pantryId)
+        public async Task<ServiceResponse> SendInvite(string inviteRecieverUserName, int pantryId)
         {
-            var invitedUser = await _userManager.FindByEmailAsync(inviteRecieverEmail);
+            var invitedUser = await _userManager.FindByNameAsync(inviteRecieverUserName);
             if(invitedUser == null)
             {
                 return ServiceResponse.Error("Invited user not found.");

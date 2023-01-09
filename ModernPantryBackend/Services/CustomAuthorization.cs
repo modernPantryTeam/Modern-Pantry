@@ -1,7 +1,12 @@
-﻿using Microsoft.AspNetCore.Http.Features;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.IdentityModel.Tokens;
+using ModernPantryBackend.Authentication;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
+using System.Net;
+using System.Numerics;
 using System.Security.Claims;
 using System.Text;
 
@@ -10,22 +15,13 @@ namespace ModernPantryBackend.Services
     [AttributeUsage(AttributeTargets.Class)]
     public class CustomAuthorization : Attribute, IAuthorizationFilter
     {
-
-
-        /// <summary>  
-                /// This will Authorize User  
-                /// </summary>  
-                /// <returns></returns>  
         public void OnAuthorization(AuthorizationFilterContext filterContext)
         {
-
             if (filterContext != null)
             {
                 Microsoft.Extensions.Primitives.StringValues authTokens;
                 filterContext.HttpContext.Request.Headers.TryGetValue("Authorization", out authTokens);
-
                 var _token = authTokens.FirstOrDefault();
-
                 if (_token != null)
                 {
                     string authToken = _token;
@@ -35,16 +31,13 @@ namespace ModernPantryBackend.Services
                         {
                             filterContext.HttpContext.Response.Headers.Add("authToken", authToken);
                             filterContext.HttpContext.Response.Headers.Add("AuthStatus", "Authorized");
-
                             filterContext.HttpContext.Response.Headers.Add("storeAccessiblity", "Authorized");
-
                             return;
                         }
                         else
                         {
                             filterContext.HttpContext.Response.Headers.Add("authToken", authToken);
                             filterContext.HttpContext.Response.Headers.Add("AuthStatus", "NotAuthorized");
-
                             filterContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.Forbidden;
                             filterContext.HttpContext.Response.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = "Not Authorized";
                             filterContext.Result = new JsonResult("NotAuthorized")
@@ -52,24 +45,22 @@ namespace ModernPantryBackend.Services
                                 Value = new
                                 {
                                     Status = "Error",
-                                    Message = "Invalid Token"
+                                    Message = "Invalid authorization token."
                                 },
                             };
                         }
-
                     }
-
                 }
                 else
                 {
                     filterContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
-                    filterContext.HttpContext.Response.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = "Please Provide authToken";
-                    filterContext.Result = new JsonResult("Please Provide authToken")
+                    filterContext.HttpContext.Response.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = "Please provide the authorization token.";
+                    filterContext.Result = new JsonResult("Please provide the authorization token.")
                     {
                         Value = new
                         {
                             Status = "Error",
-                            Message = "Please Provide authToken"
+                            Message = "Please provide the authorization token."
                         },
                     };
                 }
@@ -79,13 +70,16 @@ namespace ModernPantryBackend.Services
         public bool IsValidToken(string authToken)
         {
             authToken = authToken.Split(' ').Last();
+            var config = Program.configuration;
+            var authenticationSettings = new AuthenticationSettings();
+            config.GetSection("Authentication").Bind(authenticationSettings);
+
             var validationParameters = new TokenValidationParameters()
             {
                 ValidateIssuer = false,
                 ValidateAudience = false,
-                //ValidIssuer = "http://localhost",
-                //ValidAudience = "http://localhost",
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("0123456789ABCDEF"))
+                ValidateLifetime = true,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtKey"])),
             };
 
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -98,14 +92,12 @@ namespace ModernPantryBackend.Services
             {
                 return false;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
-            //... manual validations return false if anything untoward is discovered
+
             return validatedToken != null;
         }
     }
-
-
 }

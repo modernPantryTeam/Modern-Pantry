@@ -5,6 +5,49 @@ import summaryService from "../services/summary-service";
 import { Component } from 'react';
 import WButtonCustom from '../components/WButtonCustom.js'
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import Typography from "@mui/material/Typography";
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 14,
+    },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+        border: 0,
+    },
+}));
+
+function createData(name, data2, data3, data4, data5, data6, data7, data8) {
+    return { name, data2, data3, data4, data5, data6, data7, data8 };
+}
+
+const rows = [
+    createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
+    createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
+    createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
+    createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
+    createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
+    createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
+    createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
+];
 
 class Statistics extends Component {
 
@@ -137,54 +180,46 @@ class Statistics extends Component {
                                     </p>
                                 </div>
                             </div>
-
-                            <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6 relative w-full p-px mx-auto mb-4 overflow-hidden transition-shadow duration-300 border rounded lg:mb-8 group hover:shadow-xl">
-                                <div class="flex items-center p-4 darkthemebg rounded">
-                                    <div class="flex flex-shrink-0 items-center justify-center bg-green-200 h-16 w-16 rounded">
-                                        <svg class="w-6 h-6 fill-current text-green-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd" d="M3.293 9.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L4.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
-                                    <div class="flex-grow flex flex-col ml-4 darkthemebg">
-                                        <span class="text-xl font-bold">21.2K</span>
-                                        <div class="flex items-center justify-between">
-                                            <span class="text-gray-500">Visits last 30 days</span>
-                                            <span class="text-green-500 text-sm font-semibold ml-2">+12.6%</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="flex items-center p-4 darkthemebg rounded">
-                                    <div class="flex flex-shrink-0 items-center justify-center bg-red-200 h-16 w-16 rounded">
-                                        <svg class="w-6 h-6 fill-current text-red-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd" d="M16.707 10.293a1 1 0 010 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l4.293-4.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
-                                    <div class="flex-grow flex flex-col ml-4 darkthemebg">
-                                        <span class="text-xl font-bold">1.5K</span>
-                                        <div class="flex items-center justify-between">
-                                            <span class="text-gray-500">Food added last 30 days</span>
-                                            <span class="text-red-500 text-sm font-semibold ml-2">-8.1%</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="flex items-center p-4 darkthemebg rounded">
-                                    <div class="flex flex-shrink-0 items-center justify-center bg-green-200 h-16 w-16 rounded">
-                                        <svg class="w-6 h-6 fill-current text-green-700" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd" d="M3.293 9.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L4.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
-                                    <div class="flex-grow flex flex-col ml-4">
-                                        <span class="text-xl font-bold darkthemebg">11.5K</span>
-                                        <div class="flex items-center justify-between darkthemebg">
-                                            <span class="text-gray-500">Placeholder last 30 days</span>
-                                            <span class="text-green-500 text-sm font-semibold ml-2">+28.4%</span>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div className="max-w-xl md:mx-auto sm:text-center lg:max-w-2xl">
+                                <p className="text-base text-gray-700 md:text-lg text-white">
+                                    Average monthly consumtion
+                                </p>
                             </div>
-                            <p className="mx-auto mb-4 text-gray-600 sm:text-center lg:max-w-2xl lg:mb-6 md:px-16 text-white">
+                            <div className='border'>
+                                <TableContainer component={Paper}>
+                                    <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                                        <TableHead>
+                                            <TableRow>
+                                                <StyledTableCell>Category</StyledTableCell>
+                                                <StyledTableCell align="right">Unit&nbsp;(l)</StyledTableCell>
+                                                <StyledTableCell align="right">Unit&nbsp;(ml)</StyledTableCell>
+                                                <StyledTableCell align="right">Unit&nbsp;(kg)</StyledTableCell>
+                                                <StyledTableCell align="right">Unit&nbsp;(g)</StyledTableCell>
+                                                <StyledTableCell align="right">Unit&nbsp;(piece)</StyledTableCell>
+                                                <StyledTableCell align="right">Unit&nbsp;(bottle)</StyledTableCell>
+                                                <StyledTableCell align="right">Unit&nbsp;(can)</StyledTableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {rows.map((row) => (
+                                                <StyledTableRow key={row.name}>
+                                                    <StyledTableCell component="th" scope="row">
+                                                        {row.name}
+                                                    </StyledTableCell>
+                                                    <StyledTableCell align="right">{row.data2}</StyledTableCell>
+                                                    <StyledTableCell align="right">{row.data3}</StyledTableCell>
+                                                    <StyledTableCell align="right">{row.data4}</StyledTableCell>
+                                                    <StyledTableCell align="right">{row.data5}</StyledTableCell>
+                                                    <StyledTableCell align="right">{row.data6}</StyledTableCell>
+                                                    <StyledTableCell align="right">{row.data7}</StyledTableCell>
+                                                    <StyledTableCell align="right">{row.data8}</StyledTableCell>
+                                                </StyledTableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </div>
+                            <p className="pt-4 mx-auto mb-4 text-gray-600 sm:text-center lg:max-w-2xl lg:mb-6 md:px-16 text-white">
                                 Keep it going, thank you for being amazing!
                             </p>
                         </div>

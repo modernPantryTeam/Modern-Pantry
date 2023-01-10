@@ -49,15 +49,25 @@ let rows = [
     // createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
 ];
 
-let pantryId = pantryService.getCurrentPantryByID();
+// let pantryId = pantryService.getCurrentPantryByID();
 
-let summaries = [];
-summaryService.getPantrySummary(pantryId.content.id).then(response => {
-    for(const element of response.content.categorySummaries){
-        summaries.push(createData(element.categoryName, element.amountPerUnit.L, element.amountPerUnit.ML, element.amountPerUnit.kg, element.amountPerUnit.g, element.amountPerUnit.Piece, element.amountPerUnit.Bottle, element.amountPerUnit.Can))
+// let summaries = [];
+// summaryService.getPantrySummary(pantryId.content.id).then(response => {
+//     for(const element of response.content.categorySummaries){
+//         summaries.push(createData(element.categoryName, element.amountPerUnit.L, element.amountPerUnit.ML, element.amountPerUnit.kg, element.amountPerUnit.g, element.amountPerUnit.Piece, element.amountPerUnit.Bottle, element.amountPerUnit.Can))
+//     }
+// });
+// rows = summaries;
+
+let getSummary = summaryService.getCurrentSummary();
+
+function showSummary(){
+    for(let element of getSummary.content.categorySummaries){
+        rows.push(createData(element.categoryName, element.amountPerUnit.L, element.amountPerUnit.ML, element.amountPerUnit.kg, element.amountPerUnit.g, element.amountPerUnit.Piece, element.amountPerUnit.Bottle, element.amountPerUnit.Can));
     }
-});
-rows = summaries;
+}
+
+showSummary();
 
 class Statistics extends Component {
 

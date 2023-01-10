@@ -13,6 +13,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import pantryService from "../services/pantry-service";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -38,15 +39,25 @@ function createData(name, data2, data3, data4, data5, data6, data7, data8) {
     return { name, data2, data3, data4, data5, data6, data7, data8 };
 }
 
-const rows = [
-    createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
-    createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
-    createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
-    createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
-    createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
-    createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
-    createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
+let rows = [
+    // createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
+    // createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
+    // createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
+    // createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
+    // createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
+    // createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
+    // createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
 ];
+
+let pantryId = pantryService.getCurrentPantryByID();
+
+let summaries = [];
+summaryService.getPantrySummary(pantryId.content.id).then(response => {
+    for(const element of response.content.categorySummaries){
+        summaries.push(createData(element.categoryName, element.amountPerUnit.L, element.amountPerUnit.ML, element.amountPerUnit.kg, element.amountPerUnit.g, element.amountPerUnit.Piece, element.amountPerUnit.Bottle, element.amountPerUnit.Can))
+    }
+});
+rows = summaries;
 
 class Statistics extends Component {
 

@@ -5,11 +5,6 @@ import Headbar from '../components/Headbar';
 import Transitions from '../components/Transition'
 import Spinner from 'react-bootstrap/Spinner';
 import { Redirect } from "react-router-dom";
-import {useEffect} from 'react';
-
-const delay = ms => new Promise(
-  resolve => setTimeout(resolve, ms)
-);
 
 export default class SignUp extends Component {
   constructor(props) {

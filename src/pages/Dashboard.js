@@ -60,6 +60,7 @@ function Dashboard() {
 								height='200'
 								image='https://i.imgur.com/LeAXVOG.png'
 								alt='pantry image'
+								onClick={() => handleEnter(card.id)}
 							/>
 							<CardContent>
 								<Typography gutterBottom variant='h5' component='div'>

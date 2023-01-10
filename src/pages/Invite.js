@@ -4,7 +4,6 @@ import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import Drawer from '../components/Drawer';
 import Transitions from '../components/Transition'
 import Spinner from 'react-bootstrap/Spinner';
-import { Redirect } from "react-router-dom";
 import pantryService from '../services/pantry-service';
 
 export default class Invite extends Component {
@@ -20,6 +19,10 @@ export default class Invite extends Component {
             loading: false,
             message: ""
         };
+    }
+
+    goBack() {
+        window.location.href = `/dashboard/`
     }
 
     onChangeinviteRecieverUserName(e) {
@@ -40,6 +43,10 @@ export default class Invite extends Component {
             message: "",
             successful: false,
             loading: true
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            pantryService.getCurrentInvites()
         });
 
         pantryService.invite(
@@ -142,7 +149,7 @@ export default class Invite extends Component {
                                                     {this.state.loading && <Spinner size="sm" animation="border" role="status">
                                                         <span className="visually-hidden">Signing up...</span>
                                                     </Spinner>}
-                                                    {this.state.successful && <Redirect replace to="/dashboard" />}
+                                                    {this.state.successful && this.goBack()}
                                                 </Button>
                                             </form>
                                         </CardContent>

@@ -73,9 +73,6 @@
                 return ServiceResponse.Error("Invited user not found.");
             }
 
-            //Temporary workaround, invites users instantly
-            return await _pantryService.AddUserToPantry(invitedUser.Id, pantryId);
-
             var pantry = (await _pantryRepository.FindByConditions(p => p.Id == pantryId)).FirstOrDefault();
             if (pantry == null)
             {

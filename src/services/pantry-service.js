@@ -128,6 +128,34 @@ class pantryService {
 			return response.data;
 		});
 	}
+
+	async getCurrentInvites() {
+        return await axios.get(apiUrl + "/api/PantryInvites/GetCurrentInvites", {
+            withCredentials: true,
+            headers: {
+                Authorization: `Bearer ${authService.getToken()}`,
+            }
+        }).then(response => {
+			console.log(response.data)
+            return response.data
+        })
+    }
+
+	async processInvite(id, accept) {
+
+		return await axios
+			.get(apiUrl + "/api/PantryInvites/ProcessInvite?inviteId=" + id + "&accept=" + accept, {
+				withCredentials: true,
+				headers: {
+					Authorization: "Bearer " + authService.getToken(),
+				},
+			})
+			.then(response => {
+				if (response.data.successStatus === true) {
+				}
+				return response.data;
+			});
+	}
 }
 
 export default new pantryService();

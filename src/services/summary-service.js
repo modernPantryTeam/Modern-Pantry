@@ -21,6 +21,11 @@ class summaryService {
 				return response.data;
 			});
 	}
+
+	getCurrentSummary() {
+		while (localStorage.getItem("CurrentPantrySummary") == null);
+		return JSON.parse(localStorage.getItem("CurrentPantrySummary"));
+	}
 }
 
 export default new summaryService();

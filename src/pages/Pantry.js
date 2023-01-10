@@ -30,6 +30,7 @@ import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantity
 import Share from "../components/Share";
 import pantryService from "../services/pantry-service";
 import productsService from "../services/products-service";
+import summaryService from "../services/summary-service";
 
 function descendingComparator(a, b, orderBy) {
 	if (b[orderBy] < a[orderBy]) {
@@ -251,6 +252,9 @@ export default function EnhancedTable() {
 	const url = "?url=https%3A%2F%2Flocalhost%3A3000%2Fpantry%2F" + id;
 	document.addEventListener("DOMContentLoaded", () => {
 		pantryService.getQR(url);
+	});
+	document.addEventListener("DOMContentLoaded", () => {
+		summaryService.getPantrySummary(id);
 	});
 
 	document.addEventListener("DOMContentLoaded", () => {

@@ -4,7 +4,6 @@ import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import Drawer from "../components/Drawer";
 import pantryService from "../services/pantry-service";
 import Transitions from "../components/Transition";
-import { Redirect } from "react-router-dom";
 
 export default class Create extends Component {
 	constructor(props) {
@@ -20,6 +19,10 @@ export default class Create extends Component {
 			successful: false
 		};
 	}
+
+    goBack() {
+        window.location.href = `/dashboard/`
+    }
 
 	onChangeName(e) {
 		this.setState({
@@ -111,7 +114,7 @@ export default class Create extends Component {
 													color='secondary'
 													endIcon={<SendOutlinedIcon />}>
 													{"Create"}
-													{this.state.successful && <Redirect replace to="/dashboard"/>}
+													{this.state.successful && this.goBack()}
 												</Button>
 											</form>
 										</CardContent>

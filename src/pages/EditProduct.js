@@ -17,6 +17,8 @@ import Transitions from "../components/Transition";
 import productsService from "../services/products-service";
 import DeleteIcon from '@mui/icons-material/Delete';
 import withRouter from "../components/withRouter";
+import pantryService from "../services/pantry-service";
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 
 class EditProduct extends Component {
 
@@ -33,6 +35,7 @@ class EditProduct extends Component {
 
         this.state = {
             currentProduct: productsService.getCurrentProduct(),
+            currentPantry: pantryService.getCurrentPantryByID(),
             name: "",
             message: "",
             category: [],
@@ -46,6 +49,7 @@ class EditProduct extends Component {
     componentDidMount() {
 
         this.setState({
+            pantry: this.state.currentPantry.content.id,
             productId: this.props.params.product,
             name: this.state.currentProduct.content.name,
             category: this.state.currentProduct.content.categories[0].id,
@@ -53,6 +57,10 @@ class EditProduct extends Component {
             quantity: this.state.currentProduct.content.amount,
             date: this.state.currentProduct.content.expieryDate,
         });
+    }
+
+    goBack(pantry) {
+        window.location.href = `/pantry/${pantry}`
     }
 
     handleClick(id) {
@@ -244,15 +252,27 @@ class EditProduct extends Component {
                                                 color='secondary'
                                                 value={this.state.date}
                                             />
-
-                                            <Button
-                                                style={{ marginTop: "24px", color: "white" }}
-                                                type='submit'
-                                                variant='text'
-                                                color='secondary'
-                                                endIcon={<SendOutlinedIcon />}>
-                                                {"Edit product"}
-                                            </Button>
+                                            <CardActions>
+                                                <Grid container direction='row' justifyContent='flex-start'>
+                                                    <Button
+                                                        style={{ marginTop: "24px", color: "white" }}
+                                                        type='submit'
+                                                        variant='text'
+                                                        color='secondary'
+                                                        onClick={() => this.goBack(this.state.pantry)}
+                                                        startIcon={<KeyboardReturnIcon />}>
+                                                        {"Back"}
+                                                    </Button>
+                                                </Grid>
+                                                <Button
+                                                    style={{ marginTop: "24px", color: "white" }}
+                                                    type='submit'
+                                                    variant='text'
+                                                    color='secondary'
+                                                    endIcon={<SendOutlinedIcon />}>
+                                                    {"Edit"}
+                                                </Button>
+                                            </CardActions>
                                         </form>
                                     </CardContent>
                                 </Card>

@@ -18,7 +18,7 @@ function Dashboard() {
 
 	async function handleEnter(id) {
 		pantryService.getPantryByID(id)
-		await delay(100);
+		await delay(500);
 		window.location.href = `/pantry/${id}`
 	}
 

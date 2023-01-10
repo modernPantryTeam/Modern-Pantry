@@ -6,27 +6,6 @@ import Tooltip from "@mui/material/Tooltip";
 import BasicMenu from "./BasicMenu";
 import notificationsService from "../services/notifications-service";
 
-// const notifications = [
-//     {
-//         label: 'Bread is about to expire'
-//     },
-//     {
-//         label: 'You need to resupply on beer'
-//     },
-//     {
-//         label: 'Water is about to run out'
-//     },
-//     {
-//         label: 'You need to resupply on Cola'
-//     },
-//     {
-//         label: 'Bread is about to run out'
-//     },
-//     {
-//         label: 'Cheese is about to expire'
-//     },
-// ];
-
 const NotificationBell = ({ iconColor }) => {
 	const [open, setOpen] = React.useState(false);
 	const [anchorEl, setAnchorEl] = React.useState(null);

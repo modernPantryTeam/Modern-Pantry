@@ -136,7 +136,6 @@ class pantryService {
                 Authorization: `Bearer ${authService.getToken()}`,
             }
         }).then(response => {
-			console.log(response.data)
             return response.data
         })
     }

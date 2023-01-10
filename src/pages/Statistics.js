@@ -174,7 +174,7 @@ class Statistics extends Component {
 
                             <div className="max-w-xl md:mx-auto sm:text-center lg:max-w-2xl md:mb-1">
                                 <div>
-                                    <p className="inline-block px-3 py-px mb-4 text-xs font-semibold tracking-wider text-teal-900 uppercase rounded-full text-black bg-white">
+                                    <p className="inline-block px-3 py-px mb-2 text-xs font-semibold tracking-wider text-teal-900 uppercase rounded-full text-black bg-white">
                                         SUMMARY
                                     </p>
                                 </div>

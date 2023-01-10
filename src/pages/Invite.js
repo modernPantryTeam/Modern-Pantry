@@ -112,7 +112,7 @@ export default class Invite extends Component {
 													color='secondary'
                                                     variant='outlined'
 													fullWidth
-                                                    placeholder="User Name"
+                                                    placeholder="Username"
                                                     onChange={this.onChangeinviteRecieverUserName}
                                                     value={this.state.inviteRecieverUserName}
                                                     disabled={this.state.successful}

@@ -114,7 +114,7 @@ export default class User extends Component {
                                         {this.state.username}
                                         </Typography>
                                     </CardContent>
-                                    <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 5 }}>
+                                    {/* <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 5 }}>
                                         <button 
                                             type="button"
                                             disabled={this.state.loading}
@@ -123,7 +123,7 @@ export default class User extends Component {
                                         >
                                             Edit profile
                                         </button>
-                                    </Box>
+                                    </Box> */}
                                 </Box>
                             </Card>
                         </div>

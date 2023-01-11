@@ -97,6 +97,29 @@ class productsService {
 				return response.data;
 			});
 	}
+
+	async getProductQR(url) {
+
+		return await axios
+			.get(apiUrl + "/api/QR" + url, {
+				url,
+				withCredentials: true,
+				headers: {
+					Authorization: "Bearer " + authService.getToken(),
+				},
+			})
+			.then(response => {
+				if (response.data.successStatus === true) {
+					localStorage.setItem("ProductQR", JSON.stringify(response.data));
+				}
+				return response.data;
+			});
+	}
+
+	getCurrentProductQR() {
+		while (localStorage.getItem("ProductQR") == null);
+		return JSON.parse(localStorage.getItem("ProductQR"));
+	}
 }
 
 

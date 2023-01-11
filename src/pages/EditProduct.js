@@ -19,6 +19,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import withRouter from "../components/withRouter";
 import pantryService from "../services/pantry-service";
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
+import Share from "../components/Share";
+import ShareProduct from "../components/ShareProduct";
 
 class EditProduct extends Component {
 
@@ -144,17 +146,8 @@ class EditProduct extends Component {
                                         <Grid container direction='row' justifyContent='flex-start'>
                                             <p className='pt-4 pl-2 text-medium'>Manage product</p>
                                         </Grid>
-                                        <form>
-                                            <Button
-                                                style={{ justifyContent: 'flex-end' }}
-                                                color="inherit"
-                                                size="small"
-                                                startIcon={<DeleteIcon />}
-                                                onClick={() => this.handleClick(this.props.params.product)}
-                                            >
-                                                Delete
-                                            </Button>
-                                        </form>
+                                            <ShareProduct>
+                                            </ShareProduct>
                                     </CardActions>
                                     <CardContent>
                                         {this.state.message && (

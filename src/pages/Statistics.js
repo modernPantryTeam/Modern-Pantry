@@ -13,6 +13,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import pantryService from '../services/pantry-service';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -40,12 +41,15 @@ function createData(name, data2, data3, data4, data5, data6, data7, data8) {
 
 let rows = [];
 
-let getSummary = summaryService.getCurrentSummary();
+const currentPantry = pantryService.getCurrentPantryByID();
+const id = currentPantry.content.id;
 
-function showSummary(){
-    for(let element of getSummary.content.categorySummaries){
-        rows.push(createData(element.categoryName, element.amountPerUnit.L, element.amountPerUnit.ML, element.amountPerUnit.kg, element.amountPerUnit.g, element.amountPerUnit.Piece, element.amountPerUnit.Bottle, element.amountPerUnit.Can));
-    }
+function showSummary() {
+    summaryService.getPantrySummary(id).then(response => {
+        for (let element of response.content) {
+            rows.push(createData(element.categoryName, element.amountPerUnit.L, element.amountPerUnit.ML, element.amountPerUnit.kg, element.amountPerUnit.g, element.amountPerUnit.Piece, element.amountPerUnit.Bottle, element.amountPerUnit.Can));
+        }
+    })
 }
 
 showSummary();

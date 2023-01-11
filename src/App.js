@@ -8,6 +8,7 @@ import {
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import Invites from "./pages/Invites";
 import NotFound from "./pages/not-found";
 import Dashboard from "./pages/Dashboard";
 import Create from "./pages/Create";
@@ -67,6 +68,9 @@ export default class App extends Component {
 								</Route>
 								<Route path='/create'>
 									{!this.state.loggedIn ? <Redirect to='/login' /> : <Create />}
+								</Route>
+								<Route path='/invites'>
+									{!this.state.loggedIn ? <Redirect to='/invites' /> : <Invites />}
 								</Route>
 								<Route path='/profile'>
 									{!this.state.loggedIn ? (

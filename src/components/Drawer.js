@@ -24,7 +24,7 @@ import { Grid } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutButton from "./LogoutButton";
 import NotificationBell from "./NotificationBell";
-import IosShareIcon from '@mui/icons-material/IosShare';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
 
 const drawerWidth = 240;
 
@@ -152,7 +152,7 @@ export default function MiniDrawer() {
 				</DrawerHeader>
 				<Divider />
 				<List>
-					{["My Pantries", "Statistics", "Create","Invite", "Profile", "Logout"].map(
+					{["My Pantries", "Statistics", "Create","Invites", "Profile", "Logout"].map(
 						(text, index) => (
 							<ListItem key={text} disablePadding sx={{ display: "block" }}>
 								<ListItemButton
@@ -177,8 +177,8 @@ export default function MiniDrawer() {
 										<Link style={{ color: "white" }} href='/create'>
 											{index === 2 && <AddCircleOutlineIcon />}
 										</Link>
-										<Link style={{ color: "white" }} href='/invite'>
-											{index === 3 && <IosShareIcon />}
+										<Link style={{ color: "white" }} href='/invites'>
+											{index === 3 && <MailOutlineIcon />}
 										</Link>
 										<Link style={{ color: "white" }} href='/profile'>
 											{index === 4 && <AccountCircleIcon />}

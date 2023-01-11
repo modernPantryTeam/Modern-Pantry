@@ -93,25 +93,6 @@ class pantryService {
 		return JSON.parse(localStorage.getItem("QR"));
 	}
 
-	async getNotifications() {
-
-		return await axios
-			.get(apiUrl + "/api/Notifications/GetUsersNotifications", {
-				withCredentials: true,
-				headers: {
-					Authorization: "Bearer " + authService.getToken(),
-				},
-			})
-			.then(response => {
-				return response.data;
-			});
-	}
-
-	getCurrentNotifications() {
-		while (localStorage.getItem("CurrentNotifications") == null);
-		return JSON.parse(localStorage.getItem("CurrentNotifications"));
-	}
-
 	async invite(inviteRecieverUserName, pantryID) {
 
 		var data = JSON.stringify({
@@ -140,18 +121,20 @@ class pantryService {
         })
     }
 
-	async processInvite(id, accept) {
-
+	async processInvite(id, status) {
+		var data = JSON.stringify({
+			id: id,
+			status: status
+		});
 		return await axios
-			.get(apiUrl + "/api/PantryInvites/ProcessInvite?inviteId=" + id + "&accept=" + accept, {
+			.post(apiUrl + "/api/PantryInvites/ProcessInvite?inviteId=" + id + "&accept=" + status, data, {
 				withCredentials: true,
 				headers: {
 					Authorization: "Bearer " + authService.getToken(),
 				},
 			})
 			.then(response => {
-				if (response.data.successStatus === true) {
-				}
+				window.location.reload()
 				return response.data;
 			});
 	}

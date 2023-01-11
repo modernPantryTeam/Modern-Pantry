@@ -15,11 +15,9 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Transitions from "../components/Transition";
 import productsService from "../services/products-service";
-import DeleteIcon from '@mui/icons-material/Delete';
 import withRouter from "../components/withRouter";
 import pantryService from "../services/pantry-service";
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
-import Share from "../components/Share";
 import ShareProduct from "../components/ShareProduct";
 
 class EditProduct extends Component {

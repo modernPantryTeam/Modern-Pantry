@@ -11,9 +11,10 @@ export default class Invite extends Component {
         super(props);
         this.handleInvite = this.handleInvite.bind(this);
         this.onChangeinviteRecieverUserName = this.onChangeinviteRecieverUserName.bind(this);
-        this.onChangePantryID = this.onChangePantryID.bind(this);
+        this.onChangePantryId = this.onChangePantryId.bind(this);
         this.state = {
-            pantryID: "",
+            currentPantry: pantryService.getCurrentPantryByID(),
+            pantryId: pantryService.getCurrentPantryByID(),
             email: "",
             successful: false,
             loading: false,
@@ -21,8 +22,14 @@ export default class Invite extends Component {
         };
     }
 
-    goBack() {
-        window.location.href = `/dashboard/`
+    componentDidMount() {
+        this.setState({
+            pantryId: this.state.currentPantry.content.id,
+        });
+    }
+
+    goBack(url) {
+        window.location.href = `/pantry/` + url
     }
 
     onChangeinviteRecieverUserName(e) {
@@ -31,9 +38,9 @@ export default class Invite extends Component {
         });
     }
 
-    onChangePantryID(e) {
+    onChangePantryId(e) {
         this.setState({
-            pantryID: e.target.value
+            pantryId: e.target.value
         });
     }
 
@@ -45,13 +52,9 @@ export default class Invite extends Component {
             loading: true
         });
 
-        document.addEventListener("DOMContentLoaded", () => {
-            pantryService.getCurrentInvites()
-        });
-
         pantryService.invite(
             this.state.inviteRecieverUserName,
-            this.state.pantryID).then(
+            this.state.pantryId).then(
                 response => {
                     if(response.successStatus === false){
                         this.setState({
@@ -134,9 +137,9 @@ export default class Invite extends Component {
                                                     required
 													color='secondary'
                                                     placeholder="Pantry ID"
-                                                    onChange={this.onChangePantryID}
-                                                    value={this.state.pantryID}
-                                                    disabled={this.state.successful}
+                                                    disabled
+                                                    onChange={this.onChangePantryId}
+                                                    value={this.state.pantryId}
                                                 />
 
                                                 <Button
@@ -149,7 +152,7 @@ export default class Invite extends Component {
                                                     {this.state.loading && <Spinner size="sm" animation="border" role="status">
                                                         <span className="visually-hidden">Signing up...</span>
                                                     </Spinner>}
-                                                    {this.state.successful && this.goBack()}
+                                                    {this.state.successful && this.goBack(this.state.pantryId)}
                                                 </Button>
                                             </form>
                                         </CardContent>

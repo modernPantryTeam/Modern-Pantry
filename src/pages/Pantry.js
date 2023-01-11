@@ -14,6 +14,7 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
+import IosShareIcon from '@mui/icons-material/IosShare';
 import EditIcon from '@mui/icons-material/Edit';
 import { CardActions } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
@@ -194,6 +195,14 @@ function EnhancedTableToolbar(props) {
 					</Tooltip>
 				) : (
 					<>
+						<Button
+							href='/invite'
+							style={{ color: "white", justifyContent: "flex-end" }}
+							color='inherit'
+							size='small'
+							startIcon={<IosShareIcon />}>
+							Invite
+						</Button>
 						<Share></Share>
 						<IconButton>
 							<Button
@@ -235,8 +244,8 @@ function handleDelete(id) {
 
 const delay = ms => new Promise(
 	resolve => setTimeout(resolve, ms)
-  );
-  
+);
+
 
 async function handleCatchProduct(id) {
 	productsService.getProductByID(id);
@@ -378,7 +387,7 @@ export default function EnhancedTable() {
 																			style={{ color: 'white' }}
 																			startIcon={<EditIcon />}
 																			onClick={() => handleCatchProduct(row.id)}
-																			>
+																		>
 																		</Button>
 																	</Grid>
 																	<Button sx={{ minWidth: 0, paddingLeft: '4px', paddingRight: '4px' }}

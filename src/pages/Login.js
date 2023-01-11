@@ -66,7 +66,7 @@ export default class Login extends Component {
 					<div className='container flex mx-auto items-center h-screen'>
 						<div className='sm:w-20 md:w-20 lg:w-full'></div>
 						<div className='flex flex-col w-4\/5'>
-							<div className='flex flex-col items-center bg-white p-4 border border-gray-primary mb-4 rounded'>
+							<div className='flex flex-col items-center bg-white border border-gray-primary mb-4 rounded'>
 								<h1 className='flex justify-center w-full'>
 									<img
 										src='https://i.imgur.com/YtiHDru.png'

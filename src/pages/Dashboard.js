@@ -58,7 +58,7 @@ function Dashboard() {
 							<CardMedia
 								component='img'
 								height='200'
-								image='https://i.imgur.com/LeAXVOG.png'
+								image='https://i.imgur.com/XkGoPkA.jpg'
 								alt='pantry image'
 								onClick={() => handleEnter(card.id)}
 							/>

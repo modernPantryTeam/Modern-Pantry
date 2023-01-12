@@ -264,6 +264,7 @@ export default function EnhancedTable() {
 	document.addEventListener("DOMContentLoaded", () => {
 		pantryService.getQR(url);
 	});
+	
 	document.addEventListener("DOMContentLoaded", () => {
 		summaryService.getPantrySummary(id);
 	});

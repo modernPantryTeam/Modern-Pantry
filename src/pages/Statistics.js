@@ -14,6 +14,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import pantryService from '../services/pantry-service';
+import { useState, useEffect } from 'react';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -41,11 +42,36 @@ function createData(name, data2, data3, data4, data5, data6, data7, data8) {
 
 export default function Statistics() {
     const [rows, setRows] = React.useState([])
+    const [age, setAge] = React.useState(0);
+    const [count, setCount] = React.useState(0);
+    const [L, setL] = React.useState(0);
+    const [ML, setML] = React.useState(0);
+    const [kg, setKg] = React.useState(0);
+    const [g, setG] = React.useState(0);
+    const [piece, setPiece] = React.useState(0);
+    const [bottle, setBottle] = React.useState(0);
+    const [can, setCan] = React.useState(0);
+
+    useEffect(() => {
+        const summary = summaryService.getCurrentSummary();
+        if (summary) {
+          setAge(summary.content.pantryAge);
+          setCount(summary.content.totalItemCount);
+          setL(summary.content.totalQuantityByUnit.L);
+          setML(summary.content.totalQuantityByUnit.ML);
+          setKg(summary.content.totalQuantityByUnit.kg);
+          setG(summary.content.totalQuantityByUnit.g);
+          setPiece(summary.content.totalQuantityByUnit.Piece);
+          setBottle(summary.content.totalQuantityByUnit.Bottle);
+          setCan(summary.content.totalQuantityByUnit.Can);
+        }
+      }, []);
 
     document.addEventListener("DOMContentLoaded", () => {
         let rows = []
-
-        summaryService.getPantrySummary(1091).then(response => {
+        const currentPantry = pantryService.getCurrentPantryByID();
+        const id = currentPantry.content.id;
+        summaryService.getPantrySummary(id).then(response => {
             for (let element of response.content.categorySummaries) {
                 rows.push(createData(element.categoryName, element.amountPerUnit.L, element.amountPerUnit.ML, element.amountPerUnit.kg, element.amountPerUnit.g, element.amountPerUnit.Piece, element.amountPerUnit.Bottle, element.amountPerUnit.Can));
             }
@@ -75,7 +101,7 @@ export default function Statistics() {
             <><Drawer />
                 <Transitions>
                     <div className="px-4 pb-2 pt-4 lg:mx-auto md:mx-auto ml-14 sm:max-w-xl lg:max-w-screen-xl md:px-24 lg:px-8 darkthemebg">
-                        {/* <div className="max-w-xl mb-10 md:mx-auto sm:text-center lg:max-w-2xl md:mb-12">
+                        <div className="max-w-xl mb-10 md:mx-auto sm:text-center lg:max-w-2xl md:mb-12">
                             <div>
                                 <p className="inline-block px-3 py-px mb-4 text-xs font-semibold tracking-wider text-teal-900 uppercase rounded-full text-black bg-white">
                                     STATISTICS
@@ -121,7 +147,7 @@ export default function Statistics() {
                             <div className="relative flex flex-col items-center h-full py-10 duration-300 rounded-sm transition-color sm:items-stretch sm:flex-row darkthemebg">
                                 <div className="ml-4 px-12 py-8 text-center darkthemebg">
                                     <h6 className="text-4xl font-bold sm:text-5xl">
-                                        {this.state.count / 500 * 100}%
+                                        {count / 500 * 100}%
                                     </h6>
                                     <p className="text-center md:text-base">
                                         Pantry fulfilment
@@ -130,7 +156,7 @@ export default function Statistics() {
                                 <div className="w-56 h-1 transition duration-300 transform bg-gray-300 rounded-full group-hover:bg-deep-purple-accent-400 group-hover:scale-110 sm:h-auto sm:w-1 mr-4 ml-4" />
                                 <div className="px-12 py-8 text-center darkthemebg">
                                     <h6 className="text-4xl font-bold text-deep-purple-accent-400 sm:text-5xl">
-                                        {this.state.L + this.state.ML + this.state.kg + this.state.g + this.state.piece + this.state.bottle + this.state.can}
+                                        {L + ML + kg + g + piece + bottle + can}
                                     </h6>
                                     <p className="text-center md:text-base">
                                         Total product quantity
@@ -139,14 +165,14 @@ export default function Statistics() {
                                 <div className="w-56 h-1 transition duration-300 transform bg-gray-300 rounded-full group-hover:bg-deep-purple-accent-400 group-hover:scale-110 sm:h-auto sm:w-1 mr-4 ml-4" />
                                 <div className="px-12 py-8 text-center darkthemebg">
                                     <h6 className="text-4xl font-bold text-deep-purple-accent-400 sm:text-5xl">
-                                        {this.state.count}
+                                        {count}
                                     </h6>
                                     <p className="text-center md:text-base">
                                         Amount of unique products
                                     </p>
                                 </div>
                             </div>
-                        </div> */}
+                        </div>
 
                         <div className="max-w-xl md:mx-auto sm:text-center lg:max-w-2xl md:mb-1">
                             <div>

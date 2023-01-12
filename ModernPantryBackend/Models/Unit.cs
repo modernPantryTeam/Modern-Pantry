@@ -8,6 +8,8 @@
         g,       //gram
         Piece,
         Bottle,
-        Can
+        Can,
+        Each,
+        Count
     }
 }

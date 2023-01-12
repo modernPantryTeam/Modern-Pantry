@@ -52,15 +52,15 @@ let rows = [
 // const currentPantry = pantryService.getCurrentPantryByID();
 // const id = currentPantry.content.id;
 
-// function showSummary() {
-//     summaryService.getPantrySummary(id).then(response => {
-//         for (let element of response.content) {
-//             rows.push(createData(element.categoryName, element.amountPerUnit.L, element.amountPerUnit.ML, element.amountPerUnit.kg, element.amountPerUnit.g, element.amountPerUnit.Piece, element.amountPerUnit.Bottle, element.amountPerUnit.Can));
-//         }
-//     })
-// }
+function showSummary() {
+    summaryService.getPantrySummary(1092).then(response => {
+        for (let element of response.content) {
+            rows.push(createData(element.categoryName, element.amountPerUnit.L, element.amountPerUnit.ML, element.amountPerUnit.kg, element.amountPerUnit.g, element.amountPerUnit.Piece, element.amountPerUnit.Bottle, element.amountPerUnit.Can));
+        }
+    })
+}
 
-// showSummary();
+showSummary();
 
 class Statistics extends Component {
 

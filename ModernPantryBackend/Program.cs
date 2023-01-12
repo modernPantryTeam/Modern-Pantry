@@ -149,6 +149,8 @@ app.UseExceptionHandler(c => c.Run(async context =>
     await context.Response.WriteAsJsonAsync(ServiceResponse.Error(exception.Message, HttpStatusCode.InternalServerError));
 }));
 
+app.UseDeveloperExceptionPage();
+
 app.UseCors("corspolicy");
 app.UseHttpsRedirection();
 app.UseAuthorization();

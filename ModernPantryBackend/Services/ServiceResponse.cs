@@ -23,10 +23,6 @@
             return new ServiceResponse(true, statusCode, message);
         }
 
-        public static explicit operator ObjectResult(ServiceResponse v)
-        {
-            throw new NotImplementedException();
-        }
     }
 
     public class ServiceResponse<T> : ServiceResponse

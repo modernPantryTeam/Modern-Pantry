@@ -16,7 +16,7 @@ namespace ModernPantryBackend.Tests
             {
                 Id = 1,
                 Name = "Product 1",
-                Unit = Unit.Count,
+                Unit = Unit.Can,
                 Amount = 10,
                 ExpieryDate = "01-01-2022",
                 AddDate = DateTime.Now,
@@ -29,7 +29,7 @@ namespace ModernPantryBackend.Tests
             // Assert
             Assert.Equal(1, dto.Id);
             Assert.Equal("Product 1", dto.Name);
-            Assert.Equal(Unit.Count, dto.Unit);
+            Assert.Equal(Unit.Can, dto.Unit);
             Assert.Equal(10, dto.Amount);
             Assert.Equal("01-01-2022", dto.ExpieryDate);
             Assert.Equal(1, dto.PantryId);

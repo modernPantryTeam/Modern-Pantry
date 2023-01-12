@@ -9,7 +9,5 @@
         Piece,
         Bottle,
         Can,
-        Each,
-        Count
     }
 }

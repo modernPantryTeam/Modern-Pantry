@@ -12,7 +12,7 @@ namespace ModernPantryBackend.Tests
             {
                 Id = 1,
                 Name = "Apple",
-                Unit = Unit.Each,
+                Unit = Unit.Piece,
                 Amount = 1,
                 ExpieryDate = DateTime.Now.AddDays(7),
                 AddDate = DateTime.Now,
@@ -25,7 +25,7 @@ namespace ModernPantryBackend.Tests
             // Assert
             Assert.Equal(1, product.Id);
             Assert.Equal("Apple", product.Name);
-            Assert.Equal(Unit.Each, product.Unit);
+            Assert.Equal(Unit.Piece, product.Unit);
             Assert.Equal(1, product.Amount);
             Assert.True(product.ExpieryDate > DateTime.Now);
             Assert.True(product.AddDate <= DateTime.Now);
@@ -41,7 +41,7 @@ namespace ModernPantryBackend.Tests
             {
                 Id = 1,
                 Name = "Apple",
-                Unit = Unit.Each,
+                Unit = Unit.Piece,
                 Amount = 1,
                 ExpieryDate = DateTime.Now.AddDays(7),
                 AddDate = DateTime.Now,
@@ -59,7 +59,7 @@ namespace ModernPantryBackend.Tests
             // Assert
             Assert.Equal(1, product.Id);
             Assert.Equal("Apple", product.Name);
-            Assert.Equal(Unit.Each, product.Unit);
+            Assert.Equal(Unit.Piece, product.Unit);
             Assert.Equal(1, product.Amount);
             Assert.True(product.ExpieryDate > DateTime.Now);
             Assert.True(product.AddDate <= DateTime.Now);

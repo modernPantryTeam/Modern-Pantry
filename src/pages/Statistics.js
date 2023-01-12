@@ -35,11 +35,19 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
-// function createData(name, data2, data3, data4, data5, data6, data7, data8) {
-//     return { name, data2, data3, data4, data5, data6, data7, data8 };
-// }
+function createData(name, data2, data3, data4, data5, data6, data7, data8) {
+    return { name, data2, data3, data4, data5, data6, data7, data8 };
+}
 
-// let rows = [];
+let rows = [
+    createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
+    createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
+    createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
+    createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
+    createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
+    createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
+    createData('Dairy', 11, 0, 66, 44, 0, 0, 0, 0),
+];
 
 // const currentPantry = pantryService.getCurrentPantryByID();
 // const id = currentPantry.content.id;
@@ -206,7 +214,7 @@ class Statistics extends Component {
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {/* {rows.map((row) => (
+                                            {rows.map((row) => (
                                                 <StyledTableRow key={row.name}>
                                                     <StyledTableCell component="th" scope="row">
                                                         {row.name}
@@ -219,7 +227,7 @@ class Statistics extends Component {
                                                     <StyledTableCell align="right">{row.data7}</StyledTableCell>
                                                     <StyledTableCell align="right">{row.data8}</StyledTableCell>
                                                 </StyledTableRow>
-                                            ))} */}
+                                            ))}
                                         </TableBody>
                                     </Table>
                                 </TableContainer>

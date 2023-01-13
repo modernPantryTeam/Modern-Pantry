@@ -22,7 +22,6 @@
         {
             return new ServiceResponse(true, statusCode, message);
         }
-
     }
 
     public class ServiceResponse<T> : ServiceResponse

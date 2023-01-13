@@ -42,8 +42,8 @@ export default class AddProduct extends Component {
         };
     }
 
-    goBack() {
-        window.location.href = `/dashboard`
+    goBack(pantry) {
+        window.location.href = `/pantry/${pantry}`
     }
 
     componentDidMount() {
@@ -227,7 +227,7 @@ export default class AddProduct extends Component {
                                                         type='submit'
                                                         variant='text'
                                                         color='secondary'
-                                                        onClick={() => this.goBack(this.state.pantry)}
+                                                        onClick={() => this.goBack(this.state.pantryId)}
                                                         startIcon={<KeyboardReturnIcon />}>
                                                         {"Dashboard"}
                                                     </Button>

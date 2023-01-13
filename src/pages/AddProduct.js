@@ -229,7 +229,7 @@ export default class AddProduct extends Component {
                                                         color='secondary'
                                                         onClick={() => this.goBack(this.state.pantryId)}
                                                         startIcon={<KeyboardReturnIcon />}>
-                                                        {"Dashboard"}
+                                                        {"Back"}
                                                     </Button>
                                                 </Grid>
                                                 <Button
@@ -238,7 +238,7 @@ export default class AddProduct extends Component {
                                                     variant='text'
                                                     color='secondary'
                                                     endIcon={<SendOutlinedIcon />}>
-                                                    {"Add product"}
+                                                    {"Add"}
                                                 </Button>
                                             </CardActions>
                                         </form>

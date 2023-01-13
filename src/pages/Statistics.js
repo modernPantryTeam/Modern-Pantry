@@ -183,7 +183,7 @@ export default function Statistics() {
                         </div>
                         <div className="max-w-xl md:mx-auto sm:text-center lg:max-w-2xl">
                             <p className="text-base text-gray-700 md:text-lg text-white">
-                                Average monthly consumption
+                                Category summary
                             </p>
                         </div>
                         <div className='border'>

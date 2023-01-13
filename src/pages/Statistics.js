@@ -2,7 +2,6 @@ import React from 'react';
 import Drawer from '../components/Drawer';
 import Transitions from '../components/Transition'
 import summaryService from "../services/summary-service";
-import { Component } from 'react';
 import WButtonCustom from '../components/WButtonCustom.js'
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import { styled } from '@mui/material/styles';
@@ -14,7 +13,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import pantryService from '../services/pantry-service';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -53,20 +52,23 @@ export default function Statistics() {
     const [can, setCan] = React.useState(0);
 
     useEffect(() => {
-        const summary = summaryService.getCurrentSummary();
-        if (summary) {
-          setAge(summary.content.pantryAge);
-          setCount(summary.content.totalItemCount);
-          setL(summary.content.totalQuantityByUnit.L);
-          setML(summary.content.totalQuantityByUnit.ML);
-          setKg(summary.content.totalQuantityByUnit.kg);
-          setG(summary.content.totalQuantityByUnit.g);
-          setPiece(summary.content.totalQuantityByUnit.Piece);
-          setBottle(summary.content.totalQuantityByUnit.Bottle);
-          setCan(summary.content.totalQuantityByUnit.Can);
+        if ((localStorage.getItem("CurrentPantrySummary") != null)) {
+            const summary = summaryService.getCurrentSummary();
+            if (summary) {
+                setAge(summary.content.pantryAge);
+                setCount(summary.content.totalItemCount);
+                setL(summary.content.totalQuantityByUnit.L);
+                setML(summary.content.totalQuantityByUnit.ML);
+                setKg(summary.content.totalQuantityByUnit.kg);
+                setG(summary.content.totalQuantityByUnit.g);
+                setPiece(summary.content.totalQuantityByUnit.Piece);
+                setBottle(summary.content.totalQuantityByUnit.Bottle);
+                setCan(summary.content.totalQuantityByUnit.Can);
+            }
         }
-      }, []);
+    }, []);
 
+    if ((localStorage.getItem("CurrentPantrySummary") != null)) {
     document.addEventListener("DOMContentLoaded", () => {
         let rows = []
         const currentPantry = pantryService.getCurrentPantryByID();
@@ -78,8 +80,9 @@ export default function Statistics() {
             setRows(rows)
         })
     })
+}
 
-    if ((localStorage.getItem("CurrentPantrySummary") === null)) {
+    if ((localStorage.getItem("CurrentPantrySummary") == null)) {
         return (
             <><Drawer></Drawer>
                 <Transitions>

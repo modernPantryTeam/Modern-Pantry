@@ -53,7 +53,7 @@ internal class Program
             options.AddPolicy("corspolicy",
                 policy =>
                 {
-                    policy.WithOrigins("http://localhost:3000", "https://localhost:3000")
+                    policy.WithOrigins("http://localhost:3000", "https://localhost:3000", "https://modern-pantry.vercel.app/", "https://modern-pantry-git-deployed-grogu-modernpantry.vercel.app/")
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials();

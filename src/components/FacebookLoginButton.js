@@ -4,7 +4,7 @@ import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props
 import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
 import axios from "axios";
 
-const apiUrl = "https://bd4d-37-30-108-33.eu.ngrok.io";
+const apiUrl = "https://97f8-37-30-108-33.eu.ngrok.io";
 
 function FacebookLoginButton() {
 

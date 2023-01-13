@@ -1,7 +1,7 @@
 import axios from "axios";
 import authService from "./auth-service";
 
-const apiUrl = "https://localhost:7183";
+const apiUrl = "https://97f8-37-30-108-33.eu.ngrok.io";
 
 class notificationsSerivice{
     async getNotifications(){

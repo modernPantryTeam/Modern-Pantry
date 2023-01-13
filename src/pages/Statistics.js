@@ -147,7 +147,7 @@ export default function Statistics() {
                             <div className="relative flex flex-col items-center h-full py-10 duration-300 rounded-sm transition-color sm:items-stretch sm:flex-row darkthemebg">
                                 <div className="ml-4 px-12 py-8 text-center darkthemebg">
                                     <h6 className="text-4xl font-bold sm:text-5xl">
-                                        {count / 500 * 100}%
+                                        {(count / 500 * 100).toFixed(2)}%
                                     </h6>
                                     <p className="text-center md:text-base">
                                         Pantry fulfilment

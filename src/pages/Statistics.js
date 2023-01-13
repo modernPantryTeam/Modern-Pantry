@@ -79,7 +79,7 @@ export default function Statistics() {
         })
     })
 
-    if ((localStorage.getItem("CurrentPantrySummary") == null)) {
+    if ((localStorage.getItem("CurrentPantrySummary") === null)) {
         return (
             <><Drawer></Drawer>
                 <Transitions>

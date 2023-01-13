@@ -1,6 +1,6 @@
 ﻿using ModernPantryBackend.Models;
 
-namespace ModernPantryBackend.Tests
+namespace ModernPantryBackend.Tests.UnitTests
 {
     public class ProductTests
     {

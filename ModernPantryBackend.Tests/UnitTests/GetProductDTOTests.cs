@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using ModernPantryBackend.Models;
 
-namespace ModernPantryBackend.Tests
+namespace ModernPantryBackend.Tests.UnitTests
 {
     public class GetProductDTOTests
     {

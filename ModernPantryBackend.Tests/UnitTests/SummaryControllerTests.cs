@@ -4,7 +4,7 @@ using Moq;
 using ModernPantryBackend.Interfaces;
 using System.Net;
 
-namespace ModernPantryBackend.Tests
+namespace ModernPantryBackend.Tests.UnitTests
 {
     public class SummaryControllerTests
     {

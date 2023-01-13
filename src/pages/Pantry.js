@@ -251,7 +251,7 @@ async function handleCatchProduct(id) {
 	productsService.getProductByID(id);
 	const productUrl = "?url=https%3A%2F%2Fmodern-pantry.vercel.app%2Fedit-product%2F" + id;
 	productsService.getProductQR(productUrl);
-	await delay(500);
+	await delay(1000);
 	window.location.href = `/edit-product/${id}`
 }
 

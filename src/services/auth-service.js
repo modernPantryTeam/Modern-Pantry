@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiUrl = "https://localhost:7183";
+const apiUrl = "https://bd4d-37-30-108-33.eu.ngrok.io";
 
 class authService {
 	async login(username, password) {

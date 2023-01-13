@@ -37,6 +37,11 @@ What is Modern Pantry? It is an application that we have created so that people 
   npm start
   ```
 
+### Tests Guide 
+
+To run local tests u have to click in Microsoft Visual Studio 2022 Test/Run all tests
+
+
 [react.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
 [react-url]: https://reactjs.org/
 [node.js]: https://img.shields.io/badge/node.js-233056?style=for-the-badge&logo=nodedotjs&logoColor=green

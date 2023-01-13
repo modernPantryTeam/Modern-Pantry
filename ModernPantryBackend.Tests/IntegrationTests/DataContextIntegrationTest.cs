@@ -1,8 +1,6 @@
 ﻿using ModernPantryBackend.Data;
 using ModernPantryBackend.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.InMemory;
-using ModernPantryBackend.Models.DTOs;
 
 namespace ModernPantryBackend.Tests.IntegrationTests
 {

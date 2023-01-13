@@ -249,7 +249,7 @@ const delay = ms => new Promise(
 
 async function handleCatchProduct(id) {
 	productsService.getProductByID(id);
-	const productUrl = "?url=https%3A%2F%2Flocalhost%3A3000%2Fedit-product%2F" + id;
+	const productUrl = "?url=https%3A%2F%2Fmodern-pantry.vercel.app%2Fedit-product%2F" + id;
 	productsService.getProductQR(productUrl);
 	await delay(500);
 	window.location.href = `/edit-product/${id}`
@@ -260,7 +260,7 @@ export default function EnhancedTable() {
 	const [rows, setRows] = React.useState([])
 	let units = getUnits();
 
-	const url = "?url=https%3A%2F%2Flocalhost%3A3000%2Fpantry%2F" + id;
+	const url = "?url=https%3A%2F%2Fmodern-pantry.vercel.app%2Fpantry%2F" + id;
 	document.addEventListener("DOMContentLoaded", () => {
 		pantryService.getQR(url);
 	});

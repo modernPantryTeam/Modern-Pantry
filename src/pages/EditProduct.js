@@ -247,7 +247,6 @@ class EditProduct extends Component {
                                                 <Grid container direction='row' justifyContent='flex-start'>
                                                     <Button
                                                         style={{ marginTop: "24px", color: "white" }}
-                                                        type='submit'
                                                         variant='text'
                                                         color='secondary'
                                                         onClick={() => this.goBack(this.state.pantry)}

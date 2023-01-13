@@ -5,6 +5,7 @@ import {
     TextField,
     Grid,
     Select,
+    CardActions,
 } from "@mui/material";
 import React, { Component } from "react";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
@@ -15,9 +16,10 @@ import FormControl from "@mui/material/FormControl";
 import Transitions from "../components/Transition";
 import productsService from "../services/products-service";
 import pantryService from "../services/pantry-service";
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 
 export default class AddProduct extends Component {
-    
+
     constructor(props) {
         super(props);
         this.handleAddProduct = this.handleAddProduct.bind(this);
@@ -38,6 +40,10 @@ export default class AddProduct extends Component {
             pantryId: 0,
             date: "2023-01-01",
         };
+    }
+
+    goBack() {
+        window.location.href = `/dashboard`
     }
 
     componentDidMount() {
@@ -117,7 +123,7 @@ export default class AddProduct extends Component {
                             style={{ minHeight: "80vh" }}>
                             <Grid item xs={3}>
                                 <Card
-                                    style={{maxWidth: "600px", marginTop: "20px" }}
+                                    style={{ maxWidth: "600px", marginTop: "20px" }}
                                     elevation={5}>
                                     <p className='pt-4 pl-2 text-medium'>Add product</p>
                                     <CardContent>
@@ -214,15 +220,27 @@ export default class AddProduct extends Component {
                                                 required
                                                 color='secondary'
                                             />
-
-                                            <Button
-                                                style={{ marginTop: "24px", color: "white" }}
-                                                type='submit'
-                                                variant='text'
-                                                color='secondary'
-                                                endIcon={<SendOutlinedIcon />}>
-                                                {"Add product"}
-                                            </Button>
+                                            <CardActions>
+                                                <Grid container direction='row' justifyContent='flex-start'>
+                                                    <Button
+                                                        style={{ marginTop: "24px", color: "white" }}
+                                                        type='submit'
+                                                        variant='text'
+                                                        color='secondary'
+                                                        onClick={() => this.goBack(this.state.pantry)}
+                                                        startIcon={<KeyboardReturnIcon />}>
+                                                        {"Dashboard"}
+                                                    </Button>
+                                                </Grid>
+                                                <Button
+                                                    style={{ marginTop: "24px", color: "white" }}
+                                                    type='submit'
+                                                    variant='text'
+                                                    color='secondary'
+                                                    endIcon={<SendOutlinedIcon />}>
+                                                    {"Add product"}
+                                                </Button>
+                                            </CardActions>
                                         </form>
                                     </CardContent>
                                 </Card>

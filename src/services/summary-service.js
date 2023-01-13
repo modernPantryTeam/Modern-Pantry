@@ -26,6 +26,13 @@ class summaryService {
 		while (localStorage.getItem("CurrentPantrySummary") == null);
 		return JSON.parse(localStorage.getItem("CurrentPantrySummary"));
 	}
+
+	isEmpty() {
+		if (localStorage.getItem("CurrentPantrySummary") === null) {
+			return false;
+		}
+		return true;
+	}
 }
 
 export default new summaryService();

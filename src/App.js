@@ -11,6 +11,7 @@ import SignUp from "./pages/SignUp";
 import Invites from "./pages/Invites";
 import NotFound from "./pages/not-found";
 import Dashboard from "./pages/Dashboard";
+import EmptyStatistics from "./pages/empty-statistics";
 import Create from "./pages/Create";
 import Statistics from "./pages/Statistics";
 import Profile from "./pages/Profile";
@@ -23,6 +24,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import "./index.css";
 
 import authService from "./services/auth-service";
+import summaryService from "./services/summary-service";
 
 const darkTheme = createTheme({
 	palette: {
@@ -42,6 +44,7 @@ export default class App extends Component {
 		super(props);
 		this.state = {
 			loggedIn: authService.loggedIn(),
+			isEmpty: summaryService.isEmpty(),
 		};
 	}
 
@@ -86,9 +89,17 @@ export default class App extends Component {
 										<Dashboard />
 									)}
 								</Route>
+								<Route path='/empty-statistics' component={EmptyStatistics}>
+									{!this.state.loggedIn ? <Redirect to='/login' /> : <EmptyStatistics />}
+								</Route>
 								<Route path='/statistics'>
 									{!this.state.loggedIn ? (
 										<Redirect to='/login' />
+									) : (
+										<Statistics />
+									)}
+									{!this.state.isEmpty ? (
+										<Redirect to='/empty-statistics' />
 									) : (
 										<Statistics />
 									)}

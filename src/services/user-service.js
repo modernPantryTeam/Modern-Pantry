@@ -12,6 +12,7 @@ class userService {
             password
         }, {
             headers: {
+                'ngrok-skip-browser-warning' : true,
                 Authorization: 'Bearer ' + authService.getToken()
             }
         });

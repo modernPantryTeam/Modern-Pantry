@@ -11,6 +11,7 @@ class summaryService {
 			.get(apiUrl + "/api/Summary/GetPantrySummary/" + id, {
 				withCredentials: true,
 				headers: {
+					'ngrok-skip-browser-warning' : true,
 					Authorization: "Bearer " + authService.getToken(),
 				},
 			})

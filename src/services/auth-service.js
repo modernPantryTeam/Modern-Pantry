@@ -13,6 +13,7 @@ class authService {
 			.post(apiUrl + "/api/Account/Login", data, {
 				withCredentials: true,
 				headers: {
+					'ngrok-skip-browser-warning' : true,
 					"Content-Type": "application/json",
 				},
 			})

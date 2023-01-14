@@ -12,6 +12,7 @@ class pantryService {
 			.post(apiUrl + "/api/Pantry/CreatePantry", data, {
 				withCredentials: true,
 				headers: {
+					'ngrok-skip-browser-warning' : true,
 					Authorization: `Bearer ${authService.getToken()}`,
 					"Content-Type": "application/json",
 				},
@@ -25,6 +26,7 @@ class pantryService {
 		return await axios.delete(apiUrl + "/api/Pantry/DeletePantry/" + id, {
 			withCredentials: true,
 			headers: {
+				'ngrok-skip-browser-warning' : true,
 				Authorization: "Bearer " + authService.getToken(),
 				"Content-Type": "application/json",
 			},
@@ -40,6 +42,7 @@ class pantryService {
 			.get(apiUrl + "/api/Pantry/GetUserPantries", {
 				withCredentials: true,
 				headers: {
+					'ngrok-skip-browser-warning' : true,
 					Authorization: "Bearer " + authService.getToken(),
 				},
 			})
@@ -54,6 +57,7 @@ class pantryService {
 			.get(apiUrl + "/api/Pantry/GetPantryById/" + id, {
 				withCredentials: true,
 				headers: {
+					'ngrok-skip-browser-warning' : true,
 					Authorization: "Bearer " + authService.getToken(),
 				},
 			})
@@ -77,6 +81,7 @@ class pantryService {
 				url,
 				withCredentials: true,
 				headers: {
+					'ngrok-skip-browser-warning' : true,
 					Authorization: "Bearer " + authService.getToken(),
 				},
 			})
@@ -102,6 +107,7 @@ class pantryService {
 		return await axios.post(apiUrl + "/api/PantryInvites/SendInvite?inviteRecieverUserName=" + inviteRecieverUserName + "&pantryId=" + pantryID, data, {
 			withCredentials: true,
 			headers: {
+				'ngrok-skip-browser-warning' : true,
 				Authorization: "Bearer " + authService.getToken(),
 				"Content-Type": "application/json",
 			},
@@ -114,6 +120,7 @@ class pantryService {
         return await axios.get(apiUrl + "/api/PantryInvites/GetCurrentInvites", {
             withCredentials: true,
             headers: {
+				'ngrok-skip-browser-warning' : true,
                 Authorization: `Bearer ${authService.getToken()}`,
             }
         }).then(response => {
@@ -130,6 +137,7 @@ class pantryService {
 			.post(apiUrl + "/api/PantryInvites/ProcessInvite?inviteId=" + id + "&accept=" + status, data, {
 				withCredentials: true,
 				headers: {
+					'ngrok-skip-browser-warning' : true,
 					Authorization: "Bearer " + authService.getToken(),
 				},
 			})

@@ -8,6 +8,7 @@ class notificationsSerivice{
         return await axios.get(apiUrl + "/api/Notifications/GetUsersNotifications", {
             withCredentials: true,
             headers: {
+                'ngrok-skip-browser-warning' : true,
                 Authorization: `Bearer ${authService.getToken()}`,
             }
         }).then(response => {

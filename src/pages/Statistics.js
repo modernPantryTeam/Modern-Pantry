@@ -41,6 +41,7 @@ function createData(name, data2, data3, data4, data5, data6, data7, data8) {
 
 export default function Statistics() {
     const [rows, setRows] = React.useState([])
+    const [average, setAverage] = React.useState([])
     const [age, setAge] = React.useState(0);
     const [count, setCount] = React.useState(0);
     const [L, setL] = React.useState(0);
@@ -69,18 +70,24 @@ export default function Statistics() {
     }, []);
 
     if ((localStorage.getItem("CurrentPantrySummary") != null)) {
-    document.addEventListener("DOMContentLoaded", () => {
-        let rows = []
-        const currentPantry = pantryService.getCurrentPantryByID();
-        const id = currentPantry.content.id;
-        summaryService.getPantrySummary(id).then(response => {
-            for (let element of response.content.categorySummaries) {
-                rows.push(createData(element.categoryName, element.amountPerUnit.L, element.amountPerUnit.ML, element.amountPerUnit.kg, element.amountPerUnit.g, element.amountPerUnit.Piece, element.amountPerUnit.Bottle, element.amountPerUnit.Can));
-            }
-            setRows(rows)
+        document.addEventListener("DOMContentLoaded", () => {
+            let rows = []
+            let average = []
+            const currentPantry = pantryService.getCurrentPantryByID();
+            const id = currentPantry.content.id;
+            summaryService.getPantrySummary(id)
+            .then(response => {
+                for (let element of response.content.categorySummaries) {
+                    rows.push(createData(element.categoryName, element.amountPerUnit.L, element.amountPerUnit.ML, element.amountPerUnit.kg, element.amountPerUnit.g, element.amountPerUnit.Piece, element.amountPerUnit.Bottle, element.amountPerUnit.Can));
+                    average.push(createData(element.categoryName, element.averageMonthlyConsumption.L, element.averageMonthlyConsumption.ML, element.averageMonthlyConsumption.kg, element.averageMonthlyConsumption.g, element.averageMonthlyConsumption.Piece, element.averageMonthlyConsumption.Bottle, element.averageMonthlyConsumption.Can));
+                }
+                setRows(rows)
+                setAverage(average)
+            })
+
+
         })
-    })
-}
+    }
 
     if ((localStorage.getItem("CurrentPantrySummary") == null)) {
         return (
@@ -217,6 +224,45 @@ export default function Statistics() {
                                                 <StyledTableCell align="right">{row.data6}</StyledTableCell>
                                                 <StyledTableCell align="right">{row.data7}</StyledTableCell>
                                                 <StyledTableCell align="right">{row.data8}</StyledTableCell>
+                                            </StyledTableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </div>
+                        <div className="max-w-xl md:mx-auto sm:text-center lg:max-w-2xl">
+                            <p className="pt-4 text-base text-gray-700 md:text-lg text-white">
+                                Average monthly consumption
+                            </p>
+                        </div>
+                        <div className='border'>
+                            <TableContainer component={Paper}>
+                                <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <StyledTableCell>Category</StyledTableCell>
+                                            <StyledTableCell align="right">Unit&nbsp;(l)</StyledTableCell>
+                                            <StyledTableCell align="right">Unit&nbsp;(ml)</StyledTableCell>
+                                            <StyledTableCell align="right">Unit&nbsp;(kg)</StyledTableCell>
+                                            <StyledTableCell align="right">Unit&nbsp;(g)</StyledTableCell>
+                                            <StyledTableCell align="right">Unit&nbsp;(piece)</StyledTableCell>
+                                            <StyledTableCell align="right">Unit&nbsp;(bottle)</StyledTableCell>
+                                            <StyledTableCell align="right">Unit&nbsp;(can)</StyledTableCell>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {average.map((average) => (
+                                            <StyledTableRow key={average.name}>
+                                                <StyledTableCell component="th" scope="row">
+                                                    {average.name}
+                                                </StyledTableCell>
+                                                <StyledTableCell align="right">{average.data2}</StyledTableCell>
+                                                <StyledTableCell align="right">{average.data3}</StyledTableCell>
+                                                <StyledTableCell align="right">{average.data4}</StyledTableCell>
+                                                <StyledTableCell align="right">{average.data5}</StyledTableCell>
+                                                <StyledTableCell align="right">{average.data6}</StyledTableCell>
+                                                <StyledTableCell align="right">{average.data7}</StyledTableCell>
+                                                <StyledTableCell align="right">{average.data8}</StyledTableCell>
                                             </StyledTableRow>
                                         ))}
                                     </TableBody>

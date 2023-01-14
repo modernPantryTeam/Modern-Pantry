@@ -18,6 +18,7 @@ class productsService {
 			.post(apiUrl + "/api/Product/CreateProduct", data, {
 				withCredentials: true,
 				headers: {
+					'ngrok-skip-browser-warning' : true,
 					Authorization: "Bearer " + authService.getToken(),
 					"Content-Type": "application/json",
 				},
@@ -33,6 +34,7 @@ class productsService {
 			.get(apiUrl + "/api/Product/GetPantryProducts/" + id, {
 				withCredentials: true,
 				headers: {
+					'ngrok-skip-browser-warning' : true,
 					Authorization: "Bearer " + authService.getToken(),
 				},
 			})
@@ -47,6 +49,7 @@ class productsService {
 			.get(apiUrl + "/api/Product/GetProductById/" + id, {
 				withCredentials: true,
 				headers: {
+					'ngrok-skip-browser-warning' : true,
 					Authorization: "Bearer " + authService.getToken(),
 				},
 			})
@@ -74,6 +77,7 @@ class productsService {
 		.put(apiUrl + "/api/Product/EditProduct", data, {
 			withCredentials: true,
 			headers: {
+				'ngrok-skip-browser-warning' : true,
 				Authorization: "Bearer " + authService.getToken(),
 				"Content-Type": "application/json",
 			},
@@ -89,6 +93,7 @@ class productsService {
 			.delete(apiUrl + "/api/Product/DeleteProduct/" + id, {
 				withCredentials: true,
 				headers: {
+					'ngrok-skip-browser-warning' : true,
 					Authorization: "Bearer " + authService.getToken(),
 				},
 			})
@@ -105,6 +110,7 @@ class productsService {
 				url,
 				withCredentials: true,
 				headers: {
+					'ngrok-skip-browser-warning' : true,
 					Authorization: "Bearer " + authService.getToken(),
 				},
 			})

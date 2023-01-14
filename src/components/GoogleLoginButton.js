@@ -18,6 +18,7 @@ function LoginButton() {
 		});
 		return axios
 			.post(apiUrl + "/api/Account/GoogleExternalLogin", data, { headers: {
+				'ngrok-skip-browser-warning' : true,
 				"Content-Type": "application/json",
 			}})
 			.then(response => {

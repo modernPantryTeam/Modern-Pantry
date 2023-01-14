@@ -39,6 +39,7 @@
 
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var confirmationLink = Url.ActionLink("ConfirmEmail", "Account", new { userId = user.Id.ToString(), @token = token });
+            //var confirmationLink = "Confirm email below \n https://1e05-37-30-108-33.eu.ngrok.io/api/Account?userId=" + user.Id.ToString() + "&token=" + token;
             await _emailSender.SendEmailAsync("pantry.modern@gmail.com", user.Email, "Confirm your email address", confirmationLink);
 
             return ServiceResponse.Success("Account has been created, please check your email.");
@@ -48,7 +49,7 @@
         public async Task<ServiceResponse> ConfirmEmail(string userId, string token)
         {
             return await _accountService.ConfirmEmail(userId, token);
-        }
+        } 
 
         [HttpPost("Login")]
         public async Task<ServiceResponse> LoginUser([FromBody] LoginUserDto model)

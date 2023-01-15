@@ -117,7 +117,7 @@ internal class Program
             opt.Password.RequireUppercase = true;
             opt.Password.RequireNonAlphanumeric = false;
             opt.User.RequireUniqueEmail = true;
-            opt.SignIn.RequireConfirmedEmail = true;
+            opt.SignIn.RequireConfirmedEmail = false;
         })
         .AddEntityFrameworkStores<DataContext>()
         .AddDefaultTokenProviders();

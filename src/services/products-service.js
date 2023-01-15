@@ -1,7 +1,7 @@
 import axios from "axios";
 import authService from "./auth-service";
 
-const apiUrl = "https://41cc-37-30-108-33.eu.ngrok.io";
+const apiUrl = "https://fe2e-37-30-108-33.eu.ngrok.io";
 
 class productsService {
 	async addProduct(name, pantryId, unit, amount, date, category) {

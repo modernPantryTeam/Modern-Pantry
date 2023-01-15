@@ -6,7 +6,7 @@ import "../sass/css/login.css";
 import { useEffect } from "react";
 import axios from "axios";
 
-const apiUrl = "https://354b-37-30-108-33.eu.ngrok.io";
+const apiUrl = "https://fe2e-37-30-108-33.eu.ngrok.io";
 const clientId =
 	"224755618921-u8fkf9m7ov2m8a2p6dinnmp549u2gl8a.apps.googleusercontent.com";
 
